@@ -1,4 +1,4 @@
-from utils.gcalender import GCalender
+from tools.utils.gcalendar import GCalender
 import datetime
 from langchain.tools.base import BaseTool
 
@@ -7,12 +7,8 @@ class Calendar(BaseTool):
     name = "calendar"
     description = (
             "You can ask calendar tool to create an event for you."
-            "Input should be start and end time(Example input:2023,10,20,13,30/ 2023,10,20,14,00/ mail_id)."
-            "If no email id is given, don't make up an email id(Example input:2023,10,20,13,30/ 2023,10,20,14,00/nomail@gmail.com)"
                     )
-    def __init__(self) -> None:
-        self.cal = GCalender()
-
+    
     def parse_date(self, input_str):
         try:
             year, month, day, hour, minute = map(int, input_str.split(','))
@@ -21,7 +17,8 @@ class Calendar(BaseTool):
         except ValueError:
             return None
 
-    def run(self, date: str):
+    def _run(self, date: str):
+        cal = GCalender()
         # Parse the start and end times using the parse_date function
         input_pairs = date.split('/')
         start_time = self.parse_date(input_pairs[0])
@@ -49,7 +46,7 @@ class Calendar(BaseTool):
                     {'email': mail}
                 ]
             }
-            return self.cal.create_event(events)
+            return cal.create_event(events)
         else:
             return None
         

@@ -1,2 +1,9 @@
 __pycache__
 pylint.txt
+assistant.py
+credentials.json
+openai_api_key.txt
+test.py
+build
+tools.egg-info
+token.json
