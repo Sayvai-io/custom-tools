@@ -1,13 +1,15 @@
 from utils.gcalender import GCalender
 import datetime
-from pydantic import BaseModel
+from langchain.tools.base import BaseTool
 
-
-class Calendar(BaseModel):
+class Calendar(BaseTool):
 
     name = "calendar"
-    description = ("You can ask calendar tool to create an event for you.")
-    
+    description = (
+            "You can ask calendar tool to create an event for you."
+            "Input should be start and end time(Example input:2023,10,20,13,30/ 2023,10,20,14,00/ mail_id)."
+            "If no email id is given, don't make up an email id(Example input:2023,10,20,13,30/ 2023,10,20,14,00/nomail@gmail.com)"
+                    )
     def __init__(self) -> None:
         self.cal = GCalender()
 
