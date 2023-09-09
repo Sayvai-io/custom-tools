@@ -1,8 +1,11 @@
-from sayvai_tools.tools.utils.gcalendar import GCalender
 import datetime
+
 from langchain.tools.base import BaseTool
 
-class Calendar(BaseTool):
+from sayvai_tools.utils.gcalendar import GCalendar
+
+
+class Calendar():
 
     name = "calendar"
     description = (
@@ -18,7 +21,7 @@ class Calendar(BaseTool):
             return None
 
     def _run(self, date: str):
-        cal = GCalender()
+        cal = GCalendar()
         # Parse the start and end times using the parse_date function
         input_pairs = date.split('/')
         start_time = self.parse_date(input_pairs[0])

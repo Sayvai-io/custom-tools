@@ -3,6 +3,7 @@ from src.sayvai_tools import __version__
 
 core_requirements = [
     'langchain',
+    'langchain_experimental',
     'google-api-python-client',
     'openai',
     'SQLAlchemy'
