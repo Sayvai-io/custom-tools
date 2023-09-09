@@ -1,15 +1,16 @@
 from setuptools import setup, find_packages
-from src.tools import __version__
+from src.sayvai_tools import __version__
 
 core_requirements = [
     'langchain',
-    'llama_index',
+    'langchain_experimental',
     'google-api-python-client',
     'openai',
+    'SQLAlchemy'
 ]
 
 setup(
-    name='tools',
+    name='sayvai_tools',
     version=__version__,
     description='Tools for the assistant',
     author='sayvai-io',
