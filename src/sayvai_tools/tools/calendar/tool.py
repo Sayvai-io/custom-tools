@@ -1,4 +1,4 @@
-from tools.utils.gcalendar import GCalender
+from sayvai_tools.tools.utils.gcalendar import GCalender
 import datetime
 from langchain.tools.base import BaseTool
 
@@ -50,7 +50,7 @@ class Calendar(BaseTool):
         else:
             return None
         
-    async def run_async(self, date: str):
+    async def _arun(self, date: str):
         # Parse the start and end times using the parse_date function
         input_pairs = date.split('/')
         start_time = self.parse_date(input_pairs[0])

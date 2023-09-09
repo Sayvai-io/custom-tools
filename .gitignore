@@ -7,3 +7,5 @@ test.py
 build
 tools.egg-info
 token.json
+sayvai_tools.egg-info
+engine.py
