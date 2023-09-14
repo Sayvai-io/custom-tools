@@ -3,7 +3,7 @@ from elevenlabs import play
 from sayvai_tools.utils.tts import ElevenlabsAudioStreaming
 
 
-class VoiceInputOutputRun():
+class VoiceInputOutputRun:
     """Tool that asks user for input."""
 
     name: str = "voice"
