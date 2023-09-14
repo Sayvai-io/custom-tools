@@ -1,31 +1,38 @@
-"""base tool for IO"""
+"""Conversational Human """
+from typing import Callable, Optional
+from langchain.callbacks.manager import CallbackManagerForToolRun
+from langchain.pydantic_v1 import Field
 from elevenlabs import play
 from sayvai_tools.utils.tts import ElevenlabsAudioStreaming
-from langchain.pydantic_v1 import Field
-from typing import Callable
 
 
-class VoiceOutputRun:
+# def _print_func(text: str) -> None:
+#     print("\n")
+#     print(text)
+
+
+class ConversationalHuman:
     """Tool that asks user for input."""
 
-    name: str = "voice"
+    name: str = "human"
     description: str = (
         "You can ask a human for guidance when you think you "
         "got stuck or you are not sure what to do next. "
         "The input should be a question for the human."
     )
+    # prompt_func: Callable[[str], None] = Field(default_factory=lambda: _print_func)
+    # input_func: Callable = Field(default_factory=lambda: input)
     
     def __init__(self, api_key: str) -> None:
         self.api_key = api_key
-        assert isinstance(self.api_key, str)
         pass
 
     def _run(
         self,
         query: str,
-    ):
+        run_manager: Optional[CallbackManagerForToolRun] = None,
+    ) -> str:
         """Use the Human input tool."""
-        # input_func: Callable = Field(default_factory=lambda: input)
         tts = ElevenlabsAudioStreaming()
         inputbytes = tts.audio_streaming(query, 
                             model="eleven_multilingual_v1",
@@ -35,4 +42,6 @@ class VoiceOutputRun:
                             similarity= 0.5,
                             api_key= self.api_key)
         play(inputbytes)
-
+        # self.prompt_func(query)
+        # return self.input_func()
+        return input("")
