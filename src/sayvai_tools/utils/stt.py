@@ -1,6 +1,7 @@
 import yaml
 import os
 from google.cloud import speech_v1p1beta1 as speech
+from sayvai_tools.utils.recording import record
 #os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "G_Cloud_API_key.json"
 
 
@@ -8,7 +9,7 @@ class STT:
     def __init__(self, model: str = "default", sample_rate: int = 44100, lang_code: str = "en-IN",
                  automatic_punctuation: bool = True,
                  enhanced: bool = True,
-                 second_lang_codes: list[str] = ["en-IN"], no_of_audio_channels: int = 2,
+                 second_lang_codes: list[str] = ["en-US"], no_of_audio_channels: int = 2,
                  sep_rec_per_channel: bool = True, spoken_punctuation: bool = True,
                  word_confidence: bool = True, spoken_emoji: bool = True,
                  max_alt: int = 0, audio_format: str = "default", interact_type: str = "default",
@@ -76,45 +77,54 @@ class STT:
             enable_spoken_punctuation=self.enable_spoken_punctuation,
             enable_spoken_emojis=self.enable_spoken_emojis,
             max_alternatives=self.max_alternatives,
-            speech_contexts=self.speech_context(),
             enable_word_confidence=self.enable_word_confidence,
             metadata=self.recognition_meta_data()
         )
         return config_mp3
 
-    def generate_text(self, path: str = None):
-        self.check_for_bounds()
-        if path is not None and self.state==True:
+    @staticmethod
+    def read_audio(path: str = None):
+        record()
+        if path is not None:
+            with open(path, 'rb') as f:
+                byte_data_mp3 = f.read()
+            audio_mp3 = speech.RecognitionAudio(content=byte_data_mp3)
+            return audio_mp3
+        else:
+            return None
+
+    def generate_text(self, path=r"Recording.mp3"):
+        #self.check_for_bounds()
+        if path is not None and self.state == True:
             speech_client = speech.SpeechClient()
             audio_mp3 = self.read_audio(path)
             response_standard_mp3 = speech_client.long_running_recognize(
                 config=self.create_reg_config(),
                 audio=audio_mp3
             )
-            os.remove("Recording.flac")
-            # return response_standard_mp3.results[0].alternatives[0].transcript
-            return response_standard_mp3.result()
+            os.remove("Recording.mp3")
+            return response_standard_mp3
         else:
             return False
 
 
 
-    @staticmethod
-    def load_phrase_set(file_path: str):
-        with open(file_path, "r", encoding="utf-8") as yaml_file:
-            loaded_data = yaml.safe_load(yaml_file)
-            return loaded_data
+    # @staticmethod
+    # def load_phrase_set(file_path: str):
+    #     with open(file_path, "r", encoding="utf-8") as yaml_file:
+    #         loaded_data = yaml.safe_load(yaml_file)
+    #         return loaded_data
 
-    def speech_context(self):
-        speech_context = self.load_phrase_set("phrase_set.yaml")
-        return speech_context
+    # def speech_context(self):
+    #     speech_context = self.load_phrase_set("phrase_set.yaml")
+    #     return speech_context
 
-    def check_speech_context(self):
-        speech_context=self.speech_context()
-        if speech_context is not None:
-            for i in speech_context:
-                if(i.get("boost")>20 or i.get("boost")<0):
-                    self.state=False
+    # def check_speech_context(self):
+    #     speech_context=self.speech_context()
+    #     if speech_context is not None:
+    #         for i in speech_context:
+    #             if(i.get("boost")>20 or i.get("boost")<0):
+    #                 self.state=False
 
 
     def recognition_meta_data(self):
@@ -183,5 +193,5 @@ class STT:
         else:
             return speech.RecognitionMetadata.RecordingDeviceType.RECORDING_DEVICE_TYPE_UNSPECIFIED
 
-    def check_for_bounds(self):
-        self.check_speech_context()
+    # def check_for_bounds(self):
+    #     self.check_speech_context()
