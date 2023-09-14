@@ -1,5 +1,4 @@
 """TTS file for sayvai_tools."""
-from elevenlabs.api.tts import text_chunker
 from elevenlabs import stream, generate
 
 # elevenlabs.set_api_key("431f452112cab175b80762e50e525c8f")
@@ -9,7 +8,7 @@ from elevenlabs import save
 from elevenlabs.api.voice import Voice
 from elevenlabs.simple import VOICES_CACHE, is_voice_id
 
-from elevenlabs_audio_streaming.constant import VALID_MODELS
+# from elevenlabs_audio_streaming.constant import VALID_MODELS
 
 
 class ElevenlabsAudioStreaming:
@@ -45,9 +44,6 @@ class ElevenlabsAudioStreaming:
         Returns: value error if model not found
 
         """
-
-        if not isinstance(model, str) or model not in VALID_MODELS:
-            raise ValueError(f"Model '{model}' not found.")
 
     def audio_streaming(self, text, voice, model, audio_streaming, stability, similarity, api_key):
         """
@@ -89,13 +85,7 @@ class ElevenlabsAudioStreaming:
             # save(audio, "E:/Text-to-speech/src/audio buffer/audio.wav")
             # play(audio)
 
-    @staticmethod
-    def avail_models():
-        """
-        Returns: available models
 
-        """
-        return VALID_MODELS
 
     @staticmethod
     def avail_voices():

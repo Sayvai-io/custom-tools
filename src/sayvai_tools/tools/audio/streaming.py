@@ -25,7 +25,8 @@ class VoiceInputOutputRun():
         """Use the Human input tool."""
         tts = ElevenlabsAudioStreaming()
         inputbytes = tts.audio_streaming(query, 
-                            model="eleven_multilingual_v1", 
+                            model="eleven_multilingual_v1",
+                            voice="Adam", 
                             audio_streaming= True, 
                             stability= 0.5,
                             similarity= 0.5,

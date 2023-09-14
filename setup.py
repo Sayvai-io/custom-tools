@@ -7,7 +7,9 @@ core_requirements = [
     'google-api-python-client',
     'openai',
     'SQLAlchemy',
-    'elevenlabs'
+    'elevenlabs==0.2.24',
+    'google_auth_oauthlib',
+    'google-auth-httplib2',
 ]
 
 setup(
