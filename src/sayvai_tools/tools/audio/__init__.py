@@ -1,3 +1,3 @@
-from sayvai_tools.tools.audio.streaming import VoiceInputOutputRun
+from sayvai_tools.tools.audio.streaming import VoiceOutputRun
 
-__all__ = [ "VoiceInputOutputRun"]
+__all__ = [ "VoiceOutputRun"]
