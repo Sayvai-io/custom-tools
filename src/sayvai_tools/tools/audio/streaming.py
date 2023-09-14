@@ -4,6 +4,7 @@ from sayvai_tools.utils.tts import ElevenlabsAudioStreaming
 from langchain.pydantic_v1 import Field
 from typing import Callable
 
+
 class VoiceOutputRun:
     """Tool that asks user for input."""
 
@@ -34,4 +35,4 @@ class VoiceOutputRun:
                             similarity= 0.5,
                             api_key= self.api_key)
         play(inputbytes)
-        # return input_func()
+
