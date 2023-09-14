@@ -6,7 +6,8 @@ core_requirements = [
     'langchain_experimental',
     'google-api-python-client',
     'openai',
-    'SQLAlchemy'
+    'SQLAlchemy',
+    'elevenlabs'
 ]
 
 setup(
