@@ -4,6 +4,8 @@ from langchain.callbacks.manager import CallbackManagerForToolRun
 from langchain.pydantic_v1 import Field
 from elevenlabs import play
 from sayvai_tools.utils.tts import ElevenlabsAudioStreaming
+from sayvai_tools.utils.stt import STT
+
 
 
 # def _print_func(text: str) -> None:
@@ -25,6 +27,8 @@ class ConversationalHuman:
     
     def __init__(self, api_key: str) -> None:
         self.api_key = api_key
+        self.stt = STT(audio_format="mp3")
+        self.tts = ElevenlabsAudioStreaming()
         pass
 
     def _run(
@@ -33,8 +37,8 @@ class ConversationalHuman:
         run_manager: Optional[CallbackManagerForToolRun] = None,
     ) -> str:
         """Use the Human input tool."""
-        tts = ElevenlabsAudioStreaming()
-        inputbytes = tts.audio_streaming(query, 
+
+        inputbytes = self.tts.audio_streaming(query,
                             model="eleven_multilingual_v1",
                             voice="Adam", 
                             audio_streaming= True, 
@@ -42,6 +46,7 @@ class ConversationalHuman:
                             similarity= 0.5,
                             api_key= self.api_key)
         play(inputbytes)
+
         # self.prompt_func(query)
         # return self.input_func()
-        return input("")
+        return(self.stt.generate_text().result().results[0].alternatives[0].transcript)
