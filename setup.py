@@ -14,7 +14,7 @@ core_requirements = [
     'pydub',
     'numpy',
     'google',
-    'google-cloud-speech'
+    'google-cloud-speech==2.21.0'
 ]
 
 setup(
