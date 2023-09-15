@@ -10,7 +10,7 @@ core_requirements = [
     'elevenlabs==0.2.24',
     'google_auth_oauthlib',
     'google-auth-httplib2',
-    'pyaudio',
+    'pyaudio-wheels',
     'pydub',
     'numpy',
     'google',
