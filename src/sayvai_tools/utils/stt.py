@@ -85,13 +85,16 @@ class STT:
     @staticmethod
     def read_audio(path=r"Recording.mp3"):
         record()
-        if path is not None:
-            with open(path, 'rb') as f:
-                byte_data_mp3 = f.read()
-            audio_mp3 = speech.RecognitionAudio(content=byte_data_mp3)
-            return audio_mp3
-        else:
-            return None
+        try:
+            if path is not None:
+                with open(path, 'rb') as f:
+                    byte_data_mp3 = f.read()
+                audio_mp3 = speech.RecognitionAudio(content=byte_data_mp3)
+                return audio_mp3
+            else:
+                return None
+        except:
+            pass
 
     def generate_text(self):
         #self.check_for_bounds()
