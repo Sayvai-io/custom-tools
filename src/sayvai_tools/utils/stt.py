@@ -6,7 +6,7 @@ from sayvai_tools.utils.recording import record
 
 
 class STT:
-    def _init_(self, model: str = "default", sample_rate: int = 44100, lang_code: str = "en-IN",
+    def __init__(self, model: str = "default", sample_rate: int = 44100, lang_code: str = "en-IN",
                  automatic_punctuation: bool = True,
                  enhanced: bool = True,
                  second_lang_codes: list[str] = ["en-US"], no_of_audio_channels: int = 2,
@@ -99,15 +99,22 @@ class STT:
         if self.state == True:
             speech_client = speech.SpeechClient()
             audio_mp3 = self.read_audio()
-            response_standard_mp3 = speech_client.long_running_recognize(
-                config=self.create_reg_config(),
-                audio=audio_mp3
-            )
-            os.remove("Recording.mp3")
             try:
-                return response_standard_mp3.result().results[0].alternatives[0].transcript
+                response_standard_mp3 = speech_client.recognize(
+                    config=self.create_reg_config(),
+                    audio=audio_mp3)
+                os.remove("Recording.mp3")
+                print("recognize")
+                return response_standard_mp3.results[0].alternatives[0].transcript
             except:
-                return "Sorry not able to hear"
+                response_standard_mp3 = speech_client.long_running_recognize(
+                    config=self.create_reg_config(),
+                    audio=audio_mp3
+                )
+                os.remove("Recording.mp3")
+                print("long recognize")
+                return response_standard_mp3.result().results[0].alternatives[0].transcript
+
 
         else:
             return " "

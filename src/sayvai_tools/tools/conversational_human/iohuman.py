@@ -49,4 +49,4 @@ class ConversationalHuman:
 
         # self.prompt_func(query)
         # return self.input_func()
-        return(self.stt.generate_text().result().results[0].alternatives[0].transcript)
+        return(self.stt.generate_text())
