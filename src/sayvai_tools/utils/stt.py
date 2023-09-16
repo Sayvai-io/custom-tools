@@ -82,8 +82,8 @@ class STT:
         )
         return config_mp3
 
-    @staticmethod
-    def read_audio(path=r"Recording.mp3"):
+
+    def read_audio(self,path=r"Recording.mp3"):
         record()
         try:
             if path is not None:
@@ -92,7 +92,7 @@ class STT:
                 audio_mp3 = speech.RecognitionAudio(content=byte_data_mp3)
                 return audio_mp3
         except:
-            pass
+            return self.read_audio(path=r"Recording.mp3")
 
     def generate_text(self):
         #self.check_for_bounds()
@@ -103,17 +103,27 @@ class STT:
                 response_standard_mp3 = speech_client.recognize(
                     config=self.create_reg_config(),
                     audio=audio_mp3)
-                os.remove("Recording.mp3")
+                try:
+                    os.remove("Recording.mp3")
+                except:
+                    pass
                 print("recognize")
                 return response_standard_mp3.results[0].alternatives[0].transcript
+
             except:
                 response_standard_mp3 = speech_client.long_running_recognize(
                     config=self.create_reg_config(),
                     audio=audio_mp3
                 )
-                os.remove("Recording.mp3")
+                try:
+                    os.remove("Recording.mp3")
+                except:
+                    pass
                 print("long recognize")
                 return response_standard_mp3.result().results[0].alternatives[0].transcript
+
+
+
 
 
         else:

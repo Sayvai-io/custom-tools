@@ -8,7 +8,7 @@ from pydub.silence import split_on_silence
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 44100
-CHUNK_SIZE = 48000
+CHUNK_SIZE = 44100
 
 # Initialize PyAudio
 audio = pyaudio.PyAudio()
@@ -41,13 +41,15 @@ def record():
             audio_data = np.frombuffer(data, dtype=np.int16)
 
             # Check if audio data is silence
-            is_silence = np.max(audio_data) < 100
+            is_silence = np.max(audio_data) < 500
+            print(np.max(audio_data))
 
             if recording:
                 if is_silence:
                     # End of an audio chunk
                     recording = False
                     if len(audio_chunks) > 1:
+                        print("len of audio chunks :", len(audio_chunks))
                         # Process the recorded audio chunk
                         song = AudioSegment(
                             data=b"".join(audio_chunks),
@@ -62,7 +64,8 @@ def record():
                             min_silence_len=1000,
                             silence_thresh=-50
                         )
-                        silence_chunk = AudioSegment.silent(duration=1000)
+                        silence_chunk = AudioSegment.silent(duration=500)
+                        print("audio_chunk_length", len(chunks))
                         for i, chunk in enumerate(chunks):
                             j = j + 1
                             # Create a silence chunk that's 0.5 seconds (500 ms) long for padding
@@ -80,6 +83,7 @@ def record():
 
                         # Clear the audio chunks list
                         audio_chunks.clear()
+
                         break
                 else:
                     # Continue recording audio data
