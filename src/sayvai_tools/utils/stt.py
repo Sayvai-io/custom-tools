@@ -92,6 +92,7 @@ class STT:
                 audio_mp3 = speech.RecognitionAudio(content=byte_data_mp3)
                 return audio_mp3
         except:
+            print("running excpet")
             return self.read_audio(path=r"Recording.mp3")
 
     def generate_text(self):
@@ -106,11 +107,13 @@ class STT:
                 try:
                     os.remove("Recording.mp3")
                 except:
+                    print("running excpet")
                     pass
                 print("recognize")
                 return response_standard_mp3.results[0].alternatives[0].transcript
 
             except:
+                print("running excpet")
                 response_standard_mp3 = speech_client.long_running_recognize(
                     config=self.create_reg_config(),
                     audio=audio_mp3
@@ -118,6 +121,7 @@ class STT:
                 try:
                     os.remove("Recording.mp3")
                 except:
+                    print("running excpet")
                     pass
                 print("long recognize")
                 return response_standard_mp3.result().results[0].alternatives[0].transcript
@@ -127,7 +131,7 @@ class STT:
 
 
         else:
-            return " "
+            return "No output"
 
 
 
