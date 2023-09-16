@@ -47,7 +47,7 @@ def record():
                 if is_silence:
                     # End of an audio chunk
                     recording = False
-                    if len(audio_chunks) > 0:
+                    if len(audio_chunks) > 1:
                         # Process the recorded audio chunk
                         song = AudioSegment(
                             data=b"".join(audio_chunks),
@@ -78,18 +78,9 @@ def record():
                                 format="mp3"
                             )
 
-
                         # Clear the audio chunks list
                         audio_chunks.clear()
                         break
-                    else:
-                        alternate_chunk = AudioSegment.silent(duration=1000)
-                        alternate_chunk.export(
-                            rf"Recording.mp3",
-                            bitrate="192k",
-                            format="mp3"
-                        )
-
                 else:
                     # Continue recording audio data
                     audio_chunks.append(data)
@@ -108,4 +99,3 @@ def record():
 
     except KeyboardInterrupt:
         print("Recording stopped.")
-
