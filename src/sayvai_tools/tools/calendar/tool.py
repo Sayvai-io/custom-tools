@@ -45,7 +45,7 @@ class Calendar():
                     'RRULE:FREQ=DAILY;COUNT=1'
                 ],
                 'attendees': [
-                    {'email': 'sanjaypranav@sayvai.io'},
+                    {'email': 'vinithkac@sayvai.io'},
                     {'email': mail}
                 ]
             }
