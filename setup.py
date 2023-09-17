@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-from src.sayvai_tools import __version__
 
 core_requirements = [
     'langchain',
@@ -19,7 +18,7 @@ core_requirements = [
 
 setup(
     name='sayvai_tools',
-    version=__version__,
+    version=0.0.1,
     description='Tools for the assistant',
     author='sayvai-io',
     package_dir={"": "src"},
