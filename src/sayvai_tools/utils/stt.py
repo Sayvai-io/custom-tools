@@ -106,11 +106,9 @@ class STT:
                         config=self.create_reg_config(),
                         audio=audio_mp3)
                     os.remove("Recording.mp3")
-                    print("recognize")
                     return response_standard_mp3.results[0].alternatives[0].transcript
 
                 except:
-                    print("long recognize")
                     response_standard_mp3 = speech_client.long_running_recognize(
                         config=self.create_reg_config(),
                         audio=audio_mp3
@@ -131,7 +129,7 @@ class STT:
 
     def speech_context(self):
         # try:
-        speech_context = self.load_phrase_set(r"C:\Users\dines\Downloads\phrase_set.yaml")
+        speech_context = self.load_phrase_set(self.speech_context_path)
         return speech_context
         # except:
         #     return None

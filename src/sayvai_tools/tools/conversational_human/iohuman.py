@@ -5,6 +5,7 @@ from langchain.pydantic_v1 import Field
 from elevenlabs import play
 from sayvai_tools.utils.tts import ElevenlabsAudioStreaming
 from sayvai_tools.utils.stt import STT
+import os
 
 
 
@@ -25,10 +26,12 @@ class ConversationalHuman:
     # prompt_func: Callable[[str], None] = Field(default_factory=lambda: _print_func)
     # input_func: Callable = Field(default_factory=lambda: input)
     
-    def __init__(self, api_key: str) -> None:
+    def __init__(self, api_key: str, g_api_key: str, phrase_set_path: str) -> None:
         self.api_key = api_key
-        self.stt = STT(audio_format="mp3")
+        self.stt = STT(audio_format="mp3",speech_context_path=phrase_set_path)
         self.tts = ElevenlabsAudioStreaming()
+        self.g_api_key = g_api_key
+        self.phrase_set_path = phrase_set_path
         pass
 
     def _run(
@@ -37,7 +40,7 @@ class ConversationalHuman:
         run_manager: Optional[CallbackManagerForToolRun] = None,
     ) -> str:
         """Use the Human input tool."""
-
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = self.g_api_key
         inputbytes = self.tts.audio_streaming(query,
                             model="eleven_multilingual_v1",
                             voice="Adam", 
