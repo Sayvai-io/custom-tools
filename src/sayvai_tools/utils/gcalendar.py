@@ -121,8 +121,7 @@ class GCalendar:
 
         # Check if the provided date and time are in the past
         if start_time < current_datetime:
-            print("The provided date and time are in the past.")
-            return
+            return "The provided date and time are in the past."
 
         specific_date = start_time.date()  # Use the date from the input
 
@@ -152,12 +151,12 @@ class GCalendar:
                         'RRULE:FREQ=DAILY;COUNT=1'
                     ],
                     'attendees': [
-                        {'email': 'sridhanush@sayvai.io'},
+                        {'email': 'vinitkac@sayvai.io'},
                         {'email': mail}
                     ]
                 }
-                print(self.create_event(events))
+                return self.create_event(events)
             else:
-                print("The slot is not within 9 AM - 5 PM.")
+                return "The slot is not within 9 AM - 5 PM."
         else:
-            print("The slot is not available.")
+            return "The slot is not available."
