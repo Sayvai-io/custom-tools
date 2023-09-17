@@ -8,7 +8,7 @@ from pydub.silence import split_on_silence
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 44100
-CHUNK_SIZE = 44100
+CHUNK_SIZE = 16000
 
 # Initialize PyAudio
 audio = pyaudio.PyAudio()
@@ -41,15 +41,15 @@ def record():
             audio_data = np.frombuffer(data, dtype=np.int16)
 
             # Check if audio data is silence
-            is_silence = np.max(audio_data) < 500
-            print(np.max(audio_data))
+            is_silence = np.max(audio_data) < 350
+            #print(np.max(audio_data))
 
             if recording:
                 if is_silence:
                     # End of an audio chunk
                     recording = False
-                    if len(audio_chunks) > 1:
-                        print("len of audio chunks :", len(audio_chunks))
+                    if len(audio_chunks) > 0:
+                        #print("len of audio chunks :", len(audio_chunks))
                         # Process the recorded audio chunk
                         song = AudioSegment(
                             data=b"".join(audio_chunks),
@@ -61,25 +61,30 @@ def record():
                         # Split the chunk on silence
                         chunks = split_on_silence(
                             song,
-                            min_silence_len=1000,
-                            silence_thresh=-50
+                            min_silence_len=1500,
+                            silence_thresh=-35
                         )
                         silence_chunk = AudioSegment.silent(duration=500)
-                        print("audio_chunk_length", len(chunks))
-                        for i, chunk in enumerate(chunks):
-                            j = j + 1
+                        #print("audio_chunk_length", len(chunks))
+                        #print(chunks)
+                        combined_chunks=AudioSegment.empty()
+                        for i in chunks:
+                            combined_chunks+=i
+                        #print(combined_chunks)
+                        # for i, chunk in enumerate(chunks):
+                        #     j = j + 1
                             # Create a silence chunk that's 0.5 seconds (500 ms) long for padding
 
                             # Add the padding chunk to the beginning and end of the chunk
-                            audio_chunk = silence_chunk + chunk + silence_chunk
-                            # Normalize the entire chunk
-                            normalized_chunk = match_target_amplitude(audio_chunk, -20.0)
-                            # Export the audio chunk with a new bitrate
-                            normalized_chunk.export(
-                                rf"Recording.mp3",
-                                bitrate="192k",
-                                format="mp3"
-                            )
+                        audio_chunk = silence_chunk + combined_chunks + silence_chunk
+                        # Normalize the entire chunk
+                        normalized_chunk = match_target_amplitude(audio_chunk, -20.0)
+                        # Export the audio chunk with a new bitrate
+                        normalized_chunk.export(
+                            rf"Recording.mp3",
+                            bitrate="192k",
+                            format="mp3"
+                        )
 
                         # Clear the audio chunks list
                         audio_chunks.clear()
