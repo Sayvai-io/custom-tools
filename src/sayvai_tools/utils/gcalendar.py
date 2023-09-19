@@ -91,11 +91,8 @@ class GCalendar:
             return None
 
     @staticmethod
-    def is_slot_available(time_interval, booked_slots):
+    def is_slot_available(start_time, end_time, booked_slots):
         # Check if the time interval is between 9 AM and 5 PM
-        start_time, end_time = time_interval.split(' ')
-        start_time = dt.datetime.fromisoformat(start_time)
-        end_time = dt.datetime.fromisoformat(end_time)
 
         for slot in booked_slots:
             slot_start_str, slot_end_str = slot.split(' ')
@@ -114,6 +111,8 @@ class GCalendar:
         end_time = self.parse_date(input_pairs[1])
         mail = input_pairs[2]
 
+
+
         clinic_open_time = 9
         clinic_close_time = 17
 
@@ -121,8 +120,7 @@ class GCalendar:
 
         # Check if the provided date and time are in the past
         if start_time < current_datetime:
-            print("The provided date and time are in the past.")
-            return
+            return "The provided date and time are in the past."
 
         specific_date = start_time.date()  # Use the date from the input
 
@@ -133,7 +131,18 @@ class GCalendar:
 
         time_interval = start_time.isoformat() + '+05:30' + ' ' + end_time.isoformat() + '+05:30'
 
-        if self.is_slot_available(time_interval, booked_slots):
+        start_time, end_time = time_interval.split(' ')
+        start_time = dt.datetime.fromisoformat(start_time)
+        end_time = dt.datetime.fromisoformat(end_time)
+
+        if end_time <= start_time:
+            return "End time should be greater than start time."
+
+        duration = end_time - start_time
+        if duration < dt.timedelta(minutes=15) or duration > dt.timedelta(hours=1):
+            return "The slot should be between 15 minutes and 1 hour."
+
+        if self.is_slot_available(start_time, end_time, booked_slots):
             # Check if the slot is within 9 AM - 5 PM
             if clinic_open_time <= start_time.hour < clinic_close_time and clinic_open_time <= end_time.hour <= clinic_close_time:
                 events = {
@@ -156,8 +165,8 @@ class GCalendar:
                         {'email': mail}
                     ]
                 }
-                print(self.create_event(events))
+                return self.create_event(events)
             else:
-                print("The slot is not within 9 AM - 5 PM.")
+                return "The slot is not within 9 AM - 5 PM."
         else:
-            print("The slot is not available.")
+            return "The slot is not available."
