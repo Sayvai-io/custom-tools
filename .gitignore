@@ -10,4 +10,5 @@ token.json
 sayvai_tools.egg-info
 engine.py
 translation-396717-e2931c0fd933.json
-.idea/
+.idea
+
