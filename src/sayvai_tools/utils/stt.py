@@ -1,6 +1,6 @@
 import yaml
 from google.cloud import speech_v1p1beta1 as speech
-from recording import record
+from sayvai_tools.utils.recording import record
 
 
 
