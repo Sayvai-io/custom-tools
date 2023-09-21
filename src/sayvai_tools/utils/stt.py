@@ -1,10 +1,8 @@
 import yaml
-import os
 from google.cloud import speech_v1p1beta1 as speech
-from sayvai_tools.utils.recording import record
+from recording import record
 
 
-# os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "G_Cloud_API_key.json"
 
 
 class STT:
@@ -84,36 +82,31 @@ class STT:
         )
         return config_mp3
 
-    def read_audio(self, path=r"Recording.mp3"):
-        record()
+    def read_audio(self):
+        byte_data= record()
         try:
-            if path is not None:
-                with open(path, 'rb') as f:
-                    byte_data_mp3 = f.read()
-                audio_mp3 = speech.RecognitionAudio(content=byte_data_mp3)
-                return audio_mp3
+                audio = speech.RecognitionAudio(content=byte_data)
+                return audio
         except:
-            return self.read_audio(path=r"Recording.mp3")
+            return self.read_audio()
 
     def generate_text(self):
         self.check_for_bounds()
         if self.state == True:
             try:
                 speech_client = speech.SpeechClient()
-                audio_mp3 = self.read_audio()
+                audio = self.read_audio()
                 try:
                     response_standard_mp3 = speech_client.recognize(
                         config=self.create_reg_config(),
-                        audio=audio_mp3)
-                    os.remove("Recording.mp3")
+                        audio=audio)
                     return response_standard_mp3.results[0].alternatives[0].transcript
 
                 except:
                     response_standard_mp3 = speech_client.long_running_recognize(
                         config=self.create_reg_config(),
-                        audio=audio_mp3
+                        audio=audio
                     )
-                    os.remove("Recording.mp3")
                     return response_standard_mp3.result().results[0].alternatives[0].transcript
             except:
                 return self.generate_text()
