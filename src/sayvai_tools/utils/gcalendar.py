@@ -112,7 +112,7 @@ class GCalendar:
         mail = input_pairs[2]
 
         clinic_open_time = 9
-        clinic_close_time = 17
+        clinic_close_time = 20
 
         current_datetime = dt.datetime.now()
 

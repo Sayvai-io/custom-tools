@@ -128,11 +128,11 @@ class STT:
             return loaded_data
 
     def speech_context(self):
-        # try:
-        speech_context = self.load_phrase_set(self.speech_context_path)
-        return speech_context
-        # except:
-        #     return None
+        if self.speech_context_path is not None:
+            speech_context = self.load_phrase_set(self.speech_context_path)
+            return speech_context
+        else:
+            return None
 
     def check_speech_context(self):
         speech_context = self.speech_context()
