@@ -9,10 +9,6 @@ import os
 
 
 
-# def _print_func(text: str) -> None:
-#     print("\n")
-#     print(text)
-
 
 class ConversationalHuman:
     """Tool that asks user for input."""
@@ -31,8 +27,6 @@ class ConversationalHuman:
         self.stt = STT(audio_format="mp3",speech_context_path=phrase_set_path)
         self.tts = ElevenlabsAudioStreaming()
         self.g_api_key = g_api_key
-        self.phrase_set_path = phrase_set_path
-        pass
 
     def _run(
         self,
