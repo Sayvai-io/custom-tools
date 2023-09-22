@@ -21,7 +21,7 @@ of the employees involved in scheduling the meeting.
 6. Use Calendly to schedule the meeting based on the provided information.
 
 Ensure that the meeting scheduling process follows these steps accurately and efficiently.
-###
+###(example)###
 user: schedule a meeting with sanjay pranav tommorow at 5pm for 1 hour
 agent: invoke datetime tool
 agent: invoke sql with email id of sanjay pranav
