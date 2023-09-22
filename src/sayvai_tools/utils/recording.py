@@ -1,5 +1,5 @@
 import pyaudio
-import wave
+import io
 import numpy as np
 from pydub import AudioSegment
 from pydub.silence import split_on_silence
@@ -49,7 +49,6 @@ def record():
                     # End of an audio chunk
                     recording = False
                     if len(audio_chunks) > 0:
-                        #print("len of audio chunks :", len(audio_chunks))
                         # Process the recorded audio chunk
                         song = AudioSegment(
                             data=b"".join(audio_chunks),
@@ -65,26 +64,26 @@ def record():
                             silence_thresh=-35
                         )
                         silence_chunk = AudioSegment.silent(duration=500)
-                        #print("audio_chunk_length", len(chunks))
-                        #print(chunks)
-                        combined_chunks=AudioSegment.empty()
+                        combined_chunks = AudioSegment.empty()
                         for i in chunks:
-                            combined_chunks+=i
-                        #print(combined_chunks)
-                        # for i, chunk in enumerate(chunks):
-                        #     j = j + 1
-                            # Create a silence chunk that's 0.5 seconds (500 ms) long for padding
+                            combined_chunks += i
 
-                            # Add the padding chunk to the beginning and end of the chunk
+                        # Create a silence chunk that's 0.5 seconds (500 ms) long for padding
                         audio_chunk = silence_chunk + combined_chunks + silence_chunk
                         # Normalize the entire chunk
                         normalized_chunk = match_target_amplitude(audio_chunk, -20.0)
+
                         # Export the audio chunk with a new bitrate
+                        mp3_buffer = io.BytesIO()
                         normalized_chunk.export(
-                            rf"Recording.mp3",
-                            bitrate="192k",
-                            format="mp3"
+                            mp3_buffer,
+                            format="mp3",
+                            bitrate="192k"
                         )
+
+                        mp3_bytes = mp3_buffer.getvalue()
+                        mp3_buffer.close()
+                        return mp3_bytes
 
                         # Clear the audio chunks list
                         audio_chunks.clear()
