@@ -45,11 +45,11 @@ class GCalendar:
         try:
             self.get_service()
             now = dt.datetime.combine(date, dt.time.min).isoformat() + 'Z'
-            event_result = self.service.events().list(calendarId=self.calendar_id, timeMin=now,
+            end = dt.datetime.combine(date, dt.time.max).isoformat() + 'Z'
+            event_result = self.service.events().list(calendarId=self.calendar_id, timeMin=now, timeMax=end,
                                                       maxResults=max_results, singleEvents=True,
                                                       orderBy='startTime').execute()
             events = event_result.get('items', [])
-            print(event_result)
             if not events:
                 return "No upcoming events found."
             for event in events:
@@ -109,14 +109,12 @@ class GCalendar:
         return True  # Slot is available
 
     def book_slots(self, date):
-        print(date)
         input_pairs = date.split('/')
         start_time = self.parse_date(input_pairs[0])
         end_time = self.parse_date(input_pairs[1])
         mail = input_pairs[2]
-
         clinic_open_time = 9
-        clinic_close_time = 20
+        clinic_close_time = 17
 
         current_datetime = dt.datetime.now()
 
@@ -127,11 +125,22 @@ class GCalendar:
         specific_date = start_time.date()  # Use the date from the input
 
         booked_slots = []
-        print(specific_date)
+
         for start, end, summary, descript in self.display_events(specific_date):
             booked_slots.append(start + ' ' + end)
-            # if summary == "day is not available for booking":
-            #     return descript
+            if summary == "day is not available for booking":
+                start = dt.datetime.strptime(start, "%Y-%m-%dT%H:%M:%S%z")
+                end = dt.datetime.strptime(end, "%Y-%m-%dT%H:%M:%S%z")
+                start_time_with_timezone = start_time.replace(tzinfo=start.tzinfo)
+                end_time_with_timezone = end_time.replace(tzinfo=end.tzinfo)
+
+                # print(start_time_with_timezone, end_time_with_timezone)
+                # print(start, end)
+
+                if ((start < start_time_with_timezone < end and start < end_time_with_timezone < end) or
+                        (start_time_with_timezone < end and end_time_with_timezone > start)):
+                    # print(start, end)
+                    return descript
 
         time_interval = start_time.isoformat() + '+05:30' + ' ' + end_time.isoformat() + '+05:30'
 
