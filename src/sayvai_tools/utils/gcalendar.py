@@ -1,12 +1,11 @@
 import os.path
 import datetime as dt
 from typing import Dict
-from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from sayvai_tools.utils.constants import SCOPES
+from constants import SCOPES
 
 
 class GCalendar:
@@ -50,14 +49,18 @@ class GCalendar:
                                                       maxResults=max_results, singleEvents=True,
                                                       orderBy='startTime').execute()
             events = event_result.get('items', [])
+            print(event_result)
             if not events:
                 return "No upcoming events found."
             for event in events:
+                # print(event)
+                summary = event['summary']
+                description = event['description']
                 start = event['start'].get('dateTime', event['start'].get('date'))
                 end = event['end'].get('dateTime', event['end'].get('date'))
 
                 print(start, end)
-                yield start, end
+                yield start, end, summary, description
         except Exception as e:
             print(e)
             return "Error occured"
@@ -91,7 +94,7 @@ class GCalendar:
             return None
 
     @staticmethod
-    def is_slot_available(start_time, end_time, booked_slots):
+    def check_is_slot_available(start_time, end_time, booked_slots):
         # Check if the time interval is between 9 AM and 5 PM
 
         for slot in booked_slots:
@@ -105,7 +108,8 @@ class GCalendar:
 
         return True  # Slot is available
 
-    def check_is_slot_available(self, date):
+    def book_slots(self, date):
+        print(date)
         input_pairs = date.split('/')
         start_time = self.parse_date(input_pairs[0])
         end_time = self.parse_date(input_pairs[1])
@@ -123,9 +127,11 @@ class GCalendar:
         specific_date = start_time.date()  # Use the date from the input
 
         booked_slots = []
-
-        for start, end in self.display_events(specific_date):
+        print(specific_date)
+        for start, end, summary, descript in self.display_events(specific_date):
             booked_slots.append(start + ' ' + end)
+            # if summary == "day is not available for booking":
+            #     return descript
 
         time_interval = start_time.isoformat() + '+05:30' + ' ' + end_time.isoformat() + '+05:30'
 
@@ -143,12 +149,12 @@ class GCalendar:
             pass
         else:
             return "The slot is not within 9 AM - 5 PM."
-        if self.is_slot_available(start_time, end_time, booked_slots):
+        if self.check_is_slot_available(start_time, end_time, booked_slots):
             # Check if the slot is within 9 AM - 5 PM
             events = {
                 'summary': 'Sayvai IO',
                 'location': 'Coimbatore, Tamil Nadu, India',
-                'description': '80568 96266',
+                'description': 'default description',
                 'start': {
                     'dateTime': start_time.isoformat(),
                     'timeZone': 'IST',
@@ -168,3 +174,40 @@ class GCalendar:
             return self.create_event(events)
         else:
             return "The slot is already booked.", booked_slots
+
+    # def update_event(self, date: str):
+    #     self.get_service()
+    #     now = dt.datetime.combine(date, dt.time.min).isoformat() + 'Z'
+    #     event_result = self.service.events().list(calendarId=self.calendar_id, timeMin=now,
+    #                                               maxResults=20, singleEvents=True,
+    #                                               orderBy='startTime').execute()
+    #     events = event_result.get('items', [])
+    #     print(events)
+
+    def block_day(self, date: str):
+
+        input_pairs = date.split('/')
+        start_time = self.parse_date(input_pairs[0])
+        end_time = self.parse_date(input_pairs[1])
+
+        events = {
+            'summary': 'day is not available for booking',
+            'description': f'the doctor is not available from {start_time} to {end_time}',
+            'start': {
+                'dateTime': start_time.isoformat(),
+                'timeZone': 'IST',
+            },
+            'end': {
+                'dateTime': end_time.isoformat(),
+                'timeZone': 'IST',
+            },
+            'attendees': [
+                {'email': 'sridhanush@sayvai.io'},
+            ]
+        }
+
+        return self.create_event(events)
+
+
+
+
