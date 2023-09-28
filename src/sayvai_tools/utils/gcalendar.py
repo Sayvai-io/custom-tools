@@ -53,14 +53,16 @@ class GCalendar:
             if not events:
                 return "No upcoming events found."
             for event in events:
-                # print(event)
+
+                event_id = event["id"]
                 summary = event['summary']
                 description = event['description']
                 start = event['start'].get('dateTime', event['start'].get('date'))
                 end = event['end'].get('dateTime', event['end'].get('date'))
 
-                print(start, end)
-                yield start, end, summary, description
+                # print(start, end)
+                yield start, end, summary, description, event_id
+
         except Exception as e:
             print(e)
             return "Error occured"
@@ -126,7 +128,7 @@ class GCalendar:
 
         booked_slots = []
 
-        for start, end, summary, descript in self.display_events(specific_date):
+        for start, end, summary, descript, event_id in self.display_events(specific_date):
             booked_slots.append(start + ' ' + end)
             if summary == "day is not available for booking":
                 start = dt.datetime.strptime(start, "%Y-%m-%dT%H:%M:%S%z")
@@ -154,35 +156,37 @@ class GCalendar:
         duration = end_time - start_time
         if duration < dt.timedelta(minutes=15) or duration > dt.timedelta(hours=1):
             return "The slot should be between 15 minutes and 1 hour."
+
         if clinic_open_time <= start_time.hour < clinic_close_time and clinic_open_time <= end_time.hour < clinic_close_time:
-            pass
+
+            if self.check_is_slot_available(start_time, end_time, booked_slots):
+                # Check if the slot is within 9 AM - 5 PM
+                events = {
+                    'summary': 'Sayvai IO',
+                    'location': 'Coimbatore, Tamil Nadu, India',
+                    'description': 'default description',
+                    'start': {
+                        'dateTime': start_time.isoformat(),
+                        'timeZone': 'IST',
+                    },
+                    'end': {
+                        'dateTime': end_time.isoformat(),
+                        'timeZone': 'IST',
+                    },
+                    'recurrence': [
+                        'RRULE:FREQ=DAILY;COUNT=1'
+                    ],
+                    'attendees': [
+                        {'email': 'sridhanush@sayvai.io'},
+                        {'email': mail}
+                    ]
+                }
+                return self.create_event(events)
+            else:
+                return "The slot is already booked.", booked_slots
+
         else:
             return "The slot is not within 9 AM - 5 PM."
-        if self.check_is_slot_available(start_time, end_time, booked_slots):
-            # Check if the slot is within 9 AM - 5 PM
-            events = {
-                'summary': 'Sayvai IO',
-                'location': 'Coimbatore, Tamil Nadu, India',
-                'description': 'default description',
-                'start': {
-                    'dateTime': start_time.isoformat(),
-                    'timeZone': 'IST',
-                },
-                'end': {
-                    'dateTime': end_time.isoformat(),
-                    'timeZone': 'IST',
-                },
-                'recurrence': [
-                    'RRULE:FREQ=DAILY;COUNT=1'
-                ],
-                'attendees': [
-                    {'email': 'sridhanush@sayvai.io'},
-                    {'email': mail}
-                ]
-            }
-            return self.create_event(events)
-        else:
-            return "The slot is already booked.", booked_slots
 
     # def update_event(self, date: str):
     #     self.get_service()
@@ -215,8 +219,25 @@ class GCalendar:
             ]
         }
 
+        specific_date = start_time.date()  # Use the date from the input
+
+        # booked_slots_block_day = []
+
+        for start, end, summary, descript, event_id in self.display_events(specific_date):
+            start = dt.datetime.strptime(start, "%Y-%m-%dT%H:%M:%S%z")
+            end = dt.datetime.strptime(end, "%Y-%m-%dT%H:%M:%S%z")
+            start_time_with_timezone = start_time.replace(tzinfo=start.tzinfo)
+            end_time_with_timezone = end_time.replace(tzinfo=end.tzinfo)
+
+            if ((((start < start_time_with_timezone < end and start < end_time_with_timezone < end) or
+                  (start_time_with_timezone < end and end_time_with_timezone > start))) and
+                    summary != "day is not available for booking"):
+
+                # time = start.isoformat() + ' ' + end.isoformat()
+                # booked_slots_block_day.append((time, event_id))
+                self.delete_event(event_id)
+
+                #TODO: send message to the user that the slot is deleted either via email or via whatsapp
+
+        # print(booked_slots_block_day)
         return self.create_event(events)
-
-
-
-

@@ -14,8 +14,8 @@ class Calendar():
 
     def _run(self, date: str):
         cal = GCalendar()
-        return cal.check_is_slot_available(date)
-        
+        return cal.book_slots(date)
+
     async def _arun(self, date: str):
 
         raise NotImplementedError("Calendar async not implemented")

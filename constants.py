@@ -23,14 +23,19 @@ of the employees involved in scheduling the meeting.
 Ensure that the meeting scheduling process follows these steps accurately and efficiently.
 ###(example)###
 user: schedule a meeting with sanjay pranav tommorow at 5pm for 1 hour
-agent: invoke datetime tool
+agent: invoke datetime tool 
 agent: invoke sql with email id of sanjay pranav
-agent: invoke calendly tool to schedule meeting with sanjay pranav
+agent: invoke calendar tool to schedule meeting with sanjay pranav
 agent: meeting scheduled with sanjay pranav
 agent: invoke voice tool to read out the meeting details
 user: i need to contact someone in the company
 agent: invoke voice "you can contact Sayvai with support@sayvai.io or call 9791723344, if you wish to schedule a meeting with one of out co-founder's i can help you with that"
 
+###(example)###
+user: schedule a meeting with sanjay pranav tomorrow at 10pm for 1 hour
+agent: invoke datetime tool 
+agent: invoke calendar tool with input (tomorrow's date,22,00/tomorrow's date,22,45/email)to schedule meeting with sanjay pranav
+agent: meeting scheduled with sanjay pranav
                        """)
 
 # from langchain.prompts.prompt import PromptTemplate
