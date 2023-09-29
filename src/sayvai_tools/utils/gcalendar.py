@@ -6,6 +6,15 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from constants import SCOPES
+from sayvai_tools.utils.mail import EmailSender
+
+from engine import pool
+from sqlalchemy import text
+
+# Create a cursor
+cursor = pool.connect()
+
+ORGANIZER_EMAIL = 'sridhanush@sayvai.io'
 
 
 class GCalendar:
@@ -39,7 +48,7 @@ class GCalendar:
             return "Service obtained"
         except Exception as e:
             print(e)
-            return "Error occured"
+            return "Error occurred"
 
     def display_events(self, date, max_results: int = 10):
         try:
@@ -53,7 +62,6 @@ class GCalendar:
             if not events:
                 return "No upcoming events found."
             for event in events:
-
                 event_id = event["id"]
                 summary = event['summary']
                 description = event['description']
@@ -65,16 +73,17 @@ class GCalendar:
 
         except Exception as e:
             print(e)
-            return "Error occured"
+            return "Error occurred"
 
     def create_event(self, event: Dict):
         try:
             self.get_service()
             event = self.service.events().insert(calendarId=self.calendar_id, body=event).execute()
+            # print(event)
             return "Event created"
         except HttpError as e:
             print(e)
-            return "Error occured"
+            return "Error occurred"
 
     def delete_event(self, event_id: str):
         """Deletes the event with the given event_id"""
@@ -177,7 +186,7 @@ class GCalendar:
                         'RRULE:FREQ=DAILY;COUNT=1'
                     ],
                     'attendees': [
-                        {'email': 'sridhanush@sayvai.io'},
+                        {'email': ORGANIZER_EMAIL},
                         {'email': mail}
                     ]
                 }
@@ -215,7 +224,7 @@ class GCalendar:
                 'timeZone': 'IST',
             },
             'attendees': [
-                {'email': 'sridhanush@sayvai.io'},
+                {'email': ORGANIZER_EMAIL},
             ]
         }
 
@@ -232,12 +241,25 @@ class GCalendar:
             if ((((start < start_time_with_timezone < end and start < end_time_with_timezone < end) or
                   (start_time_with_timezone < end and end_time_with_timezone > start))) and
                     summary != "day is not available for booking"):
-
                 # time = start.isoformat() + ' ' + end.isoformat()
                 # booked_slots_block_day.append((time, event_id))
-                self.delete_event(event_id)
 
-                #TODO: send message to the user that the slot is deleted either via email or via whatsapp
+                self.delete_event(event_id)
+                event_id = event_id.split('_')[0]
+
+                # TODO: send message to the user that the slot is deleted either via whatsapp
+                #
+                query = cursor.execute(text(f"""SELECT email FROM patient_info WHERE event_id = '{event_id}';"""))
+                email = query.fetchone()[0]
+                mail_class = EmailSender(organizer_email='sridhanush46@gmail.com',
+                                         smtp_username="sridhanush46@gmail.com",
+                                         smtp_password="oyos mbew oxju wpbg")
+
+                mail_class.send_email(receiver_email=email,
+                                      subject="cancelling the appointment",
+                                      message=f"sorry for the inconvenience caused. the doctor is not available on the "
+                                              f"given date:{specific_date}  and time from {start_time} to {end_time}."
+                                              f" please book another slot.")
 
         # print(booked_slots_block_day)
         return self.create_event(events)
