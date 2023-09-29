@@ -15,6 +15,11 @@ from sqlalchemy import text
 cursor = pool.connect()
 
 ORGANIZER_EMAIL = 'sridhanush@sayvai.io'
+CLINIC_OPEN_TIME = 9
+CLINIC_CLOSE_TIME = 17
+# time slot should be within 15 minutes and 1 hour
+MINIMUM_TIME_SLOT = 15
+MAXIMUM_TIME_SLOT = 60
 
 
 class GCalendar:
@@ -51,6 +56,12 @@ class GCalendar:
             return "Error occurred"
 
     def display_events(self, date, max_results: int = 10):
+        """
+        Displays the events for the given date
+        :param date: The date for which the events are to be displayed
+        :param max_results: The maximum number of events to be displayed
+        :return: creates a generator with values start time,end time,summary,description,event id of the events for the given date
+        """
         try:
             self.get_service()
             now = dt.datetime.combine(date, dt.time.min).isoformat() + 'Z'
@@ -76,6 +87,11 @@ class GCalendar:
             return "Error occurred"
 
     def create_event(self, event: Dict):
+        """
+        Creates an event for the given event
+        :param event: The event to be created
+        :return: The event created
+        """
         try:
             self.get_service()
             event = self.service.events().insert(calendarId=self.calendar_id, body=event).execute()
@@ -86,7 +102,11 @@ class GCalendar:
             return "Error occurred"
 
     def delete_event(self, event_id: str):
-        """Deletes the event with the given event_id"""
+        """
+        Deletes the event with the given event_id
+        :param event_id:
+        :return:
+        """
         try:
             self.get_service()
             self.service.events().delete(calendarId=self.calendar_id, eventId=event_id).execute()
@@ -97,6 +117,11 @@ class GCalendar:
 
     @staticmethod
     def parse_date(input_str):
+        """
+        Parses the date from the input string
+        :param input_str:
+        :return:
+        """
         try:
             year, month, day, hour, minute = map(int, input_str.split(','))
             date = dt.datetime(year, month, day, hour, minute)
@@ -106,6 +131,13 @@ class GCalendar:
 
     @staticmethod
     def check_is_slot_available(start_time, end_time, booked_slots):
+        """
+        Checks if the slot is available for the given date
+        :param start_time:
+        :param end_time:
+        :param booked_slots:
+        :return:
+        """
         # Check if the time interval is between 9 AM and 5 PM
 
         for slot in booked_slots:
@@ -120,12 +152,21 @@ class GCalendar:
         return True  # Slot is available
 
     def book_slots(self, date):
+        """
+        Books the slot for the given date
+        checks if the provided time is in the past
+        checks if the slot is already booked
+        checks if the slot is within open and close time
+        checks if the slot is between 15 minutes and 1 hour
+        :param date:
+        :return: appointment event creation
+        """
+
+        # splits the input string into start time, end time and email
         input_pairs = date.split('/')
         start_time = self.parse_date(input_pairs[0])
         end_time = self.parse_date(input_pairs[1])
         mail = input_pairs[2]
-        clinic_open_time = 9
-        clinic_close_time = 17
 
         current_datetime = dt.datetime.now()
 
@@ -137,9 +178,12 @@ class GCalendar:
 
         booked_slots = []
 
+        # calls display_events function to get the booked slots for the given date
         for start, end, summary, descript, event_id in self.display_events(specific_date):
             booked_slots.append(start + ' ' + end)
             if summary == "day is not available for booking":
+
+                # formatting the start, end and start_time, end_time to compare
                 start = dt.datetime.strptime(start, "%Y-%m-%dT%H:%M:%S%z")
                 end = dt.datetime.strptime(end, "%Y-%m-%dT%H:%M:%S%z")
                 start_time_with_timezone = start_time.replace(tzinfo=start.tzinfo)
@@ -147,7 +191,7 @@ class GCalendar:
 
                 # print(start_time_with_timezone, end_time_with_timezone)
                 # print(start, end)
-
+                # checks if the given time interval overlaps with the blocked day time interval
                 if ((start < start_time_with_timezone < end and start < end_time_with_timezone < end) or
                         (start_time_with_timezone < end and end_time_with_timezone > start)):
                     # print(start, end)
@@ -159,15 +203,18 @@ class GCalendar:
         start_time = dt.datetime.fromisoformat(start_time)
         end_time = dt.datetime.fromisoformat(end_time)
 
+        # checks if the input time interval is valid
         if end_time <= start_time:
             return "End time should be greater than start time."
 
+        # checks if the given time interval is between minimum and maximum time slot
         duration = end_time - start_time
-        if duration < dt.timedelta(minutes=15) or duration > dt.timedelta(hours=1):
+        if duration < dt.timedelta(minutes=MINIMUM_TIME_SLOT) or duration > dt.timedelta(minutes=MAXIMUM_TIME_SLOT):
             return "The slot should be between 15 minutes and 1 hour."
 
-        if clinic_open_time <= start_time.hour < clinic_close_time and clinic_open_time <= end_time.hour < clinic_close_time:
-
+        # checks if the given time interval is within the open and close time
+        if CLINIC_OPEN_TIME <= start_time.hour < CLINIC_CLOSE_TIME and CLINIC_OPEN_TIME <= end_time.hour < CLINIC_CLOSE_TIME:
+            # Check if the slot is available
             if self.check_is_slot_available(start_time, end_time, booked_slots):
                 # Check if the slot is within 9 AM - 5 PM
                 events = {
@@ -207,7 +254,12 @@ class GCalendar:
     #     print(events)
 
     def block_day(self, date: str):
-
+        """
+        Blocks the day for the given date and time
+        cancels the appointments that are in the given time interval and send a mail to the user
+        :param date:
+        :return: block event creation
+        """
         input_pairs = date.split('/')
         start_time = self.parse_date(input_pairs[0])
         end_time = self.parse_date(input_pairs[1])
@@ -232,12 +284,14 @@ class GCalendar:
 
         # booked_slots_block_day = []
 
+        # calls display_events function to get the booked slots for the given date
         for start, end, summary, descript, event_id in self.display_events(specific_date):
             start = dt.datetime.strptime(start, "%Y-%m-%dT%H:%M:%S%z")
             end = dt.datetime.strptime(end, "%Y-%m-%dT%H:%M:%S%z")
             start_time_with_timezone = start_time.replace(tzinfo=start.tzinfo)
             end_time_with_timezone = end_time.replace(tzinfo=end.tzinfo)
 
+            # checks if there are any appointments in the given time interval of the block day and deletes the appointment
             if ((((start < start_time_with_timezone < end and start < end_time_with_timezone < end) or
                   (start_time_with_timezone < end and end_time_with_timezone > start))) and
                     summary != "day is not available for booking"):
@@ -248,9 +302,12 @@ class GCalendar:
                 event_id = event_id.split('_')[0]
 
                 # TODO: send message to the user that the slot is deleted either via whatsapp
-                #
+
+                # query the database to get the email id of the user using the event id
                 query = cursor.execute(text(f"""SELECT email FROM patient_info WHERE event_id = '{event_id}';"""))
                 email = query.fetchone()[0]
+
+                # send mail to the user that the appointment is cancelled
                 mail_class = EmailSender(organizer_email='sridhanush46@gmail.com',
                                          smtp_username="sridhanush46@gmail.com",
                                          smtp_password="oyos mbew oxju wpbg")
@@ -262,4 +319,5 @@ class GCalendar:
                                               f" please book another slot.")
 
         # print(booked_slots_block_day)
+        # creates the block dat event
         return self.create_event(events)
