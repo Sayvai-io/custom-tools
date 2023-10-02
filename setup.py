@@ -13,7 +13,10 @@ core_requirements = [
     'pydub',
     'numpy',
     'google',
-    'google-cloud-speech'
+    'google-cloud-speech',
+    'cloud-sql-python-connector',
+    'pg8000',
+
 ]
 
 setup(
