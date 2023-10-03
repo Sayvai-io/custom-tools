@@ -1,5 +1,6 @@
 import os.path
 import datetime as dt
+from datetime import datetime, timedelta
 from typing import Dict
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -216,7 +217,6 @@ class GCalendar:
         if CLINIC_OPEN_TIME <= start_time.hour < CLINIC_CLOSE_TIME and CLINIC_OPEN_TIME <= end_time.hour < CLINIC_CLOSE_TIME:
             # Check if the slot is available
             if self.check_is_slot_available(start_time, end_time, booked_slots):
-                # Check if the slot is within 9 AM - 5 PM
                 events = {
                     'summary': 'Sayvai IO',
                     'location': 'Coimbatore, Tamil Nadu, India',
@@ -321,3 +321,63 @@ class GCalendar:
         # print(booked_slots_block_day)
         # creates the block dat event
         return self.create_event(events)
+
+    def free_slots(self, date):
+
+        input_pairs = date.split('/')
+        working_start = self.parse_date(input_pairs[0])
+        working_end = self.parse_date(input_pairs[1])
+
+        working_start = working_start.isoformat()
+        working_end = working_end.isoformat()
+
+        working_start = dt.datetime.strptime(f"{working_start}+05:30", "%Y-%m-%dT%H:%M:%S%z")
+        working_end = dt.datetime.strptime(f"{working_end}+05:30", "%Y-%m-%dT%H:%M:%S%z")
+        booked_slots = []
+
+        specific_date = working_start.date()
+
+        # calls display_events function to get the booked slots for the given date
+        for start, end, summary, descript, event_id in self.display_events(specific_date):
+            booked_slots.append(start + ' ' + end)
+
+        booked_ranges = []
+        for slot in booked_slots:
+            start_str, end_str = slot.split()
+            start_time = dt.datetime.fromisoformat(start_str)
+            end_time = dt.datetime.fromisoformat(end_str)
+            booked_ranges.append((start_time, end_time))
+
+        # Initialize the list of available time slots
+        available_slots = []
+
+        # Initialize the current time as the start of the working hours
+        current_time = working_start
+
+        # Iterate through the working hours
+        while current_time < working_end:
+            # Find the next available time slot
+            next_slot_start = current_time
+            while current_time < working_end:
+                overlapping = False
+                for booked_range in booked_ranges:
+                    if current_time < booked_range[1] and current_time + timedelta(minutes=30) > booked_range[0]:
+                        overlapping = True
+                        break
+                if overlapping:
+                    break
+                current_time += timedelta(minutes=30)
+            next_slot_end = current_time
+
+            if next_slot_start < next_slot_end:
+                available_slots.append(f"{next_slot_start.strftime('%H:%M')} - {next_slot_end.strftime('%H:%M')} free")
+
+            # Move to the next 30-minute slot
+            current_time += timedelta(minutes=30)
+
+        free = []
+        # Print the available time slots
+        for slot in available_slots:
+            free.append(slot)
+
+        return free
