@@ -1,11 +1,7 @@
-import datetime
-
-from langchain.tools.base import BaseTool
-
 from sayvai_tools.utils.gcalendar import GCalendar
 
 
-class Calendar():
+class Calendar:
 
     name = "calendar"
     description = (

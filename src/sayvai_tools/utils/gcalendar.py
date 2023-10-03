@@ -323,6 +323,11 @@ class GCalendar:
         return self.create_event(events)
 
     def free_slots(self, date):
+        """
+        Finds the free slots for the given date
+        :param date:
+        :return: list containing the free slots
+        """
 
         input_pairs = date.split('/')
         working_start = self.parse_date(input_pairs[0])
