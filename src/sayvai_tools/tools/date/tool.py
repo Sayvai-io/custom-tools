@@ -11,4 +11,6 @@ class TimeServiceTool:
 
     async def _arun(self, tool_input: str) -> str:
         """Use the tool asynchronously."""
-        return self._run()
+        raise("Not NotImplemented Error")
+        # return None
+
