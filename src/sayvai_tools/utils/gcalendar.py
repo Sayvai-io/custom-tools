@@ -91,11 +91,8 @@ class GCalendar:
             return None
 
     @staticmethod
-    def is_slot_available(time_interval, booked_slots):
+    def is_slot_available(start_time, end_time, booked_slots):
         # Check if the time interval is between 9 AM and 5 PM
-        start_time, end_time = time_interval.split(' ')
-        start_time = dt.datetime.fromisoformat(start_time)
-        end_time = dt.datetime.fromisoformat(end_time)
 
         for slot in booked_slots:
             slot_start_str, slot_end_str = slot.split(' ')
@@ -121,8 +118,7 @@ class GCalendar:
 
         # Check if the provided date and time are in the past
         if start_time < current_datetime:
-            print("The provided date and time are in the past.")
-            return
+            return "The provided date and time are in the past."
 
         specific_date = start_time.date()  # Use the date from the input
 
@@ -133,31 +129,42 @@ class GCalendar:
 
         time_interval = start_time.isoformat() + '+05:30' + ' ' + end_time.isoformat() + '+05:30'
 
-        if self.is_slot_available(time_interval, booked_slots):
-            # Check if the slot is within 9 AM - 5 PM
-            if clinic_open_time <= start_time.hour < clinic_close_time and clinic_open_time <= end_time.hour <= clinic_close_time:
-                events = {
-                    'summary': 'Sayvai IO',
-                    'location': 'Coimbatore, Tamil Nadu, India',
-                    'description': '80568 96266',
-                    'start': {
-                        'dateTime': start_time.isoformat(),
-                        'timeZone': 'IST',
-                    },
-                    'end': {
-                        'dateTime': end_time.isoformat(),
-                        'timeZone': 'IST',
-                    },
-                    'recurrence': [
-                        'RRULE:FREQ=DAILY;COUNT=1'
-                    ],
-                    'attendees': [
-                        {'email': 'sridhanush@sayvai.io'},
-                        {'email': mail}
-                    ]
-                }
-                print(self.create_event(events))
-            else:
-                print("The slot is not within 9 AM - 5 PM.")
+        start_time, end_time = time_interval.split(' ')
+        start_time = dt.datetime.fromisoformat(start_time)
+        end_time = dt.datetime.fromisoformat(end_time)
+
+        if end_time <= start_time:
+            return "End time should be greater than start time."
+
+        duration = end_time - start_time
+        if duration < dt.timedelta(minutes=15) or duration > dt.timedelta(hours=1):
+            return "The slot should be between 15 minutes and 1 hour."
+        if clinic_open_time <= start_time.hour < clinic_close_time and clinic_open_time <= end_time.hour < clinic_close_time:
+            pass
         else:
-            print("The slot is not available.")
+            return "The slot is not within 9 AM - 5 PM."
+        if self.is_slot_available(start_time, end_time, booked_slots):
+            # Check if the slot is within 9 AM - 5 PM
+            events = {
+                'summary': 'Sayvai IO',
+                'location': 'Coimbatore, Tamil Nadu, India',
+                'description': '80568 96266',
+                'start': {
+                    'dateTime': start_time.isoformat(),
+                    'timeZone': 'IST',
+                },
+                'end': {
+                    'dateTime': end_time.isoformat(),
+                    'timeZone': 'IST',
+                },
+                'recurrence': [
+                    'RRULE:FREQ=DAILY;COUNT=1'
+                ],
+                'attendees': [
+                    {'email': 'sridhanush@sayvai.io'},
+                    {'email': mail}
+                ]
+            }
+            return self.create_event(events)
+        else:
+            return "The slot is already booked.", booked_slots
