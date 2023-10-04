@@ -8,28 +8,17 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from constants import SCOPES
 from sayvai_tools.utils.mail import EmailSender
-
-from engine import pool
-from sqlalchemy import text
-
-# Create a cursor
-cursor = pool.connect()
-
-ORGANIZER_EMAIL = 'sridhanush@sayvai.io'
-CLINIC_OPEN_TIME = 9
-CLINIC_CLOSE_TIME = 17
-# time slot should be within 15 minutes and 1 hour
-MINIMUM_TIME_SLOT = 15
-MAXIMUM_TIME_SLOT = 60
+from typing import List
 
 
 class GCalendar:
 
-    def __init__(self) -> None:
+    def __init__(self, email : str = "sridhanush46@gmail.com") -> None:
         """Initializes the GCalender class"""
         self.service = None
         self.creds = None
         self.calendar_id = "primary"
+        self.oganizer_email=email
         if os.path.exists('token.json'):
             self.creds = Credentials.from_authorized_user_file('token.json', SCOPES)
         else:
@@ -152,7 +141,12 @@ class GCalendar:
 
         return True  # Slot is available
 
-    def book_slots(self, date):
+    def book_slots(self,
+                   date,
+                   MINIMUM_TIME_SLOT: int = 15,
+                   MAXIMUM_TIME_SLOT: int = 60,
+                   OPEN_TIME: int = 9,
+                   CLOSE_TIME: int = 17):
         """
         Books the slot for the given date
         checks if the provided time is in the past
@@ -214,7 +208,7 @@ class GCalendar:
             return "The slot should be between 15 minutes and 1 hour."
 
         # checks if the given time interval is within the open and close time
-        if CLINIC_OPEN_TIME <= start_time.hour < CLINIC_CLOSE_TIME and CLINIC_OPEN_TIME <= end_time.hour < CLINIC_CLOSE_TIME:
+        if OPEN_TIME <= start_time.hour < CLOSE_TIME and OPEN_TIME <= end_time.hour < CLOSE_TIME:
             # Check if the slot is available
             if self.check_is_slot_available(start_time, end_time, booked_slots):
                 events = {
@@ -233,7 +227,7 @@ class GCalendar:
                         'RRULE:FREQ=DAILY;COUNT=1'
                     ],
                     'attendees': [
-                        {'email': ORGANIZER_EMAIL},
+                        {'email': self.oganizer_email},
                         {'email': mail}
                     ]
                 }
@@ -253,12 +247,18 @@ class GCalendar:
     #     events = event_result.get('items', [])
     #     print(events)
 
-    def block_day(self, date: str):
+    def block_day(self, 
+                  date: str, 
+                  contacts : List[str], 
+                  organizer : str, 
+                  smtp_username: str,
+                  smtp_password: str):
         """
         Blocks the day for the given date and time
         cancels the appointments that are in the given time interval and send a mail to the user
         :param date:
         :return: block event creation
+        organizer : Role [doctor, dentist, event holder]
         """
         input_pairs = date.split('/')
         start_time = self.parse_date(input_pairs[0])
@@ -276,7 +276,7 @@ class GCalendar:
                 'timeZone': 'IST',
             },
             'attendees': [
-                {'email': ORGANIZER_EMAIL},
+                {'email':self.oganizer_email },
             ]
         }
 
@@ -303,20 +303,17 @@ class GCalendar:
 
                 # TODO: send message to the user that the slot is deleted either via whatsapp
 
-                # query the database to get the email id of the user using the event id
-                query = cursor.execute(text(f"""SELECT email FROM patient_info WHERE event_id = '{event_id}';"""))
-                email = query.fetchone()[0]
 
                 # send mail to the user that the appointment is cancelled
-                mail_class = EmailSender(organizer_email='sridhanush46@gmail.com',
-                                         smtp_username="sridhanush46@gmail.com",
-                                         smtp_password="oyos mbew oxju wpbg")
-
-                mail_class.send_email(receiver_email=email,
-                                      subject="cancelling the appointment",
-                                      message=f"sorry for the inconvenience caused. the doctor is not available on the "
-                                              f"given date:{specific_date}  and time from {start_time} to {end_time}."
-                                              f" please book another slot.")
+                mail_class = EmailSender(organizer_email=self.oganizer_email,
+                                         smtp_username=smtp_username,
+                                         smtp_password=smtp_password)
+                for email in contacts:
+                    mail_class.send_email(receiver_email=email,
+                                          subject="cancelling the appointment",
+                                          message=f"sorry for the inconvenience caused. the {organizer} is not available on the "
+                                                  f"given date:{specific_date}  and time from {start_time} to {end_time}."
+                                                  f" please book another slot.")
 
         # print(booked_slots_block_day)
         # creates the block dat event
@@ -332,6 +329,13 @@ class GCalendar:
         input_pairs = date.split('/')
         working_start = self.parse_date(input_pairs[0])
         working_end = self.parse_date(input_pairs[1])
+
+        specific_date = working_start.date()
+        booked_slots = []
+
+        # calls display_events function to get the booked slots for the given date
+        for start, end, summary, descript, event_id in self.display_events(specific_date):
+            booked_slots.append(start + ' ' + end)
 
         working_start = working_start.isoformat()
         working_end = working_end.isoformat()
@@ -385,4 +389,4 @@ class GCalendar:
         for slot in available_slots:
             free.append(slot)
 
-        return free
+        return [('booked slots', booked_slots), ('free slots', free)]
