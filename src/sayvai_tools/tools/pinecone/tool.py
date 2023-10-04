@@ -25,4 +25,4 @@ class VectorDB:
         return str(similar_docs)
 
     async def _arun(self, query: str):
-        return NotImplementedError("Calendar async not implemented")
+        return NotImplementedError("pinecone async not implemented")

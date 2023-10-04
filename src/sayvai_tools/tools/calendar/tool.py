@@ -1,11 +1,7 @@
-import datetime
-
-from langchain.tools.base import BaseTool
-
 from sayvai_tools.utils.gcalendar import GCalendar
 
 
-class Calendar():
+class Calendar:
 
     name = "calendar"
     description = (
@@ -14,8 +10,8 @@ class Calendar():
 
     def _run(self, date: str):
         cal = GCalendar()
-        return cal.check_is_slot_available(date)
-        
+        return cal.book_slots(date)
+
     async def _arun(self, date: str):
 
         raise NotImplementedError("Calendar async not implemented")
