@@ -13,3 +13,4 @@ translation-396717-e2931c0fd933.json
 .idea
 src/sayvai_tools/utils/phrase_set.yaml
 db.py
+sayvai.db

@@ -16,6 +16,7 @@ core_requirements = [
     'google-cloud-speech',
     'cloud-sql-python-connector',
     'pg8000',
+    'pinecone-client',
 
 ]
 

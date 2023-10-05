@@ -333,6 +333,13 @@ class GCalendar:
         working_start = self.parse_date(input_pairs[0])
         working_end = self.parse_date(input_pairs[1])
 
+        specific_date = working_start.date()
+        booked_slots = []
+
+        # calls display_events function to get the booked slots for the given date
+        for start, end, summary, descript, event_id in self.display_events(specific_date):
+            booked_slots.append(start + ' ' + end)
+
         working_start = working_start.isoformat()
         working_end = working_end.isoformat()
 
