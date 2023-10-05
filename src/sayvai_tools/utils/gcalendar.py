@@ -18,7 +18,7 @@ class GCalendar:
         self.service = None
         self.creds = None
         self.calendar_id = "primary"
-        self.oganizer_email=email
+        self.organizer_email = email
         if os.path.exists('token.json'):
             self.creds = Credentials.from_authorized_user_file('token.json', SCOPES)
         else:
@@ -85,7 +85,7 @@ class GCalendar:
         try:
             self.get_service()
             event = self.service.events().insert(calendarId=self.calendar_id, body=event).execute()
-            # print(event)
+            print(event)
             return "Event created"
         except HttpError as e:
             print(e)
@@ -153,6 +153,10 @@ class GCalendar:
         checks if the slot is already booked
         checks if the slot is within open and close time
         checks if the slot is between 15 minutes and 1 hour
+        :param CLOSE_TIME:
+        :param MAXIMUM_TIME_SLOT:
+        :param OPEN_TIME:
+        :param MINIMUM_TIME_SLOT:
         :param date:
         :return: appointment event creation
         """
@@ -227,7 +231,7 @@ class GCalendar:
                         'RRULE:FREQ=DAILY;COUNT=1'
                     ],
                     'attendees': [
-                        {'email': self.oganizer_email},
+                        {'email': self.organizer_email},
                         {'email': mail}
                     ]
                 }
@@ -249,13 +253,17 @@ class GCalendar:
 
     def block_day(self, 
                   date: str, 
-                  contacts : List[str], 
-                  organizer : str, 
+                  contacts: List[str],
+                  organizer: str,
                   smtp_username: str,
                   smtp_password: str):
         """
         Blocks the day for the given date and time
         cancels the appointments that are in the given time interval and send a mail to the user
+        :param contacts:
+        :param organizer:
+        :param smtp_username:
+        :param smtp_password:
         :param date:
         :return: block event creation
         organizer : Role [doctor, dentist, event holder]
@@ -276,7 +284,7 @@ class GCalendar:
                 'timeZone': 'IST',
             },
             'attendees': [
-                {'email':self.oganizer_email },
+                {'email':self.organizer_email},
             ]
         }
 
@@ -299,13 +307,13 @@ class GCalendar:
                 # booked_slots_block_day.append((time, event_id))
 
                 self.delete_event(event_id)
-                event_id = event_id.split('_')[0]
+                # event_id = event_id.split('_')[0]
 
                 # TODO: send message to the user that the slot is deleted either via whatsapp
 
 
                 # send mail to the user that the appointment is cancelled
-                mail_class = EmailSender(organizer_email=self.oganizer_email,
+                mail_class = EmailSender(organizer_email=self.organizer_email,
                                          smtp_username=smtp_username,
                                          smtp_password=smtp_password)
                 for email in contacts:
@@ -389,4 +397,4 @@ class GCalendar:
         for slot in available_slots:
             free.append(slot)
 
-        return [('booked slots', booked_slots), ('free slots', free)]
+        return booked_slots

@@ -1,3 +1,3 @@
-from sayvai_tools.tools.date.tool import TimeServiceTool
+from sayvai_tools.tools.date.tool import GetDate
 
-__all__ = ['TimeServiceTool']
+__all__ = ['GetDate']

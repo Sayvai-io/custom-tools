@@ -1,7 +1,7 @@
 import datetime
 
 
-class TimeServiceTool:
+class GetDate:
 
     def _run(self, tool_input: str) -> str:
         """Use the tool."""
