@@ -23,9 +23,8 @@ class ConversationalHuman:
     # input_func: Callable = Field(default_factory=lambda: input)
     
     def __init__(self, api_key: str, g_api_key: str, phrase_set_path: str) -> None:
-        self.api_key = api_key
         self.stt = STT(audio_format="mp3",speech_context_path=phrase_set_path)
-        self.tts = ElevenlabsAudioStreaming()
+        self.tts = ElevenlabsAudioStreaming(api_key=api_key)
         self.g_api_key = g_api_key
 
     def _run(
