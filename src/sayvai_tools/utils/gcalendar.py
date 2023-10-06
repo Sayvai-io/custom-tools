@@ -6,21 +6,21 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from constants import SCOPES
 from sayvai_tools.utils.mail import EmailSender
 from typing import List
 
 
 class GCalendar:
 
-    def __init__(self, email : str = "sridhanush46@gmail.com") -> None:
+    def __init__(self, scope: str, email: str = "sridhanush46@gmail.com", ) -> None:
         """Initializes the GCalender class"""
         self.service = None
         self.creds = None
+        self.SCOPE = scope
         self.calendar_id = "primary"
         self.organizer_email = email
         if os.path.exists('token.json'):
-            self.creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+            self.creds = Credentials.from_authorized_user_file('token.json', self.SCOPE)
         else:
             self.get_credentials()
         # if self.creds and self.creds.expired and self.creds.refresh_token:
@@ -28,7 +28,7 @@ class GCalendar:
 
     def get_credentials(self):
         """Gets the credentials for the user"""
-        flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
+        flow = InstalledAppFlow.from_client_secrets_file('credentials.json', self.SCOPES)
         self.creds = flow.run_local_server(port=0)
 
         with open('token.json', 'w') as token:
