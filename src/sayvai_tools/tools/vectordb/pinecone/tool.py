@@ -2,12 +2,12 @@ from langchain.vectorstores import Pinecone
 from typing import Any
 
 
-class VectorDB:
+class PineconeDB:
     """Tool that queries vector database."""
 
-    name = "vector"
+    name = "pinecone"
     description = (
-        "Useful for when you need to answer questions about the hotel. "
+        "Useful for when you need to answer any questions"
         "Input should be a fully formed question."
     )
 
