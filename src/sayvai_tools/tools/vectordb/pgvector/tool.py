@@ -23,7 +23,7 @@ class PGVectorDB:
         self.collection_name = collection_name
         self.docsearch = PGVector(
                             collection_name=self.collection_name,
-                            connection_string='postgresql+pg8000://postgres:2509@34.100.184.104:5432/postgres',
+                            connection_string=self.connection_string,
                             embedding_function=self.embeddings
                         ) 
 
