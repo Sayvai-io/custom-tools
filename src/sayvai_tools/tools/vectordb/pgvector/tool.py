@@ -1,12 +1,5 @@
-
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.text_splitter import CharacterTextSplitter
-from langchain.vectorstores.pgvector import PGVector
-from langchain.document_loaders import DirectoryLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-import os
 from typing import Any
-
+from langchain.vectorstores.pgvector import PGVector
 
 class PGVectorDB:
     """Tool that queries vector database."""
