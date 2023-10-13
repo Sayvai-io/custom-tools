@@ -5,6 +5,7 @@ core_requirements = [
     'langchain_experimental',
     'google-api-python-client',
     'openai',
+    'tiktoken',
     'SQLAlchemy',
     'elevenlabs==0.2.24',
     'google_auth_oauthlib',
@@ -17,7 +18,7 @@ core_requirements = [
     'cloud-sql-python-connector',
     'pg8000',
     'pinecone-client',
-
+    'pgvector'
 ]
 
 setup(

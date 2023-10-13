@@ -26,7 +26,7 @@ class PGVectorDB:
             k: int = 2,
     ) -> str:
         similar_docs = self.docsearch.similarity_search_with_score(query, k=k)
-        return str(similar_docs)
+        return similar_docs
 
     async def _arun(self, query: str):
         return NotImplementedError("pinecone async not implemented")
