@@ -1,5 +1,8 @@
+from typing import Any, Optional
+
+from langchain.document_loaders import DirectoryLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import Pinecone
-from typing import Any
 
 
 class PineconeDB:
@@ -26,3 +29,26 @@ class PineconeDB:
 
     async def _arun(self, query: str):
         return NotImplementedError("pinecone async not implemented")
+
+
+class LoadDocs:
+    def __init__(self,embedings, directory, index_name, namespace: Optional[str] = None):
+        self.directory = directory
+        self.embeddings = embedings
+        self.index_name = index_name
+        self.namespace = namespace
+
+    def load_dir(self, directory):
+        loader = DirectoryLoader(directory)
+        documents = loader.load()
+        return documents
+
+    def split_docs(self,chunk_size=1000,chunk_overlap=20):
+        documents = self.load_dir(self.directory)
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+        docs = text_splitter.split_documents(documents)
+        return docs
+
+    def docs_load(self):
+        index = Pinecone.from_documents(self.split_docs(), self.embeddings, index_name=self.index_name, namespace=self.namespace)
+        return index
