@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 core_requirements = [
     'langchain',
@@ -18,7 +18,9 @@ core_requirements = [
     'cloud-sql-python-connector',
     'pg8000',
     'pinecone-client',
-    'pgvector'
+    'pgvector',
+    'pandas',
+    'openpyxl'
 ]
 
 setup(
