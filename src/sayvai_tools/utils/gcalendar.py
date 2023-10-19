@@ -1,18 +1,22 @@
-import os.path
 import datetime as dt
-from datetime import datetime, timedelta
+import os
+import os.path
+import time
+from datetime import timedelta
 from typing import Dict
+from typing import List
+
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+
 from sayvai_tools.utils.mail import EmailSender
-from typing import List
 
 
 class GCalendar:
 
-    def __init__(self, scope: str, email: str = "sridhanush46@gmail.com", ) -> None:
+    def __init__(self, scope: str, email: str = "sridhanush@sayvai.io", ) -> None:
         """Initializes the GCalender class"""
         self.service = None
         self.creds = None
@@ -25,10 +29,12 @@ class GCalendar:
             self.get_credentials()
         # if self.creds and self.creds.expired and self.creds.refresh_token:
         #     self.creds.refresh(Request())
+        # os.remove('token.json')
+
 
     def get_credentials(self):
         """Gets the credentials for the user"""
-        flow = InstalledAppFlow.from_client_secrets_file('credentials.json', self.SCOPES)
+        flow = InstalledAppFlow.from_client_secrets_file('credentials.json', self.SCOPE)
         self.creds = flow.run_local_server(port=0)
 
         with open('token.json', 'w') as token:
@@ -85,7 +91,7 @@ class GCalendar:
         try:
             self.get_service()
             event = self.service.events().insert(calendarId=self.calendar_id, body=event).execute()
-            print(event)
+            # print(event)
             return "Event created"
         except HttpError as e:
             print(e)
@@ -160,12 +166,14 @@ class GCalendar:
         :param date:
         :return: appointment event creation
         """
+        startt = time.time()
 
         # splits the input string into start time, end time and email
         input_pairs = date.split('/')
         start_time = self.parse_date(input_pairs[0])
         end_time = self.parse_date(input_pairs[1])
-        mail = input_pairs[2]
+        phone = input_pairs[2]
+        name = input_pairs[3]
 
         current_datetime = dt.datetime.now()
 
@@ -216,7 +224,7 @@ class GCalendar:
             # Check if the slot is available
             if self.check_is_slot_available(start_time, end_time, booked_slots):
                 events = {
-                    'summary': 'Sayvai IO',
+                    'summary': f'Appointment with dentist, Patient name:{name}, patient number:{phone}',
                     'location': 'Coimbatore, Tamil Nadu, India',
                     'description': 'default description',
                     'start': {
@@ -232,10 +240,11 @@ class GCalendar:
                     ],
                     'attendees': [
                         {'email': self.organizer_email},
-                        {'email': mail}
                     ]
                 }
-                return self.create_event(events)
+                endd = time.time()
+                total = endd - startt
+                return self.create_event(events), total
             else:
                 return "The slot is already booked.", booked_slots
 
@@ -284,7 +293,7 @@ class GCalendar:
                 'timeZone': 'IST',
             },
             'attendees': [
-                {'email':self.organizer_email},
+                {'email': self.organizer_email},
             ]
         }
 
@@ -397,4 +406,4 @@ class GCalendar:
         for slot in available_slots:
             free.append(slot)
 
-        return booked_slots
+        return ("booked_slots:", booked_slots), ("free slots:", free)
