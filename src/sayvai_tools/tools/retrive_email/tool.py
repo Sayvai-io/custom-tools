@@ -37,7 +37,7 @@ class RetrieveEmail:
                     summary != "day is not available for booking"):
                 event_id = event_id.split('_')[0]
 
-                query = self.cursor.execute(text(f"""SELECT email FROM patient_info WHERE event_id = '{event_id}';"""))
+                query = self.cursor.execute(text(f"""SELECT phone FROM patient_info WHERE event_id = '{event_id}';"""))
                 email = query.fetchone()[0]
                 email_list.append(email)
 

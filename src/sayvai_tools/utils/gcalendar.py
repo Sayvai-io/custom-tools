@@ -92,7 +92,7 @@ class GCalendar:
             self.get_service()
             event = self.service.events().insert(calendarId=self.calendar_id, body=event).execute()
             # print(event)
-            return "Event created"
+            return "Event created", event['id']
         except HttpError as e:
             print(e)
             return "Error occurred"
@@ -244,7 +244,7 @@ class GCalendar:
                 }
                 endd = time.time()
                 total = endd - startt
-                return self.create_event(events), total
+                return self.create_event(events)
             else:
                 return "The slot is already booked.", booked_slots
 
