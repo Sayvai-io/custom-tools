@@ -1,5 +1,9 @@
 from typing import Any
+
+from langchain.document_loaders import DirectoryLoader
+from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores.pgvector import PGVector
+
 
 class PGVectorDB:
     """Tool that queries vector database."""
@@ -30,10 +34,6 @@ class PGVectorDB:
 
     async def _arun(self, query: str):
         return NotImplementedError("pinecone async not implemented")
-    
-from langchain.text_splitter import CharacterTextSplitter
-from langchain.vectorstores.pgvector import PGVector
-from langchain.document_loaders import DirectoryLoader
 
 class LoadDocs:
         """The PGVector Module will try to create a table with the name of the collection.
