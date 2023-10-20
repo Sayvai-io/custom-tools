@@ -20,7 +20,8 @@ core_requirements = [
     'pinecone-client',
     'pgvector',
     'pandas',
-    'openpyxl'
+    'openpyxl',
+    'gspread==5.11.3'
 ]
 
 setup(

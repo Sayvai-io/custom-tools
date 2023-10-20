@@ -1,8 +1,10 @@
 """base tool for IO"""
-from elevenlabs import play
-from sayvai_tools.utils.tts import ElevenlabsAudioStreaming
-from langchain.pydantic_v1 import Field
 from typing import Callable
+
+from elevenlabs import play
+from langchain.pydantic_v1 import Field
+
+from sayvai_tools.utils.tts import ElevenlabsAudioStreaming
 
 
 class VoiceOutputRun:
