@@ -30,7 +30,7 @@ class SQLGSheet:
     def __init__(self, uri: str):
         self.gs = GSheets()
 
-    def gsheets(self, query: str):
+    def _run(self, query: str):
         df = pd.read_sql_query(text(query), self.connection)
         data_dict = df.to_dict('split')
         data = data_dict['data'][0]
