@@ -29,14 +29,14 @@ class SQLGSheet:
 
     def __init__(self, uri: str):
         self.gs = GSheets()
+        self.connection = create_engine(uri).connect()
 
     def _run(self, query: str):
         df = pd.read_sql_query(text(query), self.connection)
         data_dict = df.to_dict('split')
-        data = data_dict['data'][0]
         columns = data_dict['columns']
         result = [columns]  # Start with the header
-        result.append(data)  # Add the data
+        result.extend(data_dict['data'] ) # Add the data
         self.gs.create_sheet()
         self.gs.update_values(result)
         return 'Data has been exported to Google Sheets'
