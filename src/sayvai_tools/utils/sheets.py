@@ -42,7 +42,7 @@ class GSheets:
         range_to_update = f"{start_cell}:{end_cell}"
 
         # Update the range with the values
-        worksheet.update(range_to_update, value = values, value_input_option="USER_ENTERED")
+        worksheet.update(range_to_update, values = values, value_input_option="USER_ENTERED")
         
 
     def get_values(self):
