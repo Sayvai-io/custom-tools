@@ -1,10 +1,11 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 core_requirements = [
     'langchain',
     'langchain_experimental',
     'google-api-python-client',
     'openai',
+    'tiktoken',
     'SQLAlchemy',
     'elevenlabs==0.2.24',
     'google_auth_oauthlib',
@@ -17,7 +18,10 @@ core_requirements = [
     'cloud-sql-python-connector',
     'pg8000',
     'pinecone-client',
-
+    'pgvector',
+    'pandas',
+    'openpyxl',
+    'gspread==5.11.3'
 ]
 
 setup(

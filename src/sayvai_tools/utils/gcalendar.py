@@ -1,13 +1,14 @@
-import os.path
 import datetime as dt
+import os.path
 from datetime import datetime, timedelta
-from typing import Dict
+from typing import Dict, List
+
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+
 from sayvai_tools.utils.mail import EmailSender
-from typing import List
 
 
 class GCalendar:

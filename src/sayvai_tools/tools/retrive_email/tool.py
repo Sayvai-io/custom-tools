@@ -1,13 +1,17 @@
-from sayvai_tools.utils.gcalendar import GCalendar
 import datetime as dt
+
 from sqlalchemy import text
+
+from sayvai_tools.utils.gcalendar import GCalendar
 
 
 class RetrieveEmail:
 
-    def __init__(self, pool):
+    def __init__(self, pool, scope: str):
         self.pool = pool
         self.cursor = self.pool.connect()
+        self.scope = scope
+        self.cal = GCalendar(self.scope)
 
     name = "Retrieve Email"
     description = (
@@ -15,16 +19,15 @@ class RetrieveEmail:
     )
 
     def _run(self, date: str):
-        cal = GCalendar()
         input_dates = date.split('/')
-        start_time = cal.parse_date(input_dates[0])
-        end_time = cal.parse_date(input_dates[1])
+        start_time = self.cal.parse_date(input_dates[0])
+        end_time = self.cal.parse_date(input_dates[1])
 
         specific_date = start_time.date()
 
         email_list = []
 
-        for start, end, summary, descript, event_id in cal.display_events(specific_date):
+        for start, end, summary, descript, event_id in self.cal.display_events(specific_date):
             start = dt.datetime.strptime(start, "%Y-%m-%dT%H:%M:%S%z")
             end = dt.datetime.strptime(end, "%Y-%m-%dT%H:%M:%S%z")
             start_time_with_timezone = start_time.replace(tzinfo=start.tzinfo)
