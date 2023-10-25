@@ -1,13 +1,13 @@
 """Conversational Human """
+import os
 from typing import Callable, Optional
+
+from elevenlabs import play
 from langchain.callbacks.manager import CallbackManagerForToolRun
 from langchain.pydantic_v1 import Field
-from elevenlabs import play
-from sayvai_tools.utils.tts import ElevenlabsAudioStreaming
+
 from sayvai_tools.utils.stt import STT
-import os
-
-
+from sayvai_tools.utils.tts import ElevenlabsAudioStreaming
 
 
 class ConversationalHuman:

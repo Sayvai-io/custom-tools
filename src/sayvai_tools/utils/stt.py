@@ -1,8 +1,7 @@
 import yaml
 from google.cloud import speech_v1p1beta1 as speech
+
 from sayvai_tools.utils.recording import record
-
-
 
 
 class STT:
