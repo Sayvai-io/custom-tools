@@ -29,7 +29,7 @@ class GCalendar:
 
     def get_credentials(self):
         """Gets the credentials for the user"""
-        flow = InstalledAppFlow.from_client_secrets_file('credentials.json', self.SCOPES)
+        flow = InstalledAppFlow.from_client_secrets_file('credentials.json', self.SCOPE)
         self.creds = flow.run_local_server(port=0)
 
         with open('token.json', 'w') as token:
