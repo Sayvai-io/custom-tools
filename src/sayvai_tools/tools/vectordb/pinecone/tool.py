@@ -32,9 +32,9 @@ class PineconeDB:
 
 
 class LoadDocs:
-    def __init__(self,embedings, directory, index_name, namespace: Optional[str] = None):
+    def __init__(self,embeddings, directory, index_name, namespace: Optional[str] = None):
         self.directory = directory
-        self.embeddings = embedings
+        self.embeddings = embeddings
         self.index_name = index_name
         self.namespace = namespace
 

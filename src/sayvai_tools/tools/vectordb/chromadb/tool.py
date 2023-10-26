@@ -30,9 +30,9 @@ class ChromaDB:
 
 class LoadDocs:
     """Used to load the document into the database"""
-    def __init__(self,embedings, directory, persist_directory):
+    def __init__(self, embeddings, directory, persist_directory):
         self.directory = directory
-        self.embeddings = embedings
+        self.embeddings = embeddings
         self.persist_directory = persist_directory
 
     def load_dir(self, directory):
