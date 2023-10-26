@@ -12,17 +12,18 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 from sayvai_tools.utils.mail import EmailSender
-
+# checking
 
 class GCalendar:
 
-    def __init__(self, scope: str, email: str) -> None:
+    def __init__(self, scope: str, summary, email) -> None:
         """Initializes the GCalender class"""
         self.service = None
         self.creds = None
         self.SCOPE = scope
         self.calendar_id = "primary"
         self.organizer_email = email
+        self.summary = summary
         if os.path.exists('token.json'):
             self.creds = Credentials.from_authorized_user_file('token.json', self.SCOPE)
         else:
@@ -223,8 +224,9 @@ class GCalendar:
         if OPEN_TIME <= start_time.hour < CLOSE_TIME and OPEN_TIME <= end_time.hour < CLOSE_TIME:
             # Check if the slot is available
             if self.check_is_slot_available(start_time, end_time, booked_slots):
+                self.summary = self.summary.replace('{name}', name).replace('{phone}', phone)
                 events = {
-                    'summary': f'Appointment with dentist, Patient name:{name}, patient number:{phone}',
+                    'summary': self.summary,
                     'location': 'Coimbatore, Tamil Nadu, India',
                     'description': 'default description',
                     'start': {

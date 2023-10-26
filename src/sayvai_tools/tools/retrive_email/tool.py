@@ -5,13 +5,15 @@ from sqlalchemy import text
 from sayvai_tools.utils.gcalendar import GCalendar
 
 
-class RetrieveEmail:
+class RetrievePhone:
 
     def __init__(self, pool, scope: str):
         self.pool = pool
         self.cursor = self.pool.connect()
         self.scope = scope
-        self.cal = GCalendar(self.scope)
+        self.summary = None
+        self.email = None
+        self.cal = GCalendar(scope=self.scope, email=self.email, summary=self.summary)
 
     name = "Retrieve Email"
     description = (

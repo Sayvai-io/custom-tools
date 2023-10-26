@@ -7,12 +7,12 @@ class CalendarSql:
         "You can ask calendar_sql tool to create an event for you."
     )
 
-    def __init__(self, pool, scope: str, email: str):
+    def __init__(self, pool, scope: str, email: str, summary: str):
         self.pool = pool
         self.cursor = self.pool.connect()
         self.scope = scope
         self.email = email
-        self.cal = GCalendar(self.scope, self.email)
+        self.cal = GCalendar(self.scope, email = self.email, summary = self.summary)
 
     def _run(self, details: str):
         start_time, end_time, phone, name = details.split('/')

@@ -9,7 +9,9 @@ class DisplayEvents:
 
     def __init__(self, scope: str):
         self.scope = scope
-        self.cal = GCalendar(self.scope)
+        self.summary = None
+        self.email = None
+        self.cal = GCalendar(scope=self.scope, email=self.email, summary=self.summary)
 
     def _run(self, date: str):
         date = self.cal.parse_date(date)
