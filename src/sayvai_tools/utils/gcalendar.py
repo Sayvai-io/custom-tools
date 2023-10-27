@@ -16,7 +16,7 @@ from sayvai_tools.utils.mail import EmailSender
 
 class GCalendar:
 
-    def __init__(self, scope: str, summary, email) -> None:
+    def __init__(self, scope: str, summary=None, email=None) -> None:
         """Initializes the GCalender class"""
         self.service = None
         self.creds = None

@@ -12,6 +12,7 @@ class CalendarSql:
         self.cursor = self.pool.connect()
         self.scope = scope
         self.email = email
+        self.summary = summary
         self.cal = GCalendar(self.scope, email = self.email, summary = self.summary)
 
     def _run(self, details: str):
