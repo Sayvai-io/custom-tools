@@ -40,7 +40,8 @@ class ConversationalHuman:
                             audio_streaming= True, 
                             stability= 0.5,
                             similarity= 0.5,
-                            api_key= self.api_key)
+                            #api_key= self.api_key
+                            )
         play(inputbytes)
 
         # self.prompt_func(query)
