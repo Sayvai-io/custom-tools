@@ -5,13 +5,15 @@ from sqlalchemy import text
 from sayvai_tools.utils.gcalendar import GCalendar
 
 
-class RetrieveEmail:
+class RetrievePhone:
 
     def __init__(self, pool, scope: str):
         self.pool = pool
         self.cursor = self.pool.connect()
         self.scope = scope
-        self.cal = GCalendar(self.scope)
+        self.summary = None
+        self.email = None
+        self.cal = GCalendar(scope=self.scope, email=self.email, summary=self.summary)
 
     name = "Retrieve Email"
     description = (
@@ -39,7 +41,7 @@ class RetrieveEmail:
                     summary != "day is not available for booking"):
                 event_id = event_id.split('_')[0]
 
-                query = self.cursor.execute(text(f"""SELECT email FROM patient_info WHERE event_id = '{event_id}';"""))
+                query = self.cursor.execute(text(f"""SELECT phone FROM patient_info WHERE event_id = '{event_id}';"""))
                 email = query.fetchone()[0]
                 email_list.append(email)
 

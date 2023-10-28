@@ -12,8 +12,9 @@ class Block:
         self.smtp_username = smtp_username
         self.smtp_password = smtp_password
         self.scope = scope
-
-        self.cal = GCalendar(self.scope)
+        self.summary = None
+        self.email = None
+        self.cal = GCalendar(scope=self.scope, email=self.email, summary=self.summary)
 
     def _run(self, date: str, contacts: list):
         self.cal.block_day(date=date, contacts=contacts, organizer=self.organizer, smtp_username=self.smtp_username,
