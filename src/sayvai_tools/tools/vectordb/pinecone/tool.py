@@ -18,11 +18,13 @@ class PineconeDB:
         self.embeddings = embeddings
         self.index_name = index_name
         self.namespace = namespace
-        self.docsearch = Pinecone.from_existing_index(self.index_name, self.embeddings, namespace=self.namespace)
+        self.docsearch = Pinecone.from_existing_index(
+            self.index_name, self.embeddings, namespace=self.namespace
+        )
 
     def _run(
-            self,
-            query: str,
+        self,
+        query: str,
     ) -> str:
         similar_docs = self.docsearch.similarity_search_with_score(query, k=2)
         return str(similar_docs)
@@ -32,7 +34,9 @@ class PineconeDB:
 
 
 class LoadDocs:
-    def __init__(self,embeddings, directory, index_name, namespace: Optional[str] = None):
+    def __init__(
+        self, embeddings, directory, index_name, namespace: Optional[str] = None
+    ):
         self.directory = directory
         self.embeddings = embeddings
         self.index_name = index_name
@@ -43,12 +47,19 @@ class LoadDocs:
         documents = loader.load()
         return documents
 
-    def split_docs(self,chunk_size=1000,chunk_overlap=20):
+    def split_docs(self, chunk_size=1000, chunk_overlap=20):
         documents = self.load_dir(self.directory)
-        text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+        text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=chunk_size, chunk_overlap=chunk_overlap
+        )
         docs = text_splitter.split_documents(documents)
         return docs
 
     def docs_load(self):
-        index = Pinecone.from_documents(self.split_docs(), self.embeddings, index_name=self.index_name, namespace=self.namespace)
+        index = Pinecone.from_documents(
+            self.split_docs(),
+            self.embeddings,
+            index_name=self.index_name,
+            namespace=self.namespace,
+        )
         return index

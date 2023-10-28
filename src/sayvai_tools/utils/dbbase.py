@@ -373,9 +373,13 @@ class SQLDatabase:
 
         If the statement returns no rows, an empty list is returned.
         """
-        commands = command.strip().split(';')
-        commands = [c.strip() for c in commands if c.strip() and not c.strip().startswith(("Response:", "Answer:"))]
-        
+        commands = command.strip().split(";")
+        commands = [
+            c.strip()
+            for c in commands
+            if c.strip() and not c.strip().startswith(("Response:", "Answer:"))
+        ]
+
         with self._engine.begin() as connection:
             if self._schema is not None:
                 if self.dialect == "snowflake":
@@ -388,9 +392,9 @@ class SQLDatabase:
                     pass
                 else:  # postgresql and compatible dialects
                     connection.exec_driver_sql(f"SET search_path TO {self._schema}")
-            
+
             results = []
-            
+
             for single_command in commands:
                 cursor = connection.execute(text(single_command))
                 if cursor.returns_rows:
@@ -399,10 +403,14 @@ class SQLDatabase:
                     elif fetch == "one":
                         result = cursor.fetchone()  # type: ignore
                     else:
-                        raise ValueError("Fetch parameter must be either 'one' or 'all'")
+                        raise ValueError(
+                            "Fetch parameter must be either 'one' or 'all'"
+                        )
                     results.append(result)
                 else:
-                    results.append([])  # Append an empty list when cursor returns no rows
+                    results.append(
+                        []
+                    )  # Append an empty list when cursor returns no rows
             connection.commit()
             return results
 

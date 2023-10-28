@@ -1,20 +1,22 @@
-"""Google Sheets API"""""
+"""Google Sheets API""" ""
 import json
 import gspread
 import datetime
 from gspread import utils
 
+
 class GSheets:
-    """Google Sheets API"""""
+    """Google Sheets API""" ""
+
     def __init__(self) -> None:
         self.gc, _user = self.authenticate()
         pass
-    
+
     def get_credentials(self):
-        with open('credentials.json') as f:
+        with open("credentials.json") as f:
             data = json.load(f)
         return data
-    
+
     def authenticate(self):
         credentials = self.get_credentials()
         # Check Creditentials is valid
@@ -35,20 +37,19 @@ class GSheets:
         if not self.sheet:
             self.create_sheet()
         worksheet = self.sheet.get_worksheet(0)
-        start_cell = 'A1'
+        start_cell = "A1"
         end_cell = utils.rowcol_to_a1(len(values), len(values[0]))
 
         # Combine the start and end cells to form the range
         range_to_update = f"{start_cell}:{end_cell}"
 
         # Update the range with the values
-        worksheet.update(range_to_update, values = values, value_input_option="USER_ENTERED")
-        
+        worksheet.update(
+            range_to_update, values=values, value_input_option="USER_ENTERED"
+        )
 
     def get_values(self):
         # For now, we will only work with the first sheet
         worksheet = self.sheet.get_worksheet(0)
         values = worksheet.get_all_values()
         return values
-    
-

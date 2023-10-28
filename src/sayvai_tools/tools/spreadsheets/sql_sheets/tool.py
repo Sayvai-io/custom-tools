@@ -11,14 +11,15 @@ class SQLSheet:
         "You can use this to generate reports."
     )
 
-    def __init__(self, uri: str, sheet_path: str = 'output.xlsx'):
+    def __init__(self, uri: str, sheet_path: str = "output.xlsx"):
         self.connection = create_engine(uri).connect()
         self.sheet_path = sheet_path
 
     def _run(self, query: str):
         df = pd.read_sql_query(text(query), self.connection)
         df.to_excel(self.sheet_path, index=False)
-        return f'Data has been exported to {self.sheet_path}'
+        return f"Data has been exported to {self.sheet_path}"
+
 
 class SQLGSheet:
     name = "sqlgsheet"
@@ -33,10 +34,10 @@ class SQLGSheet:
 
     def _run(self, query: str):
         df = pd.read_sql_query(text(query), self.connection)
-        data_dict = df.to_dict('split')
-        columns = data_dict['columns']
+        data_dict = df.to_dict("split")
+        columns = data_dict["columns"]
         result = [columns]  # Start with the header
-        result.extend(data_dict['data'] ) # Add the data
+        result.extend(data_dict["data"])  # Add the data
         self.gs.create_sheet()
         self.gs.update_values(result)
-        return 'Data has been exported to Google Sheets'
+        return "Data has been exported to Google Sheets"

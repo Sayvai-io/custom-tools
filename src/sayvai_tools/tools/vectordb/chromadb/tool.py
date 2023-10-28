@@ -4,6 +4,7 @@ from langchain.document_loaders import DirectoryLoader
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
 
+
 class ChromaDB:
     """Tool that queries vector database."""
 
@@ -16,11 +17,13 @@ class ChromaDB:
     def __init__(self, embeddings: Any, persist_directory: str):
         self.embeddings = embeddings
         self.persist_directory = persist_directory
-        self.docsearch = Chroma(persist_directory=self.persist_directory, embedding_function=self.embeddings)
+        self.docsearch = Chroma(
+            persist_directory=self.persist_directory, embedding_function=self.embeddings
+        )
 
     def _run(
-            self,
-            query: str,
+        self,
+        query: str,
     ) -> str:
         similar_docs = self.docsearch.similarity_search(query)
         return str(similar_docs)
@@ -28,8 +31,10 @@ class ChromaDB:
     async def _arun(self, query: str):
         return NotImplementedError("pinecone async not implemented")
 
+
 class LoadDocs:
     """Used to load the document into the database"""
+
     def __init__(self, embeddings, directory, persist_directory):
         self.directory = directory
         self.embeddings = embeddings
@@ -40,13 +45,17 @@ class LoadDocs:
         documents = loader.load()
         return documents
 
-    def split_docs(self,chunk_size=1000,chunk_overlap=20):
+    def split_docs(self, chunk_size=1000, chunk_overlap=20):
         documents = self.load_dir(self.directory)
-        text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+        text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=chunk_size, chunk_overlap=chunk_overlap
+        )
         docs = text_splitter.split_documents(documents)
         return docs
 
     def docs_load(self):
-        index = Chroma.from_documents(self.split_docs(), self.embeddings, persist_directory=self.persist_directory)
+        index = Chroma.from_documents(
+            self.split_docs(), self.embeddings, persist_directory=self.persist_directory
+        )
         index.persist()
         return index

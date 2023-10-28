@@ -7,8 +7,7 @@ from typing import Any, Dict, List, Optional
 from langchain.callbacks.manager import CallbackManagerForChainRun
 from langchain.chains.base import Chain
 from langchain.chains.llm import LLMChain
-from langchain.chains.sql_database.prompt import (DECIDER_PROMPT, PROMPT,
-                                                  SQL_PROMPTS)
+from langchain.chains.sql_database.prompt import DECIDER_PROMPT, PROMPT, SQL_PROMPTS
 from langchain.prompts.prompt import PromptTemplate
 from langchain.schema import BasePromptTemplate
 from langchain.schema.language_model import BaseLanguageModel
@@ -50,7 +49,7 @@ class SQLDatabaseChain(Chain):
     return_direct: bool = False
     """Whether or not to return the result of querying the SQL table directly."""
     use_query_checker: bool = False
-    """Whether or not the query checker tool should be used to attempt 
+    """Whether or not the query checker tool should be used to attempt
     to fix the initial SQL from the LLM."""
     query_checker_prompt: Optional[BasePromptTemplate] = None
     """The prompt template that should be used by the query checker"""

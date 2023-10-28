@@ -3,9 +3,7 @@ from sayvai_tools.utils.gcalendar import GCalendar
 
 class Calendar:
     name = "calendar"
-    description = (
-        "You can ask calendar tool to create an event for you."
-    )
+    description = "You can ask calendar tool to create an event for you."
 
     def __init__(self, scope: str):
         self.scope = scope
