@@ -16,17 +16,20 @@ audio = pyaudio.PyAudio()
 
 
 def record():
-
     def match_target_amplitude(aChunk, target_dBFS):
-        """ Normalize given audio chunk """
+        """Normalize given audio chunk"""
         change_in_dBFS = target_dBFS - aChunk.dBFS
         return aChunk.apply_gain(change_in_dBFS)
 
-
     # Open a stream to capture audio from the microphone
-    stream = audio.open(format=FORMAT, channels=CHANNELS,
-                        rate=RATE, input=True,output = False,
-                        frames_per_buffer=CHUNK_SIZE)
+    stream = audio.open(
+        format=FORMAT,
+        channels=CHANNELS,
+        rate=RATE,
+        input=True,
+        output=False,
+        frames_per_buffer=CHUNK_SIZE,
+    )
 
     # Create a list to store audio chunks
     audio_chunks = []
@@ -43,7 +46,7 @@ def record():
 
             # Check if audio data is silence
             is_silence = np.max(audio_data) < 350
-            #print(np.max(audio_data))
+            # print(np.max(audio_data))
 
             if recording:
                 if is_silence:
@@ -55,14 +58,12 @@ def record():
                             data=b"".join(audio_chunks),
                             sample_width=2,
                             frame_rate=RATE,
-                            channels=CHANNELS
+                            channels=CHANNELS,
                         )
 
                         # Split the chunk on silence
                         chunks = split_on_silence(
-                            song,
-                            min_silence_len=1500,
-                            silence_thresh=-35
+                            song, min_silence_len=1500, silence_thresh=-35
                         )
                         silence_chunk = AudioSegment.silent(duration=500)
                         combined_chunks = AudioSegment.empty()
@@ -77,9 +78,7 @@ def record():
                         # Export the audio chunk with a new bitrate
                         mp3_buffer = io.BytesIO()
                         normalized_chunk.export(
-                            mp3_buffer,
-                            format="mp3",
-                            bitrate="192k"
+                            mp3_buffer, format="mp3", bitrate="192k"
                         )
 
                         mp3_bytes = mp3_buffer.getvalue()

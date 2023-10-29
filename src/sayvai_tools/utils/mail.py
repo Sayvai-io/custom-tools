@@ -20,7 +20,9 @@ class EmailSender:
 
         context = ssl.create_default_context()
         try:
-            with smtplib.SMTP_SSL(self.smtp_server, self.smtp_port, context=context) as server:
+            with smtplib.SMTP_SSL(
+                self.smtp_server, self.smtp_port, context=context
+            ) as server:
                 server.login(self.smtp_username, self.smtp_password)
                 server.sendmail(self.organizer_email, receiver_email, em.as_string())
                 print("Email sent successfully")
