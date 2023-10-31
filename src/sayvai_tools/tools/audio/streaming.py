@@ -4,7 +4,7 @@ from typing import Callable
 from elevenlabs import play
 from langchain.pydantic_v1 import Field
 
-from sayvai_tools.utils.tts import ElevenlabsAudioStreaming
+from src.sayvai_tools.utils.voice.tts import ElevenlabsAudioStreaming
 
 
 class VoiceOutputRun:

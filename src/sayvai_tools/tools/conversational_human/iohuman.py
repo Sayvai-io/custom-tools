@@ -6,8 +6,8 @@ from elevenlabs import play
 from langchain.callbacks.manager import CallbackManagerForToolRun
 from langchain.pydantic_v1 import Field
 
-from sayvai_tools.utils.stt import STT
-from sayvai_tools.utils.tts import ElevenlabsAudioStreaming
+from src.sayvai_tools.utils.voice.stt import STT
+from src.sayvai_tools.utils.voice.tts import ElevenlabsAudioStreaming
 
 
 class ConversationalHuman:
