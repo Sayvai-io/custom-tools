@@ -5,8 +5,8 @@ from langchain.schema.language_model import BaseLanguageModel
 from sqlalchemy.engine import Engine
 
 from sayvai_tools.tools.sql_database.prompt import PROMPT, SQL_PROMPTS
-from sayvai_tools.utils.dbbase import SQLDatabase
-from sayvai_tools.utils.dbchain import SQLDatabaseChain
+from src.sayvai_tools.utils.database.dbbase import SQLDatabase
+from src.sayvai_tools.utils.database.dbchain import SQLDatabaseChain
 
 
 class Database:
