@@ -1,4 +1,4 @@
-from sayvai_tools.utils.gcalendar import GCalendar
+from src.sayvai_tools.utils.google.gcalendar import GCalendar
 
 
 class DisplayEvents:

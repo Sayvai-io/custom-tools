@@ -1,4 +1,4 @@
-from sayvai_tools.utils.sheets import GSheets
+from src.sayvai_tools.utils.google.sheets import GSheets
 
 
 class Sheets:
