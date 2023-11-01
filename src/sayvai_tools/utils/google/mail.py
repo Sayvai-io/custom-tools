@@ -28,3 +28,8 @@ class EmailSender:
                 print("Email sent successfully")
         except Exception as e:
             print(e)
+            
+    def send_multiple_email(self, receiver_emails, subject, message):
+        for receiver_email in receiver_emails:
+            self.send_email(receiver_email, subject, message)
+        

@@ -1,8 +1,8 @@
 """Google Forms"""
 from __future__ import print_function
-
 from apiclient import discovery
 from httplib2 import Http
+from typing import Any, Optional, List
 from oauth2client import client, file, tools
 
 SCOPES = "https://www.googleapis.com/auth/forms.body"
@@ -65,9 +65,11 @@ class GForms:
         #         }
         #     }]
         # }
-    def add_question(self, form_title: str, question: str, options: list) -> str:
+        
+        
+    def add_question(self, form_title: str, question: str, options: Optional[list]) -> str:
         # Creates the initial form
-        # Adds the question to the form
+        # Adds the question to the form 
         NEW_QUESTION = {
             "requests": [{
                 "createItem": {

@@ -1,4 +1,4 @@
-from src.sayvai_tools.utils.google.gcalendar import GCalendar
+from sayvai_tools.utils.google.gcalendar import GCalendar
 
 
 class Block:
