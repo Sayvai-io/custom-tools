@@ -1,7 +1,7 @@
 import pandas as pd
 from sqlalchemy import create_engine, text
 
-from src.sayvai_tools.utils.google.sheets import GSheets
+from sayvai_tools.utils.google.sheets import GSheets
 
 
 class SQLSheet:

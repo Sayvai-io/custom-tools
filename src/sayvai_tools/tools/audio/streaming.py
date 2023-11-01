@@ -3,8 +3,7 @@ from typing import Callable
 
 from elevenlabs import play
 from langchain.pydantic_v1 import Field
-
-from src.sayvai_tools.utils.voice.tts import ElevenlabsAudioStreaming
+from sayvai_tools.utils.voice.tts import ElevenlabsAudioStreaming
 
 
 class VoiceOutputRun:
