@@ -21,6 +21,8 @@ core_requirements = [
     "pandas",
     "openpyxl",
     "gspread==5.11.3",
+    "pyaudio",
+    "pydub",
 ]
 
 setup(
