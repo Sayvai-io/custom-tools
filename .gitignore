@@ -15,3 +15,5 @@ src/sayvai_tools/utils/phrase_set.yaml
 db.py
 dist
 sayvai.db
+test.py
+tests/__pycache__

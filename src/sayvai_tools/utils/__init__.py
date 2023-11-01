@@ -1,10 +1,11 @@
-from sayvai_tools.utils.dbbase import SQLDatabase
-from sayvai_tools.utils.dbchain import SQLDatabaseChain
-from sayvai_tools.utils.gcalendar import GCalendar
-from sayvai_tools.utils.mail import EmailSender
-from sayvai_tools.utils.sheets import GSheets
-from sayvai_tools.utils.stt import STT
-from sayvai_tools.utils.tts import ElevenlabsAudioStreaming
+from src.sayvai_tools.utils.database.dbbase import SQLDatabase
+from src.sayvai_tools.utils.database.dbchain import SQLDatabaseChain
+from src.sayvai_tools.utils.google.gcalendar import GCalendar
+from src.sayvai_tools.utils.google.mail import EmailSender
+from src.sayvai_tools.utils.google.sheets import GSheets
+from src.sayvai_tools.utils.google.forms import GForms
+from src.sayvai_tools.utils.voice.stt import STT
+from src.sayvai_tools.utils.voice.tts import ElevenlabsAudioStreaming
 
 __all__ = [
     "GCalendar",
@@ -14,4 +15,5 @@ __all__ = [
     "EmailSender",
     "GSheets",
     "STT",
+    "GForms",
 ]
