@@ -14,7 +14,7 @@ from langchain.schema.language_model import BaseLanguageModel
 from langchain.tools.sql_database.prompt import QUERY_CHECKER
 from langchain_experimental.pydantic_v1 import Extra, Field, root_validator
 
-from src.sayvai_tools.utils.database.dbbase import SQLDatabase
+from sayvai_tools.utils.database.dbbase import SQLDatabase
 
 INTERMEDIATE_STEPS_KEY = "intermediate_steps"
 
