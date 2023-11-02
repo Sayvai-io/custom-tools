@@ -11,7 +11,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-from src.sayvai_tools.utils.google.mail import EmailSender
+from sayvai_tools.utils.google.mail import EmailSender
 
 # checking
 
