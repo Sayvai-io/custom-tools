@@ -1,6 +1,6 @@
 # Author: Aathikabilan
 import os
-import aysncio
+import asyncio
 from sayvai_tools.utils import EmailSender
 from sayvai_tools.utils import Excel
 
