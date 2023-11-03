@@ -22,6 +22,7 @@ core_requirements = [
     "gspread==5.11.3",
     "pyaudio",
     "pydub",
+    "oauth2client"
 ]
 
 setup(
