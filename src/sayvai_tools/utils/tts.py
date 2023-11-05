@@ -12,7 +12,7 @@ from elevenlabs.simple import VOICES_CACHE, is_voice_id
 class ElevenlabsAudioStreaming:
     
     def __init__(self, api_key) -> None:
-        self.api_key =api_key
+        self.api_key = api_key
 
     @staticmethod
     def check_voice(voice, stability, similarity):
