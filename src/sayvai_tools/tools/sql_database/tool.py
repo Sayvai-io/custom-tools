@@ -5,11 +5,11 @@ from langchain.schema.language_model import BaseLanguageModel
 from sqlalchemy.engine import Engine
 
 from sayvai_tools.tools.sql_database.prompt import PROMPT, SQL_PROMPTS
-from sayvai_tools.utils.dbbase import SQLDatabase
-from sayvai_tools.utils.dbchain import SQLDatabaseChain
+from sayvai_tools.utils.database.dbbase import SQLDatabase
+from sayvai_tools.utils.database.dbchain import SQLDatabaseChain
 
 
-class Database():
+class Database:
     """Tool that queries vector database."""
 
     name = "Database"
@@ -19,12 +19,12 @@ class Database():
     )
 
     def __init__(
-            self,
-            llm: BaseLanguageModel,
-            engine: Engine,
-            prompt: Optional[BasePromptTemplate] = None,
-            verbose: bool = False,
-            k: int = 5
+        self,
+        llm: BaseLanguageModel,
+        engine: Engine,
+        prompt: Optional[BasePromptTemplate] = None,
+        verbose: bool = False,
+        k: int = 5,
     ):
         self.llm = llm
         self.engine = engine
@@ -32,12 +32,8 @@ class Database():
         self.verbose = verbose
         self.k = k
 
-
-    def _run(
-        self,
-        query: str
-    ) -> str:
-        db=SQLDatabase(engine = self.engine)
+    def _run(self, query: str) -> str:
+        db = SQLDatabase(engine=self.engine)
 
         if self.prompt is not None:
             prompt_to_use = self.prompt
@@ -56,14 +52,11 @@ class Database():
             inputs["dialect"] = lambda _: (db.dialect, prompt_to_use)
 
         sql_db_chain = SQLDatabaseChain.from_llm(
-                                                llm=self.llm,
-                                                db=db,
-                                                prompt=prompt_to_use,
-                                                verbose = self.verbose
-                                                )
+            llm=self.llm, db=db, prompt=prompt_to_use, verbose=self.verbose
+        )
 
         return sql_db_chain.run(query)
-    
+
     async def _arun(self, query: str):
 
         raise NotImplementedError("SQL database async not implemented")

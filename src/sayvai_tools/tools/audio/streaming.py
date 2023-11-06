@@ -1,8 +1,9 @@
 """base tool for IO"""
-from elevenlabs import play
-from sayvai_tools.utils.tts import ElevenlabsAudioStreaming
-from langchain.pydantic_v1 import Field
 from typing import Callable
+
+from elevenlabs import play
+from langchain.pydantic_v1 import Field
+from sayvai_tools.utils.voice.tts import ElevenlabsAudioStreaming
 
 
 class VoiceOutputRun:
@@ -21,17 +22,19 @@ class VoiceOutputRun:
         pass
 
     def _run(
-            self,
-            query: str,
+        self,
+        query: str,
     ):
         """Use the Human input tool."""
         # input_func: Callable = Field(default_factory=lambda: input)
-        tts = ElevenlabsAudioStreaming(self.api_key)
-        inputbytes = tts.audio_streaming(query,
-                                         model="eleven_multilingual_v1",
-                                         voice="Adam",
-                                         audio_streaming=True,
-                                         stability=0.5,
-                                         similarity=0.5
-                                         )
+        tts = ElevenlabsAudioStreaming()
+        inputbytes = tts.audio_streaming(
+            query,
+            model="eleven_multilingual_v1",
+            voice="Adam",
+            audio_streaming=True,
+            stability=0.5,
+            similarity=0.5,
+            api_key=self.api_key,
+        )
         play(inputbytes)

@@ -12,9 +12,9 @@ from langchain.prompts.prompt import PromptTemplate
 from langchain.schema import BasePromptTemplate
 from langchain.schema.language_model import BaseLanguageModel
 from langchain.tools.sql_database.prompt import QUERY_CHECKER
-from sayvai_tools.utils.dbbase import SQLDatabase
-
 from langchain_experimental.pydantic_v1 import Extra, Field, root_validator
+
+from sayvai_tools.utils.database.dbbase import SQLDatabase
 
 INTERMEDIATE_STEPS_KEY = "intermediate_steps"
 
@@ -49,7 +49,7 @@ class SQLDatabaseChain(Chain):
     return_direct: bool = False
     """Whether or not to return the result of querying the SQL table directly."""
     use_query_checker: bool = False
-    """Whether or not the query checker tool should be used to attempt 
+    """Whether or not the query checker tool should be used to attempt
     to fix the initial SQL from the LLM."""
     query_checker_prompt: Optional[BasePromptTemplate] = None
     """The prompt template that should be used by the query checker"""

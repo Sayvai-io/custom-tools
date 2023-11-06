@@ -1,17 +1,13 @@
 """Conversational Human """
+import os
 from typing import Callable, Optional
+
+from elevenlabs import play
 from langchain.callbacks.manager import CallbackManagerForToolRun
 from langchain.pydantic_v1 import Field
-from elevenlabs import play
-from sayvai_tools.utils.tts import ElevenlabsAudioStreaming
-from sayvai_tools.utils.stt import STT
-import os
 
-
-
-# def _print_func(text: str) -> None:
-#     print("\n")
-#     print(text)
+from sayvai_tools.utils.voice.stt import STT
+from sayvai_tools.utils.voice.tts import ElevenlabsAudioStreaming
 
 
 class ConversationalHuman:
@@ -25,14 +21,11 @@ class ConversationalHuman:
     )
     # prompt_func: Callable[[str], None] = Field(default_factory=lambda: _print_func)
     # input_func: Callable = Field(default_factory=lambda: input)
-    
+
     def __init__(self, api_key: str, g_api_key: str, phrase_set_path: str) -> None:
-        self.api_key = api_key
-        self.stt = STT(audio_format="mp3",speech_context_path=phrase_set_path)
-        self.tts = ElevenlabsAudioStreaming()
+        self.stt = STT(audio_format="mp3", speech_context_path=phrase_set_path)
+        self.tts = ElevenlabsAudioStreaming(api_key=api_key)
         self.g_api_key = g_api_key
-        self.phrase_set_path = phrase_set_path
-        pass
 
     def _run(
         self,
@@ -40,16 +33,18 @@ class ConversationalHuman:
         run_manager: Optional[CallbackManagerForToolRun] = None,
     ) -> str:
         """Use the Human input tool."""
-        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = self.g_api_key
-        inputbytes = self.tts.audio_streaming(query,
-                            model="eleven_multilingual_v1",
-                            voice="Adam", 
-                            audio_streaming= True, 
-                            stability= 0.5,
-                            similarity= 0.5,
-                            api_key= self.api_key)
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = self.g_api_key
+        inputbytes = self.tts.audio_streaming(
+            query,
+            model="eleven_multilingual_v1",
+            voice="Adam",
+            audio_streaming=True,
+            stability=0.5,
+            similarity=0.5,
+            # api_key= self.api_key
+        )
         play(inputbytes)
 
         # self.prompt_func(query)
         # return self.input_func()
-        return(self.stt.generate_text())
+        return self.stt.generate_text()

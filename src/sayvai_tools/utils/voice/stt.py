@@ -1,23 +1,34 @@
 import yaml
-import os
 from google.cloud import speech_v1p1beta1 as speech
-from sayvai_tools.utils.recording import record
 
-
-# os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "G_Cloud_API_key.json"
+from sayvai_tools.utils.voice.recording import record
 
 
 class STT:
-    def __init__(self, model: str = "default", sample_rate: int = 44100, lang_code: str = "en-IN",
-                 automatic_punctuation: bool = True,
-                 enhanced: bool = True,
-                 second_lang_codes: list[str] = ["en-US"], no_of_audio_channels: int = 2,
-                 sep_rec_per_channel: bool = True, spoken_punctuation: bool = True,
-                 word_confidence: bool = True, spoken_emoji: bool = True,
-                 max_alt: int = 0, audio_format: str = "default", interact_type: str = "default",
-                 naics_code: int | None = None, mic_distance: str = "default", media_type: str = "default",
-                 record_device_type: str = "default", record_device_name: str | None = None,
-                 audio_topic: str = "general", speech_context_path: str | None = None):
+    def __init__(
+        self,
+        model: str = "default",
+        sample_rate: int = 44100,
+        lang_code: str = "en-IN",
+        automatic_punctuation: bool = True,
+        enhanced: bool = True,
+        second_lang_codes: list[str] = ["en-US"],
+        no_of_audio_channels: int = 2,
+        sep_rec_per_channel: bool = True,
+        spoken_punctuation: bool = True,
+        word_confidence: bool = True,
+        spoken_emoji: bool = True,
+        max_alt: int = 0,
+        audio_format: str = "default",
+        interact_type: str = "default",
+        naics_code: int | None = None,
+        mic_distance: str = "default",
+        media_type: str = "default",
+        record_device_type: str = "default",
+        record_device_name: str | None = None,
+        audio_topic: str = "general",
+        speech_context_path: str | None = None,
+    ):
         self.model = model
         self.sample_rate_hertz = sample_rate
         self.language_code = lang_code
@@ -80,41 +91,40 @@ class STT:
             max_alternatives=self.max_alternatives,
             speech_contexts=self.speech_context(),
             enable_word_confidence=self.enable_word_confidence,
-            metadata=self.recognition_meta_data()
+            metadata=self.recognition_meta_data(),
         )
         return config_mp3
 
-    def read_audio(self, path=r"Recording.mp3"):
-        record()
+    def read_audio(self):
+        byte_data = record()
         try:
-            if path is not None:
-                with open(path, 'rb') as f:
-                    byte_data_mp3 = f.read()
-                audio_mp3 = speech.RecognitionAudio(content=byte_data_mp3)
-                return audio_mp3
+            audio = speech.RecognitionAudio(content=byte_data)
+            return audio
         except:
-            return self.read_audio(path=r"Recording.mp3")
+            return self.read_audio()
 
     def generate_text(self):
         self.check_for_bounds()
         if self.state == True:
             try:
                 speech_client = speech.SpeechClient()
-                audio_mp3 = self.read_audio()
+                audio = self.read_audio()
                 try:
                     response_standard_mp3 = speech_client.recognize(
-                        config=self.create_reg_config(),
-                        audio=audio_mp3)
-                    os.remove("Recording.mp3")
+                        config=self.create_reg_config(), audio=audio
+                    )
                     return response_standard_mp3.results[0].alternatives[0].transcript
 
                 except:
                     response_standard_mp3 = speech_client.long_running_recognize(
-                        config=self.create_reg_config(),
-                        audio=audio_mp3
+                        config=self.create_reg_config(), audio=audio
                     )
-                    os.remove("Recording.mp3")
-                    return response_standard_mp3.result().results[0].alternatives[0].transcript
+                    return (
+                        response_standard_mp3.result()
+                        .results[0]
+                        .alternatives[0]
+                        .transcript
+                    )
             except:
                 return self.generate_text()
 
@@ -128,17 +138,17 @@ class STT:
             return loaded_data
 
     def speech_context(self):
-        # try:
-        speech_context = self.load_phrase_set(self.speech_context_path)
-        return speech_context
-        # except:
-        #     return None
+        if self.speech_context_path is not None:
+            speech_context = self.load_phrase_set(self.speech_context_path)
+            return speech_context
+        else:
+            return None
 
     def check_speech_context(self):
         speech_context = self.speech_context()
         if speech_context is not None:
             for i in speech_context:
-                if (i.get("boost") > 20 or i.get("boost") < 0):
+                if i.get("boost") > 20 or i.get("boost") < 0:
                     self.state = False
 
     def recognition_meta_data(self):
@@ -149,63 +159,71 @@ class STT:
             original_media_type=self.select_media_type(),
             recording_device_name=self.recording_device_name,
             recording_device_type=self.select_recording_device_type(),
-            audio_topic=self.audio_topic
+            audio_topic=self.audio_topic,
         )
         return metadata
 
     def select_interaction_type(self):
-        if (self.interaction_type == "discussion"):
+        if self.interaction_type == "discussion":
             return speech.RecognitionMetadata.InteractionType.DISCUSSION
-        elif (self.interaction_type == "presentation"):
+        elif self.interaction_type == "presentation":
             return speech.RecognitionMetadata.InteractionType.PRESENTATION
-        elif (self.interaction_type == "phone_call"):
+        elif self.interaction_type == "phone_call":
             return speech.RecognitionMetadata.InteractionType.PHONE_CALL
-        elif (self.interaction_type == "voice_mail"):
+        elif self.interaction_type == "voice_mail":
             return speech.RecognitionMetadata.InteractionType.VOICEMAIL
-        elif (self.interaction_type == "professionally_produced"):
+        elif self.interaction_type == "professionally_produced":
             return speech.RecognitionMetadata.InteractionType.PROFESSIONALLY_PRODUCED
-        elif (self.interaction_type == "voice_search"):
+        elif self.interaction_type == "voice_search":
             return speech.RecognitionMetadata.InteractionType.VOICE_SEARCH
-        elif (self.interaction_type == "voice_command"):
+        elif self.interaction_type == "voice_command":
             return speech.RecognitionMetadata.InteractionType.VOICE_COMMAND
-        elif (self.interaction_type == "dictation"):
+        elif self.interaction_type == "dictation":
             return speech.RecognitionMetadata.InteractionType.DICTATION
         else:
-            return speech.RecognitionMetadata.InteractionType.INTERACTION_TYPE_UNSPECIFIED
+            return (
+                speech.RecognitionMetadata.InteractionType.INTERACTION_TYPE_UNSPECIFIED
+            )
 
     def select_microphone_distance(self):
-        if (self.microphone_distance == "nearfield"):
+        if self.microphone_distance == "nearfield":
             return speech.RecognitionMetadata.MicrophoneDistance.NEARFIELD
-        elif (self.microphone_distance == "midfield"):
+        elif self.microphone_distance == "midfield":
             return speech.RecognitionMetadata.MicrophoneDistance.MIDFIELD
-        elif (self.microphone_distance == "farfield"):
+        elif self.microphone_distance == "farfield":
             return speech.RecognitionMetadata.MicrophoneDistance.FARFIELD
         else:
-            return speech.RecognitionMetadata.MicrophoneDistance.MICROPHONE_DISTANCE_UNSPECIFIED
+            return (
+                speech.RecognitionMetadata.MicrophoneDistance.MICROPHONE_DISTANCE_UNSPECIFIED
+            )
 
     def select_media_type(self):
-        if (self.original_media_type == "audio"):
+        if self.original_media_type == "audio":
             return speech.RecognitionMetadata.OriginalMediaType.AUDIO
-        elif (self.original_media_type == "video"):
+        elif self.original_media_type == "video":
             return speech.RecognitionMetadata.OriginalMediaType.VIDEO
         else:
-            return speech.RecognitionMetadata.OriginalMediaType.ORIGINAL_MEDIA_TYPE_UNSPECIFIED
+            return (
+                speech.RecognitionMetadata.OriginalMediaType.ORIGINAL_MEDIA_TYPE_UNSPECIFIED
+            )
 
     def select_recording_device_type(self):
-        if (self.recording_device_type == "smartphone"):
+        if self.recording_device_type == "smartphone":
             return speech.RecognitionMetadata.RecordingDeviceType.SMARTPHONE
-        elif (self.recording_device_type == "pc"):
+        elif self.recording_device_type == "pc":
             return speech.RecognitionMetadata.RecordingDeviceType.PC
-        elif (self.recording_device_type == "phone_line"):
+        elif self.recording_device_type == "phone_line":
             return speech.RecognitionMetadata.RecordingDeviceType.PHONE_LINE
-        elif (self.recording_device_type == "vehicle"):
+        elif self.recording_device_type == "vehicle":
             return speech.RecognitionMetadata.RecordingDeviceType.VEHICLE
-        elif (self.recording_device_type == "other_outdoor_device"):
+        elif self.recording_device_type == "other_outdoor_device":
             return speech.RecognitionMetadata.RecordingDeviceType.OTHER_OUTDOOR_DEVICE
-        elif (self.recording_device_type == "other_indoor_device"):
+        elif self.recording_device_type == "other_indoor_device":
             return speech.RecognitionMetadata.RecordingDeviceType.OTHER_INDOOR_DEVICE
         else:
-            return speech.RecognitionMetadata.RecordingDeviceType.RECORDING_DEVICE_TYPE_UNSPECIFIED
+            return (
+                speech.RecognitionMetadata.RecordingDeviceType.RECORDING_DEVICE_TYPE_UNSPECIFIED
+            )
 
     def check_for_bounds(self):
         self.check_speech_context()
