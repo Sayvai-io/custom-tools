@@ -26,7 +26,7 @@ core_requirements = [
 ]
 
 setup(
-    name="sayvai_tools",
+    name="sayvai-tools",
     version="0.0.1",
     description="Tools for the assistant",
     author="sayvai-io",
