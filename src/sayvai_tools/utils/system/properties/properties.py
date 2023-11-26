@@ -3,19 +3,26 @@
 import os
 import sys
 import platform
+from platform import uname_result
+
 from pydantic import BaseModel
-my_system = platform.uname()
+
+my_system: uname_result = platform.uname()
+
 
 class SystemProperties(BaseModel):
     """properties class"""
-    SYSTEM : str = my_system.system
-    NODE : str = my_system.node
-    RELEASE_DATE : str = my_system.release
-    MACHINE : str = my_system.machine
-    PROCESSOR : str = my_system.processor
-    USERNAME : str = os.getlogin()
+    SYSTEM: str = my_system.system
+    NODE: str = my_system.node
+    RELEASE_DATE: str = my_system.release
+    MACHINE: str = my_system.machine
+    PROCESSOR: str = my_system.processor
+    USERNAME: str = os.getlogin()
+
+
 class Config:
     """config class"""
+
     def __init__(self):
         """init method"""
         self.system_properties = SystemProperties()
@@ -44,20 +51,23 @@ class Config:
         """get processor"""
         return self.system_properties.PROCESSOR
 
-    def get_os(self):
+    @staticmethod
+    def get_os():
         """get os"""
         return os.name
 
-    def get_python_version(self):
+    @staticmethod
+    def get_python_version():
         """get python version"""
         return sys.version
 
-    def get_python_version_info(self):
+    @staticmethod
+    def get_python_version_info():
         """get python version info"""
         return sys.version_info
 
 
-def getallproperties():
+def getAllProperties()->dict:
     config: dict = {}
     try:
         for value in SystemProperties():
