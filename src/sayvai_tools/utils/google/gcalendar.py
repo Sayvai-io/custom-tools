@@ -25,8 +25,10 @@ class GCalendar:
         self.calendar_id = "primary"
         self.organizer_email = email
         self.summary = summary
-        if os.path.exists("token.json"):
-            self.creds = Credentials.from_authorized_user_file("token.json", self.SCOPE)
+        self.token_path = os.environ["GTOKEN_PATH"]
+        self.credential_path = os.environ["GOOGLE_CREDENTIALS_PATH"]
+        if os.path.exists(self.token_path):
+            self.creds = Credentials.from_authorized_user_file(self.token_path, self.SCOPE)
         else:
             self.get_credentials()
         # if self.creds and self.creds.expired and self.creds.refresh_token:
@@ -35,10 +37,10 @@ class GCalendar:
 
     def get_credentials(self):
         """Gets the credentials for the user"""
-        flow = InstalledAppFlow.from_client_secrets_file("credentials.json", self.SCOPE)
+        flow = InstalledAppFlow.from_client_secrets_file(self.credential_path, self.SCOPE)
         self.creds = flow.run_local_server(port=0)
 
-        with open("token.json", "w") as token:
+        with open(self.token_path, "w") as token:
             token.write(self.creds.to_json())
 
         return "Credentials obtained"

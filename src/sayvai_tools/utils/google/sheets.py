@@ -3,6 +3,7 @@ import json
 import gspread
 import datetime
 from gspread import utils
+import os
 
 
 class GSheets:
@@ -10,10 +11,10 @@ class GSheets:
 
     def __init__(self) -> None:
         self.gc, _user = self.authenticate()
-        pass
+        self.credential_path = os.environ["GOOGLE_CREDENTIALS_PATH"]
 
     def get_credentials(self):
-        with open("credentials.json") as f:
+        with open(self.credential_path) as f:
             data = json.load(f)
         return data
 
