@@ -17,3 +17,5 @@ dist
 sayvai.db
 test.py
 tests/__pycache__
+.idea
+.idea/*
