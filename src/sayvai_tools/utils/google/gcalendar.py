@@ -167,7 +167,7 @@ class GCalendar:
 
     def book_slots(
         self,
-        date,
+        input_str: str,
         MINIMUM_TIME_SLOT: int = 15,
         MAXIMUM_TIME_SLOT: int = 60,
         OPEN_TIME: int = 9,
@@ -183,13 +183,13 @@ class GCalendar:
         :param MAXIMUM_TIME_SLOT:
         :param OPEN_TIME:
         :param MINIMUM_TIME_SLOT:
-        :param date:
+        :param input_str:
         :return: appointment event creation
         """
         startt = time.time()
 
         # splits the input string into start time, end time and email
-        input_pairs = date.split("/")
+        input_pairs = input_str.split("/")
         start_time = self.parse_date(input_pairs[0])
         end_time = self.parse_date(input_pairs[1])
         phone = input_pairs[2]

@@ -54,7 +54,7 @@ class ElevenlabsAudioStreaming:
     ):
         api_key = self.api_key
         """
-        passes the text to elevenlabs api to play the audio
+        passes the text to elevenlabs api to play the TTS
 
         """
         if not isinstance(audio_streaming, bool):
@@ -76,7 +76,7 @@ class ElevenlabsAudioStreaming:
                 api_key=api_key,
             )
             # audio_stream is a generator with byte values that cannot be saved directly using save function
-            # so we add all the byte values in generator to a single variable and save the audio
+            # so we add all the byte values in generator to a single variable and save the TTS
             byte_values = bytearray()
             for byte_chunk in audio_stream:
                 byte_values += byte_chunk
@@ -84,15 +84,15 @@ class ElevenlabsAudioStreaming:
             # Convert the accumulated byte values to a bytes object
             final_byte_data = bytes(byte_values)
             return final_byte_data
-            # save(final_byte_data, "E:/Text-to-speech/src/audio buffer/audio.wav")
+            # save(final_byte_data, "E:/Text-to-speech/src/TTS buffer/TTS.wav")
             # play(final_byte_data)
 
         # if Audio streaming is False
         else:
             audio = generate(text=text, voice=voice, model=model, api_key=api_key)
             return audio
-            # save(audio, "E:/Text-to-speech/src/audio buffer/audio.wav")
-            # play(audio)
+            # save(TTS, "E:/Text-to-speech/src/TTS buffer/TTS.wav")
+            # play(TTS)
 
     @staticmethod
     def avail_voices():
