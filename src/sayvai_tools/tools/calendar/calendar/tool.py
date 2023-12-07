@@ -12,7 +12,7 @@ class Calendar:
         self.cal = GCalendar(scope=self.scope, email=self.email, summary=self.summary)
 
     def _run(self, date: str):
-        return self.cal.book_slots(date)
+        return self.cal.book_slots(input_str=date)
 
     async def _arun(self, date: str):
         raise NotImplementedError("Calendar async not implemented")

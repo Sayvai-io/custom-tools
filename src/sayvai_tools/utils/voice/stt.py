@@ -198,7 +198,7 @@ class STT:
             )
 
     def select_media_type(self):
-        if self.original_media_type == "audio":
+        if self.original_media_type == "TTS":
             return speech.RecognitionMetadata.OriginalMediaType.AUDIO
         elif self.original_media_type == "video":
             return speech.RecognitionMetadata.OriginalMediaType.VIDEO
