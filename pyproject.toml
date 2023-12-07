@@ -1,3 +1,5 @@
 #config file
 name = "sayvai_tools"
 version = "0.0.1"
+
+[tool.poetry.dependencies]

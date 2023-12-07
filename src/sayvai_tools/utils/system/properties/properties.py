@@ -67,7 +67,7 @@ class Config:
         return sys.version_info
 
 
-def getAllProperties()->dict:
+def get_all_properties()->dict:
     config: dict = {}
     try:
         for value in SystemProperties():
