@@ -1,3 +1,15 @@
-#config file
-name = "sayvai_tools"
-version = "0.0.1"
+[tool.poetry]
+name = "sayvai-tools"
+version = "0.0.2"
+description = "A python framwork for customising langchain assiatants."
+authors = ["sayvai <sanjaypranav@sayvai.io>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -17,3 +17,10 @@ dist
 sayvai.db
 test.py
 tests/__pycache__
+.idea
+.idea/*
+.pytest_cache
+.pytest_cache/*
+client_secrets.json
+credentials (1).json
+.env

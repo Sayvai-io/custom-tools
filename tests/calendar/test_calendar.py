@@ -1,3 +1,6 @@
+import os
+import dotenv
+
 import pytest
 from typing import Tuple, List, Dict, Any, Text, Optional
 from sayvai_tools.tools.calendar.calendar import Calendar

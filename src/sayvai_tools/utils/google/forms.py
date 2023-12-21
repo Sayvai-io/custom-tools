@@ -99,4 +99,5 @@ class GForms:
     
     
     def get_form_url(self, form_title: str):
-        raise NotImplementedError("This method is not implemented yet")
+        return f"https://docs.google.com/forms/d/{self.formID}/viewform"
+        # raise NotImplementedError("This method is not implemented yet")
