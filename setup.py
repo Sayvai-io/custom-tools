@@ -28,7 +28,7 @@ core_requirements = [
 
 setup(
     name="sayvai-tools",
-    version="0.0.1",
+    version="0.0.2",
     description="Tools for the assistant",
     author="sayvai-io",
     package_dir={"": "src"},
