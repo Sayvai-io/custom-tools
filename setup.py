@@ -43,6 +43,7 @@ core_requirements = [
         'mypy-extensions==1.0.0',
         'numpy==1.26.2',
         'openai==1.6.0',
+        'pinecone-client==2.2.4',
         'packaging==23.2',
         'parso==0.8.3',
         'pexpect==4.9.0',
