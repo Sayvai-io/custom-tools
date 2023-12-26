@@ -1,4 +1,5 @@
 from setuptools import find_packages, setup
+from src.sayvai_tools import __version__
 
 core_requirements = [
     "langchain",
@@ -8,6 +9,7 @@ core_requirements = [
     "tiktoken",
     "SQLAlchemy",
     "elevenlabs==0.2.24",
+    "aiohttp==3.8.5",
     "google_auth_oauthlib",
     "google-auth-httplib2",
     "numpy",
@@ -27,7 +29,7 @@ core_requirements = [
 
 setup(
     name="sayvai_tools",
-    version="0.0.1",
+    version=__version__,
     description="Tools for the assistant",
     author="sayvai-io",
     package_dir={"": "src"},
