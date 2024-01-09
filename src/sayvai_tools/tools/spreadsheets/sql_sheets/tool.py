@@ -41,6 +41,10 @@ class SQLGSheet:
         self.prompt = prompt
         self.verbose = verbose
 
+    @classmethod
+    def create(cls, uri: str, llm: BaseLanguageModel, prompt: Optional[BasePromptTemplate] = None, verbose: bool = False) -> cls:
+        return cls(uri, llm, prompt, verbose)
+
     # sample input save past 30 days data to google sheet from record table
     # table fetched from sql query 
 

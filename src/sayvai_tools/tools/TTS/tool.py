@@ -19,6 +19,10 @@ class VoiceOutputRun:
         assert isinstance(self.api_key, str)
         pass
 
+    @classmethod
+    def create(cls, api_key: str) -> cls:
+        return cls(api_key)
+
     def _run(
         self,
         query: str,

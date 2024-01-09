@@ -17,6 +17,10 @@ class SendMail:
         self.emails = self.excel.read_column("email")
         self.email_sender = EmailSender(ORGANIZER_EMAIL, SMTP_USERNAME, SMTP_PASSWORD)
 
+    @classmethod
+    def create(cls, path: str) -> cls:
+        return cls(path)
+
     def _run(self, content: str):
         self.email_sender.send_multiple_email(self.emails, "Sayvai", content)
         return "Mail sent successfully"

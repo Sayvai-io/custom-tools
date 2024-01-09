@@ -27,6 +27,15 @@ class ConversationalHuman:
         self.tts = ElevenlabsAudioStreaming(api_key=api_key)
         self.g_api_key = g_api_key
 
+    @classmethod
+    def create(
+        cls,
+        api_key: str,
+        g_api_key: str,
+        phrase_set_path: str,
+    ) -> "ConversationalHuman":
+        return cls(api_key, g_api_key, phrase_set_path)
+
     def _run(
         self,
         query: str,

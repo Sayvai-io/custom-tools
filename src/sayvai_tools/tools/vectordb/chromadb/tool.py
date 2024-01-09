@@ -21,6 +21,10 @@ class ChromaDB:
             persist_directory=self.persist_directory, embedding_function=self.embeddings
         )
 
+    @classmethod
+    def create(cls, embeddings: Any, persist_directory: str) -> cls:
+        return cls(embeddings, persist_directory)
+
     def _run(
         self,
         query: str,

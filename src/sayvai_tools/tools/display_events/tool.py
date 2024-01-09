@@ -11,6 +11,10 @@ class DisplayEvents:
         self.email = None
         self.cal = GCalendar(scope=self.scope, email=self.email, summary=self.summary)
 
+    @classmethod
+    def create(cls , scope: str) -> cls:
+        return cls(scope)
+
     def _run(self, date: str):
         date = self.cal.parse_date(date)
         specific_date = date.date()

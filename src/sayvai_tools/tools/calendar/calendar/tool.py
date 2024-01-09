@@ -11,6 +11,10 @@ class Calendar:
         self.summary = summary
         self.cal = GCalendar(scope=self.scope, email=self.email, summary=self.summary)
 
+    @classmethod
+    def create(cls , scope: str, email: str, summary: str) -> cls:
+        return cls(scope, email, summary)
+
     def _run(self, date: str):
         return self.cal.book_slots(input_str=date)
 

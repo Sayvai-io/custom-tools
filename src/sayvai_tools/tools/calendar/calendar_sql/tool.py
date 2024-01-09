@@ -14,6 +14,10 @@ class CalendarSql:
         self.summary = summary
         self.cal = GCalendar(self.scope, email=self.email, summary=self.summary)
 
+    @classmethod
+    def create(cls, pool, scope: str, email: str, summary: str) -> cls:
+        return cls(pool, scope, email, summary)
+
     def _run(self, details: str):
         start_time, end_time, phone, name = details.split("/")
         start_time = self.cal.parse_date(start_time)
