@@ -13,3 +13,4 @@ install:
 
 format:
 	black src/
+
