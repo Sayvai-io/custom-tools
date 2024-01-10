@@ -75,7 +75,6 @@ class STT:
             return speech.RecognitionConfig.AudioEncoding.ENCODING_UNSPECIFIED
 
     def create_reg_config(self):
-
         config_mp3 = speech.RecognitionConfig(
             model=self.model,
             encoding=self.audio_encoding(),
