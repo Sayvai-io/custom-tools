@@ -28,7 +28,9 @@ class GCalendar:
         self.token_path = os.environ["GTOKEN_PATH"]
         self.credential_path = os.environ["GOOGLE_CREDENTIALS_PATH"]
         if os.path.exists(self.token_path):
-            self.creds = Credentials.from_authorized_user_file(self.token_path, self.SCOPE)
+            self.creds = Credentials.from_authorized_user_file(
+                self.token_path, self.SCOPE
+            )
         else:
             self.get_credentials()
         # if self.creds and self.creds.expired and self.creds.refresh_token:
@@ -37,7 +39,9 @@ class GCalendar:
 
     def get_credentials(self):
         """Gets the credentials for the user"""
-        flow = InstalledAppFlow.from_client_secrets_file(self.credential_path, self.SCOPE)
+        flow = InstalledAppFlow.from_client_secrets_file(
+            self.credential_path, self.SCOPE
+        )
         self.creds = flow.run_local_server(port=0)
 
         with open(self.token_path, "w") as token:
@@ -211,7 +215,6 @@ class GCalendar:
         ):
             booked_slots.append(start + " " + end)
             if summary == "day is not available for booking":
-
                 # formatting the start, end and start_time, end_time to compare
                 start = dt.datetime.strptime(start, "%Y-%m-%dT%H:%M:%S%z")
                 end = dt.datetime.strptime(end, "%Y-%m-%dT%H:%M:%S%z")

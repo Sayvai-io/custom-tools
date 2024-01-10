@@ -38,7 +38,8 @@ class PGVectorDB:
 
 class LoadDocs:
     """The PGVector Module will try to create a table with the name of the collection.
-    So, make sure that the collection name is unique and the user has the permission to create a table."""
+    So, make sure that the collection name is unique and the user has the permission to create a table.
+    """
 
     def __init__(
         self, directory, embeddings: Any, collection_name: str, connection_string: str

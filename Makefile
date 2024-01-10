@@ -10,3 +10,7 @@ build:
 
 install:
 	pip install .
+
+format:
+	black src/
+

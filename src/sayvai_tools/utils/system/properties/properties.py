@@ -12,6 +12,7 @@ my_system: uname_result = platform.uname()
 
 class SystemProperties(BaseModel):
     """properties class"""
+
     SYSTEM: str = my_system.system
     NODE: str = my_system.node
     RELEASE_DATE: str = my_system.release
@@ -67,7 +68,7 @@ class Config:
         return sys.version_info
 
 
-def get_all_properties()->dict:
+def get_all_properties() -> dict:
     config: dict = {}
     try:
         for value in SystemProperties():
