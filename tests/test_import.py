@@ -8,5 +8,5 @@ def test_imports():
         __author__,
         __author_email__,
     )
-    assert __version__ == "0.0.1"
+    assert __version__ == "0.0.3"
     

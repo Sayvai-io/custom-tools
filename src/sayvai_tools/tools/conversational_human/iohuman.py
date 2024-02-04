@@ -8,10 +8,11 @@
 
 # from sayvai_tools.utils.voice.stt import STT
 # from sayvai_tools.utils.voice.tts import ElevenlabsAudioStreaming
+from sayvai_tools.utils.exception import SayvaiToolsError
 
 
 class ConversationalHuman:
-    raise "NotImplementedError"
+    raise SayvaiToolsError("Conversational Human tool is Deprecated. Due to PyAudio and SpeechRecognition library issues. Please use the Google Assistant tool instead.")
 
 
 #     """Tool that asks user for input."""
