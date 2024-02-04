@@ -1,6 +1,6 @@
 """init for tools module."""
 
-from typing import List, Str
+from typing import List
 from sayvai_tools.tools.calendar import (
     Calendar,
     CalendarSql
@@ -34,7 +34,7 @@ from sayvai_tools.tools.pdfreader import (
 
 
 
-__all__ : List[Str] = [
+__all__ : List[str] = [
     "Calendar",
     "CalendarSql",
     "BlockCalendar",
