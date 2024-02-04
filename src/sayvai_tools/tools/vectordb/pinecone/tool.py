@@ -2,7 +2,7 @@ from typing import Any, Optional
 
 from langchain.document_loaders import DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import Pinecone
+from langchain_community.vectorstores import Pinecone
 
 
 class PineconeDB:
