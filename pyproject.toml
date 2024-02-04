@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.9 || ^3.10 || ^3.11 || ^3.12"
 openai = "0.28.0"
 rich = "13.7.0"
 pinecone-client = "2.2.4"
