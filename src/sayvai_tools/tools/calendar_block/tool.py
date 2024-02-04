@@ -1,7 +1,7 @@
 from sayvai_tools.utils.google.gcalendar import GCalendar
 
 
-class Block:
+class BlockCalendar:
     name = "Block Day"
     description = "Block a day in the calendar"
 

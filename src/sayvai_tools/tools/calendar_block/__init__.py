@@ -1,3 +1,3 @@
-from sayvai_tools.tools.calendar_block.tool import Block
+from sayvai_tools.tools.calendar_block.tool import BlockCalendar
 
-__all__ = ["Block"]
+__all__ = ["BlockCalendar"]
