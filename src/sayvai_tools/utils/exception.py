@@ -12,7 +12,4 @@ class SayvaiToolsWarning(Warning):
         self.message = message
         super().__init__(self.message)
 
-class SayvaiToolsNotImplementedError(NotImplementedError):
-    """Base class for not implemented errors in this module."""
-    raise NotImplementedError("This method is not implemented yet")
 
