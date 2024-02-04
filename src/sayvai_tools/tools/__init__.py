@@ -36,7 +36,7 @@ __all__: List[str] = [
     "PGVectorDB",
     "PineconeDB",
     "ReadPagesTool",
-    "ReadPdfTool",
+    "ReadPDFTool",
     "ReadPageTool",
 ]
 
