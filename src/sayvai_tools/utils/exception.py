@@ -15,3 +15,12 @@ class SayvaiToolsWarning(Warning):
     def __init__(self, message: str):
         self.message = message
         super().__init__(self.message)
+        
+        
+class SayvaiToolsDeprecatedWarning(SayvaiToolsWarning):
+    """Base class for deprecated warnings in this module."""
+    
+    def __init__(self, message: str):
+        self.message = message
+        super().__init__(self.message)
+    
