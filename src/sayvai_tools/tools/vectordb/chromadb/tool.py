@@ -1,7 +1,8 @@
 from typing import Any, Optional
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+
 from langchain.document_loaders import DirectoryLoader
 from langchain.embeddings import OpenAIEmbeddings
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 
 

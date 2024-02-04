@@ -1,5 +1,6 @@
-from sayvai_tools.utils.google.gcalendar import GCalendar
 from sqlalchemy import text
+
+from sayvai_tools.utils.google.gcalendar import GCalendar
 
 
 class CalendarSql:

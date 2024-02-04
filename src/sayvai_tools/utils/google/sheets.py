@@ -1,9 +1,10 @@
 """Google Sheets API""" ""
-import json
-import gspread
 import datetime
-from gspread import utils
+import json
 import os
+
+import gspread
+from gspread import utils
 
 
 class GSheets:

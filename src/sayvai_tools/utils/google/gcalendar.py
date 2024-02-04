@@ -3,8 +3,7 @@ import os
 import os.path
 import time
 from datetime import timedelta
-from typing import Dict
-from typing import List
+from typing import Dict, List
 
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow

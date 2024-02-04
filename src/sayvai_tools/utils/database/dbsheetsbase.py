@@ -1,17 +1,19 @@
 """SQLAlchemy wrapper around a database."""
+
 from __future__ import annotations
 
 import warnings
 from typing import Any, Iterable, List, Optional, Sequence
 
-import sqlalchemy
 import pandas as pd
+import sqlalchemy
 from langchain.utils import get_from_env
-from sayvai_tools.utils.google.sheets import GSheets
 from sqlalchemy import MetaData, Table, create_engine, inspect, select, text
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import ProgrammingError, SQLAlchemyError
 from sqlalchemy.schema import CreateTable
+
+from sayvai_tools.utils.google.sheets import GSheets
 
 
 def _format_index(index: sqlalchemy.engine.interfaces.ReflectedIndex) -> str:
