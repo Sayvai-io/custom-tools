@@ -41,11 +41,11 @@ __all__: List[str] = [
 ]
 
 
-def get_all_tools() -> List[Str]:
+def get_all_tools() -> List[str]:
     return __all__
 
 
-def get_tool(tool_name: Str) -> Str:
+def get_tool(tool_name: str) -> str:
     if tool_name in __all__:
         return tool_name
     else:
