@@ -16,6 +16,7 @@ from sayvai_tools.tools.spreadsheets import Sheets, SQLSheet
 from sayvai_tools.tools.sql_database import Database
 from sayvai_tools.tools.TTS import VoiceOutputRun
 from sayvai_tools.tools.vectordb import ChromaDB, PGVectorDB, PineconeDB
+from langchain.tools import __all__ as langchain_tools
 
 __all__: List[str] = [
     "Calendar",
@@ -50,3 +51,6 @@ def get_tool(tool_name: str) -> str:
         return tool_name
     else:
         return "Tool not found"
+    
+def get_langchain_tools() -> List[str]:
+    return langchain_tools
