@@ -14,7 +14,7 @@ from sayvai_tools.tools.retrive_details import (
     RetrieveEmail,
     RetrievePhone
 )
-from sayvai_tools.tools.send_mail import SendEmail
+from sayvai_tools.tools.send_mail import SendMail
 from sayvai_tools.tools.spreadsheets import (
     SQLSheet,
     Sheets
@@ -44,7 +44,7 @@ __all__ : List[str] = [
     "FormTool",
     "RetrieveEmail",
     "RetrievePhone",
-    "SendEmail",
+    "SendMail",
     "SQLSheet",
     "Sheets",
     "Database",
