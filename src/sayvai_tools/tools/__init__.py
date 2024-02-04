@@ -8,7 +8,7 @@ from sayvai_tools.tools.conversational_human import ConversationalHuman
 from sayvai_tools.tools.date import GetDate
 from sayvai_tools.tools.display_events import DisplayEvents
 from sayvai_tools.tools.forms import FormTool
-from sayvai_tools.tools.pdfreader import ReadPagesTool, ReadPageTool, ReadPdfTool
+from sayvai_tools.tools.pdfreader import ReadPagesTool, ReadPageTool, ReadPDFTool
 from sayvai_tools.tools.retrive_details import RetrieveEmail, RetrievePhone
 from sayvai_tools.tools.send_mail import SendMail
 from sayvai_tools.tools.spreadsheets import Sheets, SQLSheet
