@@ -1,8 +1,9 @@
 """python file for system utils/properties"""
+
 # with this one from src/sayvai_tools/utils/system/properties/__init__.py:
 import os
-import sys
 import platform
+import sys
 from platform import uname_result
 
 from pydantic import BaseModel

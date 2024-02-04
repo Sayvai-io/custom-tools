@@ -6,7 +6,11 @@ clean:
 	rm -rf src/sayvai_tools.egg-info
 
 build:
-	apt-get update && apt-get install libasound-dev libportaudio2 libportaudiocpp0 portaudio19-dev -y
+	apt-get update && apt-get install -y python3 python3-pip
+	pip install --upgrade pip
+	pip install poetry
+	poetry build
+	poetry install
 
 install:
 	pip install .

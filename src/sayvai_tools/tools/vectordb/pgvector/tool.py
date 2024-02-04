@@ -2,7 +2,7 @@ from typing import Any
 
 from langchain.document_loaders import DirectoryLoader
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.vectorstores.pgvector import PGVector
+from langchain_community.vectorstores import PGVector
 
 
 class PGVectorDB:

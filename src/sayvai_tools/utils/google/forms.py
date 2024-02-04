@@ -1,8 +1,11 @@
 """Google Forms"""
+
 from __future__ import print_function
+
+from typing import Any, List, Optional, Text
+
 from apiclient import discovery
 from httplib2 import Http
-from typing import Any, Optional, List, Text
 from oauth2client import client, file, tools
 
 SCOPES = "https://www.googleapis.com/auth/forms.body"
