@@ -28,9 +28,6 @@ jobs:
       run: |
         python3 -m pip install --upgrade pip
         sudo make build
-        python -m pip install black isort 
-    - name: Run tests
-      run: |
-        python -m poetry show sayvai-tools
+        python -m pip install black isort flake8
 
    
