@@ -19,7 +19,7 @@ class BlockCalendar:
     @classmethod
     def create(
         cls, organizer: str, smtp_username: str, smtp_password: str, scope: str
-    ) -> cls:
+    ) -> "BlockCalendar":
         return cls(organizer, smtp_username, smtp_password, scope)
 
     def _run(self, date: str, contacts: list):
