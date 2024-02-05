@@ -1,5 +1,6 @@
-from sayvai_tools.utils.google.gcalendar import GCalendar
 from sqlalchemy import text
+
+from sayvai_tools.utils.google.gcalendar import GCalendar
 
 
 class CalendarSql:
@@ -26,7 +27,7 @@ class CalendarSql:
         specific_date = start_time.date()
         date_string = specific_date.strftime("%Y-%m-%d")
 
-        query = self.cursor.execute(text(f"""SELECT phone_number FROM patient_info;"""))
+        query = self.cursor.execute(text("""SELECT phone_number FROM patient_info;"""))
         phone_number = query.fetchall()
         phone_number = [i[0] for i in phone_number]
         result = self.cal.book_slots(details)
@@ -35,8 +36,9 @@ class CalendarSql:
             if details.split("/")[2] not in phone_number:
                 query = self.cursor.execute(
                     text(
-                        f"""INSERT INTO patient_info (name, phone_number, start_time, end_time, event_id, appointment_date) VALUES ('{name}', '{phone}'
-                                            , '{start_time}', '{end_time}','{event_id}','{date_string}');"""
+                        f"""INSERT INTO patient_info (name, phone_number, start_time, end_time, event_id, appointment_date)
+                        VALUES ('{name}', '{phone}'
+                         , '{start_time}', '{end_time}','{event_id}','{date_string}');"""
                     )
                 )
                 # query.commit()

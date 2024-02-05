@@ -1,8 +1,9 @@
 """python file for system utils/properties"""
+
 # with this one from src/sayvai_tools/utils/system/properties/__init__.py:
 import os
-import sys
 import platform
+import sys
 from platform import uname_result
 
 from pydantic import BaseModel
@@ -12,6 +13,7 @@ my_system: uname_result = platform.uname()
 
 class SystemProperties(BaseModel):
     """properties class"""
+
     SYSTEM: str = my_system.system
     NODE: str = my_system.node
     RELEASE_DATE: str = my_system.release
@@ -67,7 +69,7 @@ class Config:
         return sys.version_info
 
 
-def get_all_properties()->dict:
+def get_all_properties() -> dict:
     config: dict = {}
     try:
         for value in SystemProperties():

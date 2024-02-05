@@ -2,7 +2,6 @@ from sayvai_tools.utils.google.sheets import GSheets
 
 
 class Sheets:
-
     name = "sheets"
     description = (
         "Useful for creating and updating sheets."

@@ -1,4 +1,4 @@
-#creating word
+# creating word
 
 
 class Word:

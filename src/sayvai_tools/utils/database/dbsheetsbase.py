@@ -1,17 +1,19 @@
 """SQLAlchemy wrapper around a database."""
+
 from __future__ import annotations
 
 import warnings
 from typing import Any, Iterable, List, Optional, Sequence
 
-import sqlalchemy
 import pandas as pd
+import sqlalchemy
 from langchain.utils import get_from_env
-from sayvai_tools.utils.google.sheets import GSheets
 from sqlalchemy import MetaData, Table, create_engine, inspect, select, text
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import ProgrammingError, SQLAlchemyError
 from sqlalchemy.schema import CreateTable
+
+from sayvai_tools.utils.google.sheets import GSheets
 
 
 def _format_index(index: sqlalchemy.engine.interfaces.ReflectedIndex) -> str:
@@ -42,7 +44,7 @@ class SQLDatabaseSheetsBase:
     def __init__(
         self,
         engine: Engine,
-        sheets : GSheets,
+        sheets: GSheets,
         schema: Optional[str] = None,
         metadata: Optional[MetaData] = None,
         ignore_tables: Optional[List[str]] = None,
@@ -383,7 +385,6 @@ class SQLDatabaseSheetsBase:
         #     for c in commands
         #     if c.strip() and not c.strip().startswith(("Response:", "Answer:"))
         # ]
-        
 
         with self._engine.begin() as connection:
             if self._schema is not None:
@@ -396,7 +397,7 @@ class SQLDatabaseSheetsBase:
                 elif self.dialect == "mssql":
                     pass
                 else:  # postgresql and compatible dialects
-                    connection.exec_driver_sql(f"SET search_path TO {self._schema}") 
+                    connection.exec_driver_sql(f"SET search_path TO {self._schema}")
         df = pd.read_sql_query(text(command), self._engine)
         data_dict = df.to_dict("split")
         columns = data_dict["columns"]

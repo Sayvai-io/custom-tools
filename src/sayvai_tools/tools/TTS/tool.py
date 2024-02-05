@@ -1,6 +1,7 @@
 """base tool for IO"""
 
 from elevenlabs import play
+
 from sayvai_tools.utils.voice.tts import ElevenlabsAudioStreaming
 
 

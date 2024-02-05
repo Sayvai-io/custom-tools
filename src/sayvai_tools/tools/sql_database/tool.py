@@ -69,5 +69,4 @@ class Database:
         return sql_db_chain.run(query)
 
     async def _arun(self, query: str):
-
         raise NotImplementedError("SQL database async not implemented")

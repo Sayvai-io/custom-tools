@@ -2,11 +2,8 @@
 
 import pytest
 
+
 def test_imports():
-    from sayvai_tools import (
-        __version__,
-        __author__,
-        __author_email__,
-    )
-    assert __version__ == "0.0.1"
+    from sayvai_tools import __author__, __author_email__, __version__
+    assert __version__ == "0.0.3"
     

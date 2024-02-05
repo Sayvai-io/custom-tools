@@ -1,15 +1,20 @@
-import pandas as pd
-from sqlalchemy import create_engine, text
-from sayvai_tools.utils.google.sheets import GSheets
-from sayvai_tools.utils.database.dbsheetsbase import SQLDatabaseSheetsBase
-from sayvai_tools.utils.database.sheetschain import SheetsDatabaseChain
 from typing import Optional
+
+import pandas as pd
 from langchain.schema import BasePromptTemplate
 from langchain.schema.language_model import BaseLanguageModel
+from sqlalchemy import create_engine, text
+
 from sayvai_tools.tools.sql_database.prompt import PROMPT, SQL_PROMPTS
+from sayvai_tools.utils.database.dbsheetsbase import SQLDatabaseSheetsBase
+from sayvai_tools.utils.database.sheetschain import SheetsDatabaseChain
+from sayvai_tools.utils.google.sheets import GSheets
+
 
 class SQLSheet:
     NotImplementedError
+
+
 # name = "sqlsheet"
 # description = (
 #     "Useful for exporting SQL query results to a spreadsheet."
@@ -33,7 +38,13 @@ class SQLGSheet:
         "You can use this to generate reports."
     )
 
-    def __init__(self, uri: str, llm: BaseLanguageModel, prompt: Optional[BasePromptTemplate] = None, verbose: bool = False):
+    def __init__(
+        self,
+        uri: str,
+        llm: BaseLanguageModel,
+        prompt: Optional[BasePromptTemplate] = None,
+        verbose: bool = False,
+    ):
         self.gs = GSheets()
         self.connection = create_engine(uri).connect()
         self.db = SQLDatabaseSheetsBase(engine=self.connection)
@@ -46,7 +57,7 @@ class SQLGSheet:
         return cls(uri, llm, prompt, verbose)
 
     # sample input save past 30 days data to google sheet from record table
-    # table fetched from sql query 
+    # table fetched from sql query
 
     def _run(self, query: str):
         if self.prompt is not None:
@@ -72,14 +83,11 @@ class SQLGSheet:
         return sql_db_chain.run(query)
 
 
-
-
-
 # chain_ouput : str = self.chain.run(query)
 # rprint(f"[bold purple]{chain_ouput}[/bold purple]")
 # return "Data has been exported to Google Sheets"
-    
-    
+
+
 # df = pd.read_sql_query(text(chain_ouput), self.connection)
 # data_dict = df.to_dict("split")
 # columns = data_dict["columns"]
