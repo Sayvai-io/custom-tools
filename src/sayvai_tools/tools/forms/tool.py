@@ -10,7 +10,7 @@ class FormTool:
         self.form = GForms(formTitle=title)
 
     @classmethod
-    def create(cls, scope: str, title: str = "Test Form") -> cls:
+    def create(cls, scope: str, title: str = "Test Form") -> "FormTool":
         return cls(scope, title)
 
     name = "Form Tool"

@@ -13,7 +13,7 @@ class Sheets:
         self.gs = GSheets()
 
     @classmethod
-    def create(cls) -> cls:
+    def create(cls) -> "Sheets":
         return cls()
 
     def _run(self, values: list):

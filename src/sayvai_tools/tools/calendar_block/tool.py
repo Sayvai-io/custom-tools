@@ -17,7 +17,9 @@ class BlockCalendar:
         self.cal = GCalendar(scope=self.scope, email=self.email, summary=self.summary)
 
     @classmethod
-    def create(cls, organizer: str, smtp_username: str, smtp_password: str, scope: str) -> cls:
+    def create(
+        cls, organizer: str, smtp_username: str, smtp_password: str, scope: str
+    ) -> cls:
         return cls(organizer, smtp_username, smtp_password, scope)
 
     def _run(self, date: str, contacts: list):

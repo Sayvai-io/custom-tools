@@ -12,7 +12,7 @@ class DisplayEvents:
         self.cal = GCalendar(scope=self.scope, email=self.email, summary=self.summary)
 
     @classmethod
-    def create(cls , scope: str) -> cls:
+    def create(cls, scope: str) -> "DisplayEvents":
         return cls(scope)
 
     def _run(self, date: str):

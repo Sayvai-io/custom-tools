@@ -18,7 +18,7 @@ class SendMail:
         self.email_sender = EmailSender(ORGANIZER_EMAIL, SMTP_USERNAME, SMTP_PASSWORD)
 
     @classmethod
-    def create(cls, path: str) -> cls:
+    def create(cls, path: str) -> "SendMail":
         return cls(path)
 
     def _run(self, content: str):

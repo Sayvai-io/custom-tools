@@ -15,7 +15,7 @@ class RetrievePhone:
         self.cal = GCalendar(scope=self.scope, email=self.email, summary=self.summary)
 
     @classmethod
-    def create(cls, pool, scope: str) -> cls:
+    def create(cls, pool, scope: str) -> "RetrievePhone":
         return cls(pool, scope)
 
     name = "Retrieve Email"

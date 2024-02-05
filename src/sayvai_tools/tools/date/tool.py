@@ -1,5 +1,5 @@
 import datetime
-
+from sayvai_tools.utils.exception import SayvaiToolsError
 
 class GetDate:
     def _run(self, tool_input: str) -> str:
@@ -10,5 +10,5 @@ class GetDate:
 
     async def _arun(self, tool_input: str) -> str:
         """Use the tool asynchronously."""
-        raise ("Not NotImplemented Error")
+        raise SayvaiToolsError("Not NotImplemented Error")
         # return None
