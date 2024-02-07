@@ -10,7 +10,7 @@ from langchain.agents import (
     initialize_agent,
     create_openai_functions_agent,
 )
-from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate , MessagesPlaceholder
 from langchain_openai import ChatOpenAI
 
 # Create a new LangChain instance
@@ -27,7 +27,8 @@ prompt = ChatPromptTemplate.from_messages(
 ("system", _SYSTEM_PROMPT ),
 ("human", "Hello, how are you doing?"),
 ("ai", "I'm doing well, thanks! "),
-("human", "{input} {agent_scratchpad}"),
+("human", "{input} "),
+MessagesPlaceholder(variable_name="agent_scratchpad"),
 ])
 
 
