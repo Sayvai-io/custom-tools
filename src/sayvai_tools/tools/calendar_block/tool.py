@@ -22,7 +22,8 @@ class BlockCalendar:
             organizer=kwargs["organizer"],
             smtp_username=kwargs["smtp_username"],
             smtp_password=kwargs["smtp_password"],
-            scope=kwargs["scope"],)
+            scope=kwargs["scope"],
+        )
 
     def _run(self, date: str, contacts: list):
         self.cal.block_day(

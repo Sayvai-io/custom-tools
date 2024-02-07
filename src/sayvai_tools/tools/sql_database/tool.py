@@ -39,7 +39,7 @@ class Database:
             engine=kwargs["engine"],
             prompt=kwargs.get("prompt"),
             verbose=kwargs.get("verbose", False),
-            k=kwargs.get("k", 5)
+            k=kwargs.get("k", 5),
         )
 
     def _run(self, query: str) -> str:

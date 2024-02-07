@@ -4,11 +4,11 @@ from sayvai_tools.utils.exception import SayvaiToolsError
 
 
 class GetDate:
-    
+
     @classmethod
     def create(cls) -> "GetDate":
         return cls()
-    
+
     def _run(self) -> str:
         """Use the tool."""
 

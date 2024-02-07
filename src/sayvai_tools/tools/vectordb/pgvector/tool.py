@@ -29,7 +29,7 @@ class PGVectorDB:
         return cls(
             embeddings=kwargs["embeddings"],
             collection_name=kwargs["collection_name"],
-            connection_string=kwargs["connection_string"]
+            connection_string=kwargs["connection_string"],
         )
 
     def _run(

@@ -13,7 +13,9 @@ class Calendar:
 
     @classmethod
     def create(cls, **kwargs) -> "Calendar":
-        return cls(scope=kwargs["scope"], email=kwargs["email"], summary=kwargs["summary"])
+        return cls(
+            scope=kwargs["scope"], email=kwargs["email"], summary=kwargs["summary"]
+        )
 
     def _run(self, date: str):
         return self.cal.book_slots(input_str=date)
