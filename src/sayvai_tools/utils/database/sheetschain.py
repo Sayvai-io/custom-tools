@@ -8,13 +8,15 @@ from typing import Any, Dict, List, Optional
 from langchain.callbacks.manager import CallbackManagerForChainRun
 from langchain.chains.base import Chain
 from langchain.chains.llm import LLMChain
-from langchain.chains.sql_database.prompt import DECIDER_PROMPT, PROMPT, SQL_PROMPTS
+from langchain.chains.sql_database.prompt import (DECIDER_PROMPT, PROMPT,
+                                                  SQL_PROMPTS)
 from langchain.prompts.prompt import PromptTemplate
+from langchain.pydantic_v1 import Extra, Field, root_validator
 from langchain.schema import BasePromptTemplate
 from langchain.schema.language_model import BaseLanguageModel
 from langchain.tools.sql_database.prompt import QUERY_CHECKER
-from langchain.pydantic_v1 import Extra, Field, root_validator
 
+from sayvai_tools.utils.database.dbchain import SQLDatabaseChain
 from sayvai_tools.utils.database.dbsheetsbase import SQLDatabaseSheetsBase
 
 INTERMEDIATE_STEPS_KEY = "intermediate_steps"
@@ -197,7 +199,7 @@ class SheetsDatabaseChain(Chain):
         db: SQLDatabaseSheetsBase,
         prompt: Optional[BasePromptTemplate] = None,
         **kwargs: Any,
-    ) -> SQLDatabaseSheetsBaseChain:
+    ) -> SQLDatabaseChain:
         prompt = prompt or SQL_PROMPTS.get(db.dialect, PROMPT)
         llm_chain = LLMChain(llm=llm, prompt=prompt)
         return cls(llm_chain=llm_chain, database=db, **kwargs)
@@ -214,7 +216,7 @@ class SQLDatabaseSheetsBaseSequentialChain(Chain):
     """
 
     decider_chain: LLMChain
-    sql_chain: SQLDatabaseSheetsBaseChain
+    sql_chain: SQLDatabaseSheetsBase
     input_key: str = "query"  #: :meta private:
     output_key: str = "result"  #: :meta private:
     return_intermediate_steps: bool = False
@@ -229,7 +231,7 @@ class SQLDatabaseSheetsBaseSequentialChain(Chain):
         **kwargs: Any,
     ) -> SQLDatabaseSheetsBaseSequentialChain:
         """Load the necessary chains."""
-        sql_chain = SQLDatabaseSheetsBaseChain.from_llm(
+        sql_chain = SQLDatabaseChain.from_llm(
             llm, database, prompt=query_prompt, **kwargs
         )
         decider_chain = LLMChain(

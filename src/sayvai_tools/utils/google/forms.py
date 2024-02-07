@@ -2,7 +2,7 @@
 
 from __future__ import print_function
 
-from typing import Any, List, Optional, Text
+from typing import List
 
 from apiclient import discovery
 from httplib2 import Http

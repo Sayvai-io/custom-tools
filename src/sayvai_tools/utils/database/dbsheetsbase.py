@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import warnings
-from typing import Any, Iterable, List, Optional, Sequence
+from typing import Any, Iterable, List, Optional
 
 import pandas as pd
 import sqlalchemy
@@ -13,6 +13,7 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.exc import ProgrammingError, SQLAlchemyError
 from sqlalchemy.schema import CreateTable
 
+from sayvai_tools.utils.database.dbbase import SQLDatabase
 from sayvai_tools.utils.google.sheets import GSheets
 
 

@@ -16,7 +16,8 @@ class ConversationalHuman:
 
     def __init__(self, api_key: str, g_api_key: str, phrase_set_path: str) -> None:
         raise SayvaiToolsError(
-            """Conversational Human tool is Deprecated. Due to PyAudio and SpeechRecognition library issues. Please use the Google Assistant tool instead."""
+            """Conversational Human tool is Deprecated. Due to PyAudio and SpeechRecognition library issues.
+            Please use the Google Assistant tool instead."""
         )
 
 

@@ -22,6 +22,10 @@ class PineconeDB:
             self.index_name, self.embeddings, namespace=self.namespace
         )
 
+    @classmethod
+    def create(cls, embeddings: Any, index_name: str, namespace: str) -> "PineconeDB":
+        return cls(embeddings, index_name, namespace)
+
     def _run(
         self,
         query: str,

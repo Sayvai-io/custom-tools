@@ -9,6 +9,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from rich import print as rprint
 
 from sayvai_tools.utils.google.mail import EmailSender
 
@@ -280,6 +281,7 @@ class GCalendar:
                 }
                 endd = time.time()
                 total = endd - startt
+                rprint(f"[bold green] Time taken: {total} [/bold green]")
                 return self.create_event(events)
             else:
                 return "The slot is already booked.", booked_slots
