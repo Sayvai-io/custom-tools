@@ -1,5 +1,5 @@
 from typing import Any, Optional
-from sayvai_tools.utils import deprecated
+from sayvai_tools.utils.exception import deprecated
 from langchain.document_loaders import DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Pinecone
