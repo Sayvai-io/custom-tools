@@ -52,14 +52,13 @@ class SQLGSheet:
         self.verbose = verbose
 
     @classmethod
-    def create(
-        cls,
-        uri: str,
-        llm: BaseLanguageModel,
-        prompt: Optional[BasePromptTemplate] = None,
-        verbose: bool = False,
-    ) -> "SQLGSheet":
-        return cls(uri, llm, prompt, verbose)
+    def create(cls, **kwargs) -> "SQLGSheet":
+        return cls(
+            uri=kwargs["uri"],
+            llm=kwargs["llm"],
+            prompt=kwargs.get("prompt"),
+            verbose=kwargs.get("verbose", False),
+        )
 
     # sample input save past 30 days data to google sheet from record table
     # table fetched from sql query

@@ -23,8 +23,12 @@ class PineconeDB:
         )
 
     @classmethod
-    def create(cls, embeddings: Any, index_name: str, namespace: str) -> "PineconeDB":
-        return cls(embeddings, index_name, namespace)
+    def create(cls, **kwargs) -> "PineconeDB":
+        return cls(
+            embeddings=kwargs["embeddings"],
+            index_name=kwargs["index_name"],
+            namespace=kwargs["namespace"],
+        )
 
     def _run(
         self,

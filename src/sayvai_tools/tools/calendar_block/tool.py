@@ -17,10 +17,13 @@ class BlockCalendar:
         self.cal = GCalendar(scope=self.scope, email=self.email, summary=self.summary)
 
     @classmethod
-    def create(
-        cls, organizer: str, smtp_username: str, smtp_password: str, scope: str
-    ) -> "BlockCalendar":
-        return cls(organizer, smtp_username, smtp_password, scope)
+    def create(cls, **kwargs) -> "BlockCalendar":
+        return cls(
+            organizer=kwargs["organizer"],
+            smtp_username=kwargs["smtp_username"],
+            smtp_password=kwargs["smtp_password"],
+            scope=kwargs["scope"],
+        )
 
     def _run(self, date: str, contacts: list):
         self.cal.block_day(

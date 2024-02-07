@@ -4,12 +4,15 @@ from elevenlabs import generate, voices
 from elevenlabs.api.voice import Voice
 from elevenlabs.simple import VOICES_CACHE, is_voice_id
 
-# elevenlabs.set_api_key("431f452112cab175b80762e50e525c8f")
+from sayvai_tools.utils.exception import deprecated
 
-
+# from elevenlabs_audio_streaming import generate, voices
 # from elevenlabs_audio_streaming.constant import VALID_MODELS
 
 
+@deprecated(
+    message="VoiceOutputRun is deprecated and will be removed in future versions."
+)
 class ElevenlabsAudioStreaming:
     def __init__(self, api_key) -> None:
         self.api_key = api_key

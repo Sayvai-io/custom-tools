@@ -2,9 +2,13 @@
 
 from elevenlabs import play
 
+from sayvai_tools.utils.exception import deprecated
 from sayvai_tools.utils.voice.tts import ElevenlabsAudioStreaming
 
 
+@deprecated(
+    message="VoiceOutputRun is deprecated and will be removed in future sayvai-tools 0.0.5 ."
+)
 class VoiceOutputRun:
     """Tool that asks user for input."""
 
@@ -21,8 +25,8 @@ class VoiceOutputRun:
         pass
 
     @classmethod
-    def create(cls, api_key: str) -> "VoiceOutputRun":
-        return cls(api_key)
+    def create(cls, **kwargs) -> "VoiceOutputRun":
+        return cls(api_key=kwargs["api_key"])
 
     def _run(
         self,

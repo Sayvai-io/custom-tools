@@ -13,8 +13,8 @@ class RetrieveEmail:
         self.cal = GCalendar(self.scope)
 
     @classmethod
-    def create(cls, pool, scope: str) -> "RetrieveEmail":
-        return cls(pool, scope)
+    def create(cls, **kwargs) -> "RetrieveEmail":
+        return cls(pool=kwargs["pool"], scope=kwargs["scope"])
 
     name = "Retrieve Email"
     description = "Retrieve Email from the calendar"

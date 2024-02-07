@@ -16,8 +16,13 @@ class CalendarSql:
         self.cal = GCalendar(self.scope, email=self.email, summary=self.summary)
 
     @classmethod
-    def create(cls, pool, scope: str, email: str, summary: str) -> "CalendarSql":
-        return cls(pool, scope, email, summary)
+    def create(cls, **kwargs) -> "CalendarSql":
+        return cls(
+            pool=kwargs["pool"],
+            scope=kwargs["scope"],
+            email=kwargs["email"],
+            summary=kwargs["summary"],
+        )
 
     def _run(self, details: str):
         start_time, end_time, phone, name = details.split("/")

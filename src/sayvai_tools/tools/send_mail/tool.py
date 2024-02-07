@@ -18,8 +18,8 @@ class SendMail:
         self.email_sender = EmailSender(ORGANIZER_EMAIL, SMTP_USERNAME, SMTP_PASSWORD)
 
     @classmethod
-    def create(cls, path: str) -> "SendMail":
-        return cls(path)
+    def create(cls, **kwargs) -> "SendMail":
+        return cls(path=kwargs["path"])
 
     def _run(self, content: str):
         self.email_sender.send_multiple_email(self.emails, "Sayvai", content)
