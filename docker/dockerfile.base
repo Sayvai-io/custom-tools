@@ -1,4 +1,4 @@
-From python:3.11
+FROM python:3.11
 
 RUN pip install --upgrade pip
 RUN pip install sayvai-tools
