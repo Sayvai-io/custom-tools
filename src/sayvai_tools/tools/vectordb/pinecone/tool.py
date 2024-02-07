@@ -1,10 +1,11 @@
 from typing import Any, Optional
-
+from sayvai_tools.utils import deprecated
 from langchain.document_loaders import DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Pinecone
 
 
+@deprecated("Use sayvai_tools.tools.PineconeDB instead")
 class PineconeDB:
     """Tool that queries vector database."""
 
