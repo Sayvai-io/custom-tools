@@ -1,8 +1,6 @@
 # pip install pdfplumber
 # --------------------------------
 
-from typing import Any
-
 import fitz  # PyMuPDF
 
 # Import things that are needed generically

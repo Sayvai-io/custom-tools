@@ -8,8 +8,7 @@ from typing import Any, Dict, List, Optional
 from langchain.callbacks.manager import CallbackManagerForChainRun
 from langchain.chains.base import Chain
 from langchain.chains.llm import LLMChain
-from langchain.chains.sql_database.prompt import (DECIDER_PROMPT, PROMPT,
-                                                  SQL_PROMPTS)
+from langchain.chains.sql_database.prompt import DECIDER_PROMPT, PROMPT, SQL_PROMPTS
 from langchain.prompts.prompt import PromptTemplate
 from langchain.pydantic_v1 import Extra, Field, root_validator
 from langchain.schema import BasePromptTemplate

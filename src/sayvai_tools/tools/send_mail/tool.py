@@ -1,5 +1,5 @@
 # Author: Aathikabilan
-import asyncio
+
 import os
 
 from sayvai_tools.utils import EmailSender, Excel

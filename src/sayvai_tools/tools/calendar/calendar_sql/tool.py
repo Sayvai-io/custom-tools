@@ -35,17 +35,19 @@ class CalendarSql:
             msg, event_id = result[0], result[1]
             if details.split("/")[2] not in phone_number:
                 query = self.cursor.execute(
-                    text(
-                        f"""INSERT INTO patient_info (name, phone_number, start_time, end_time, event_id, appointment_date)
-                        VALUES ('{name}', '{phone}'
-                         , '{start_time}', '{end_time}','{event_id}','{date_string}');"""
-                    )
+                    text(f"INSERT INTO patient_info "
+                         f"(name, phone_number, start_time,  end_time, event_id, appointment_date)"
+                         f"VALUES ('{name}', '{phone}', '{start_time}', '{end_time}','{event_id}',"
+                         f"'{date_string}');"
+                         )
                 )
                 # query.commit()
             else:
                 query = self.cursor.execute(
                     text(
-                        f"""UPDATE patient_info SET start_time = '{start_time}', end_time = '{end_time}', event_id = '{event_id}', appointment_date = '{date_string}' WHERE phone_number = '{phone}';"""
+                        f"""UPDATE patient_info SET start_time = '{start_time}',
+                        end_time = '{end_time}', event_id = '{event_id}',
+                        appointment_date = '{date_string}' WHERE phone_number = '{phone}';"""
                     )
                 )
                 # query.commit()

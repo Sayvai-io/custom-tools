@@ -1,6 +1,6 @@
 """PDF Reader Tool"""
 
-from langchain.tools import BaseTool, StructuredTool, tool
+from langchain.tools import BaseTool
 
 from sayvai_tools.utils.pdfreader import read_page, read_pages, read_pdf
 

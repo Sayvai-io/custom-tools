@@ -1,5 +1,5 @@
 import io
-import os
+
 from pprint import pprint
 
 import pandas as pd

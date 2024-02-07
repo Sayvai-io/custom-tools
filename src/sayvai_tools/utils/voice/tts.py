@@ -1,6 +1,6 @@
 """TTS file for sayvai_tools."""
 
-from elevenlabs import generate, save, stream, voices
+from elevenlabs import generate, voices
 from elevenlabs.api.voice import Voice
 from elevenlabs.simple import VOICES_CACHE, is_voice_id
 
@@ -28,7 +28,7 @@ class ElevenlabsAudioStreaming:
         else:
             # Check if voice is in cache
             voice = next((v for v in VOICES_CACHE if v.name == voice_str), None)
-            # if the voice not in VOICE_CACHE, call the api to check is voice is available
+            # if the voice not in VOICE_CACHE,call the api to check if voice is available
             if not voice:
                 voice = (
                     next((v for v in voices() if v.name == voice_str), None)
@@ -76,8 +76,9 @@ class ElevenlabsAudioStreaming:
                 model=model,
                 api_key=api_key,
             )
-            # audio_stream is a generator with byte values that cannot be saved directly using save function
-            # so we add all the byte values in generator to a single variable and save the TTS
+            # audio_stream is a generator with byte values that cannot
+            # be saved directly using save function so we add all the byte
+            # values in generator to a single variable and save the TTS
             byte_values = bytearray()
             for byte_chunk in audio_stream:
                 byte_values += byte_chunk
