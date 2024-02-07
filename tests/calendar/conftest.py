@@ -39,4 +39,3 @@ def past_time():
         "summary": "sample test calendar",
         "date": "2023, 12, 4, 16, 00/2023, 12, 4, 13, 59/9629076714/SriDhanush",
     }
-

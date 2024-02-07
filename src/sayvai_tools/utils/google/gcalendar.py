@@ -5,12 +5,11 @@ import time
 from datetime import timedelta
 from typing import Dict, List
 
-from rich import print as rprint
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-
+from rich import print as rprint
 
 from sayvai_tools.utils.google.mail import EmailSender
 
