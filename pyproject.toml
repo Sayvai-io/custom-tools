@@ -11,7 +11,7 @@ python = "^3.9 || ^3.10 || ^3.11 || ^3.12"
 openai = "^1.11.0"
 rich = "13.7.0"
 pinecone-client = "2.2.4"
-langchain = {version = "0.1.1", extras = ["llm"]}
+langchain = {version = "0.1.5", extras = ["llms"]}
 llama-index = "0.8.22"
 sqlalchemy = "2.0.20"
 elevenlabs = "0.2.24"
