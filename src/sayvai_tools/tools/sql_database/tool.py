@@ -33,15 +33,14 @@ class Database:
         self.k = k
 
     @classmethod
-    def create(
-        cls,
-        llm: BaseLanguageModel,
-        engine: Engine,
-        prompt: Optional[BasePromptTemplate] = None,
-        verbose: bool = False,
-        k: int = 5,
-    ) -> "Database":
-        return cls(llm, engine, prompt, verbose, k)
+    def create(cls, **kwargs) -> "Database":
+        return cls(
+            llm=kwargs["llm"],
+            engine=kwargs["engine"],
+            prompt=kwargs.get("prompt"),
+            verbose=kwargs.get("verbose", False),
+            k=kwargs.get("k", 5)
+        )
 
     def _run(self, query: str) -> str:
         db = SQLDatabase(engine=self.engine)

@@ -21,8 +21,8 @@ class VoiceOutputRun:
         pass
 
     @classmethod
-    def create(cls, api_key: str) -> "VoiceOutputRun":
-        return cls(api_key)
+    def create(cls, **kwargs) -> "VoiceOutputRun":
+        return cls(api_key=kwargs["api_key"])
 
     def _run(
         self,

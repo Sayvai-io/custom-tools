@@ -23,8 +23,11 @@ class ChromaDB:
         )
 
     @classmethod
-    def create(cls, embeddings: Any, persist_directory: str) -> "ChromaDB":
-        return cls(embeddings, persist_directory)
+    def create(cls, **kwargs) -> "ChromaDB":
+        return cls(
+            embeddings=kwargs["embeddings"],
+            persist_directory=kwargs["persist_directory"],
+        )
 
     def _run(
         self,

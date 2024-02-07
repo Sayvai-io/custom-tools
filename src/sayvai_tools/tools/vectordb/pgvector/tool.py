@@ -25,10 +25,12 @@ class PGVectorDB:
         )
 
     @classmethod
-    def create(
-        cls, embeddings: Any, collection_name: str, connection_string: str
-    ) -> "PGVectorDB":
-        return cls(embeddings, collection_name, connection_string)
+    def create(cls, **kwargs) -> "PGVectorDB":
+        return cls(
+            embeddings=kwargs["embeddings"],
+            collection_name=kwargs["collection_name"],
+            connection_string=kwargs["connection_string"]
+        )
 
     def _run(
         self,

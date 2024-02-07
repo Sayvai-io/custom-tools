@@ -12,8 +12,8 @@ class Calendar:
         self.cal = GCalendar(scope=self.scope, email=self.email, summary=self.summary)
 
     @classmethod
-    def create(cls, scope: str, email: str, summary: str) -> "Calendar":
-        return cls(scope, email, summary)
+    def create(cls, **kwargs) -> "Calendar":
+        return cls(scope=kwargs["scope"], email=kwargs["email"], summary=kwargs["summary"])
 
     def _run(self, date: str):
         return self.cal.book_slots(input_str=date)
