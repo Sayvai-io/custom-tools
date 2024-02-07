@@ -1,7 +1,8 @@
-from typing import Any, Optional
+from typing import Any
 
 from langchain.document_loaders import DirectoryLoader
-from langchain.embeddings import OpenAIEmbeddings
+
+# from langchain.embeddings import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 
@@ -21,6 +22,10 @@ class ChromaDB:
         self.docsearch = Chroma(
             persist_directory=self.persist_directory, embedding_function=self.embeddings
         )
+
+    @classmethod
+    def create(cls, embeddings: Any, persist_directory: str) -> "ChromaDB":
+        return cls(embeddings, persist_directory)
 
     def _run(
         self,

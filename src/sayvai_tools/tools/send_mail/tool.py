@@ -1,5 +1,5 @@
 # Author: Aathikabilan
-import asyncio
+
 import os
 
 from sayvai_tools.utils import EmailSender, Excel
@@ -16,6 +16,10 @@ class SendMail:
         self.excel = Excel(path=path)
         self.emails = self.excel.read_column("email")
         self.email_sender = EmailSender(ORGANIZER_EMAIL, SMTP_USERNAME, SMTP_PASSWORD)
+
+    @classmethod
+    def create(cls, path: str) -> "SendMail":
+        return cls(path)
 
     def _run(self, content: str):
         self.email_sender.send_multiple_email(self.emails, "Sayvai", content)

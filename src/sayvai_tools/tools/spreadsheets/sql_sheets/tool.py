@@ -1,9 +1,8 @@
 from typing import Optional
 
-import pandas as pd
 from langchain.schema import BasePromptTemplate
 from langchain.schema.language_model import BaseLanguageModel
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine
 
 from sayvai_tools.tools.sql_database.prompt import PROMPT, SQL_PROMPTS
 from sayvai_tools.utils.database.dbsheetsbase import SQLDatabaseSheetsBase
@@ -51,6 +50,16 @@ class SQLGSheet:
         self.llm = llm
         self.prompt = prompt
         self.verbose = verbose
+
+    @classmethod
+    def create(
+        cls,
+        uri: str,
+        llm: BaseLanguageModel,
+        prompt: Optional[BasePromptTemplate] = None,
+        verbose: bool = False,
+    ) -> "SQLGSheet":
+        return cls(uri, llm, prompt, verbose)
 
     # sample input save past 30 days data to google sheet from record table
     # table fetched from sql query

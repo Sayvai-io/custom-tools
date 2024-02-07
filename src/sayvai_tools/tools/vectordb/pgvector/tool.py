@@ -24,6 +24,12 @@ class PGVectorDB:
             embedding_function=self.embeddings,
         )
 
+    @classmethod
+    def create(
+        cls, embeddings: Any, collection_name: str, connection_string: str
+    ) -> "PGVectorDB":
+        return cls(embeddings, collection_name, connection_string)
+
     def _run(
         self,
         query: str,

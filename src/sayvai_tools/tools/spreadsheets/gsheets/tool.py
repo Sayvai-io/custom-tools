@@ -12,6 +12,10 @@ class Sheets:
     def __init__(self):
         self.gs = GSheets()
 
+    @classmethod
+    def create(cls) -> "Sheets":
+        return cls()
+
     def _run(self, values: list):
         self.gs.create_sheet()
         self.gs.update_values(values)
