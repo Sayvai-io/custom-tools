@@ -3,13 +3,13 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 
-## How to use 
+## How to use 🤔
 ---------------------------------------
 
-## Installation
-### Install via git clone
+## Installation 🚀
+### Install via git clone 📖
 
-```bash
+```bash 💻
 $git clone https://github.com/Sayvai-io/custom-tools.git
 $cd sayvai-tools
 ```
@@ -26,11 +26,11 @@ $pip install sayvai-tools
 $pipenv install sayvai-tools
 ```
 
-## What is Sayvai-Tools?
+## What is Sayvai-Tools? ⚙️
 ---------------------------------------
 Sayvai-Tools is a collection of tools that we use at Sayvai.io to help us build our products. We are making these tools available to the public in hopes that they will help you build your products as well. These tools are meant for langchain developers and are not meant to be used by end users.
 
-# Documentation
+# Documentation 📚
 ---------------------------------------
 Documentation is available at https://sayvai-io.github.io/custom-tools/
 
