@@ -1,8 +1,10 @@
 from typing import Any, Optional
-from sayvai_tools.utils.exception import deprecated
+
 from langchain.document_loaders import DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Pinecone
+
+from sayvai_tools.utils.exception import deprecated
 
 
 @deprecated("Use sayvai_tools.tools.PineconeDB instead")
