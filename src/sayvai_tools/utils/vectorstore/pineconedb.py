@@ -9,7 +9,7 @@ class PineconeDB:
         self.pinecone = Pinecone(
             pinecone_api_key=kwargs.get("pinecone_api_key", os.environ.get("PINECONE_API_KEY")),
             index_name=index_name,
-            embedding = embeddings
+            embedding=embeddings
         )
 
     def _run(self, query: str, k: int = 3):
