@@ -4,7 +4,10 @@ from langchain.document_loaders import DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Pinecone
 
+from sayvai_tools.utils.exception import deprecated
 
+
+@deprecated("Use sayvai_tools.tools.PineconeDB instead")
 class PineconeDB:
     """Tool that queries vector database."""
 

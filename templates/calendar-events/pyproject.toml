@@ -1,15 +1,15 @@
 [tool.poetry]
-name = "getdate"
+name = "calendar-events"
 version = "0.1.0"
-description = "Get datetime tool"
-authors = ["Your Name <you@example.com>"]
-license = "MIT"
+description = ""
+authors = ["sanjaypranav <sanjaypriya195@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.13"
+python = ">=3.11,<3.13"
 langchain = "^0.1.5"
 langchain-core = "^0.1.21"
+langchain-openai = "^0.0.5"
 sayvai-tools = {path = "../.."}
 
 

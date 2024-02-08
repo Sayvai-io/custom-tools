@@ -1,9 +1,6 @@
 """Datetime Template"""
 
-from langchain.agents import (AgentExecutor, AgentType, Tool,
-                              create_openai_functions_agent, initialize_agent)
-# langchain agent main'
-from langchain.tools import BaseTool
+from langchain.agents import AgentExecutor, Tool, create_openai_functions_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
 
@@ -12,10 +9,9 @@ from sayvai_tools.tools.date import GetDate
 # Create a new LangChain instance
 llm = ChatOpenAI(model="gpt-4")
 
-
-_SYSTEM_PROMPT: str = """ You are an AI agent, if user asks what is the date 
-today invoke GetDateTool .
-"""
+_SYSTEM_PROMPT: str = (
+    """ You are an AI agent, if user asks what is the date today invoke GetDateTool ."""
+)
 
 prompt = ChatPromptTemplate.from_messages(
     [
@@ -47,15 +43,15 @@ class DateTimeAgent:
             ]
         return "Tools Initialized"
 
-    def initialize_agent_executor(self) -> AgentExecutor:
+    def initialize_agent_executor(self) -> str:
         self.agent = create_openai_functions_agent(
             llm=self.llm,
             prompt=self.prompt,
-            tools=self.tools,
+            tools=self.tools,  # type: ignore
         )
         self.agent_executor = AgentExecutor(
-            agent=self.agent,
-            tools=self.tools,
+            agent=self.agent,  # type: ignore
+            tools=self.tools,  # type: ignore
             verbose=True,
         )
         return "Agent Executor Initialized"
