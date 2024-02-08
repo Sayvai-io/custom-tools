@@ -8,6 +8,9 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.13"
+langchain = "^0.1.5"
+langchain-core = "^0.1.21"
+sayvai-tools = {path = "../.."}
 
 
 [build-system]
