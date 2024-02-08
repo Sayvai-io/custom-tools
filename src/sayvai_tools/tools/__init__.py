@@ -4,12 +4,13 @@ from typing import List
 
 from langchain.tools import __all__ as langchain_tools
 
-from sayvai_tools.tools.calendar import Calendar, CalendarSql
-from sayvai_tools.tools.calendar_block import BlockCalendar
 from sayvai_tools.tools.conversational_human import ConversationalHuman
 from sayvai_tools.tools.date import GetDate
-from sayvai_tools.tools.display_events import DisplayEvents
 from sayvai_tools.tools.forms import FormTool
+from sayvai_tools.tools.google_calendar import (AvailableSlotsTool,
+                                                CreateEventTool,
+                                                DisplayEventsTool,
+                                                get_calendar_credentials)
 from sayvai_tools.tools.pdfreader import (ReadPagesTool, ReadPageTool,
                                           ReadPDFTool)
 from sayvai_tools.tools.retrive_details import RetrieveEmail, RetrievePhone
@@ -20,12 +21,8 @@ from sayvai_tools.tools.TTS import VoiceOutputRun
 from sayvai_tools.tools.vectordb import ChromaDB, PGVectorDB, PineconeDB
 
 __all__: List[str] = [
-    "Calendar",
-    "CalendarSql",
-    "BlockCalendar",
     "ConversationalHuman",
     "GetDate",
-    "DisplayEvents",
     "FormTool",
     "RetrieveEmail",
     "RetrievePhone",
@@ -40,6 +37,10 @@ __all__: List[str] = [
     "ReadPagesTool",
     "ReadPDFTool",
     "ReadPageTool",
+    "CreateEventTool",
+    "DisplayEventsTool",
+    "AvailableSlotsTool",
+    "get_calendar_credentials",
 ]
 
 
