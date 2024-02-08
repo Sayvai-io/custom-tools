@@ -6,7 +6,10 @@ authors = ["sanjaypranav <sanjaypriya195@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "3.8>=,<3.13"
+python = "^3.9 || ^3.10 || ^3.11 || ^3.12"
+langchain = "^0.1.5"
+langchain-openai = "^0.0.5"
+langchain-community = "^0.0.19"
 
 
 [build-system]
