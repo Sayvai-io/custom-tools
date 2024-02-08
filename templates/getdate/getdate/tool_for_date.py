@@ -9,7 +9,6 @@ from sayvai_tools.tools.date import GetDate
 # Create a new LangChain instance
 llm = ChatOpenAI(model="gpt-4")
 
-
 _SYSTEM_PROMPT: str = (
     """ You are an AI agent, if user asks what is the date today invoke GetDateTool ."""
 )
