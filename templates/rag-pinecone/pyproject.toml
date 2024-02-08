@@ -10,6 +10,7 @@ python = ">=3.9,<3.13"
 langchain = "^0.1.5"
 langchain-openai = "^0.0.5"
 langchain-community = "^0.0.19"
+sayvai-tools = {path = "../.."}
 
 
 [build-system]
