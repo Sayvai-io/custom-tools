@@ -4,7 +4,7 @@ from typing import List, Optional, Type
 from langchain_core.callbacks import CallbackManagerForToolRun
 from langchain_core.pydantic_v1 import BaseModel, Field
 
-from sayvai_tools.tools.google_calendar.base_tool import GoogleCalendarBaseTool
+from sayvai_tools.tools.google_calendar.base import GoogleCalendarBaseTool
 
 
 class DisplayEventsSchema(BaseModel):
@@ -43,7 +43,7 @@ class DisplayEventsTool(GoogleCalendarBaseTool):
         Returns:
             List of dictionaries representing events.
         """
-        events_result = self.service.events().list(
+        events_result = self.api_resource.events().list(
             calendarId=calendar_id,
             timeMin=datetime.utcnow().isoformat() + 'Z',
             maxResults=max_results,

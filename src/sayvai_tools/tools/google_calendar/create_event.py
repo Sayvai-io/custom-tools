@@ -5,7 +5,7 @@ from googleapiclient.errors import HttpError
 from langchain_core.callbacks import CallbackManagerForToolRun
 from langchain_core.pydantic_v1 import BaseModel, Field
 
-from sayvai_tools.tools.google_calendar.base_tool import GoogleCalendarBaseTool
+from sayvai_tools.tools.google_calendar.base import GoogleCalendarBaseTool
 
 
 class CreateEventSchema(BaseModel):
@@ -76,8 +76,12 @@ class CreateEventTool(GoogleCalendarBaseTool):
         """
         event = {
             'summary': summary,
-            'start': {'dateTime': start_time.isoformat()},
-            'end': {'dateTime': end_time.isoformat()},
+            'start': {
+                'dateTime': start_time.isoformat(),
+                'timeZone': 'Asia/Kolkata'},
+            'end': {
+                'dateTime': end_time.isoformat(),
+                'timeZone': 'Asia/Kolkata'},
         }
         if description:
             event['description'] = description
@@ -87,7 +91,7 @@ class CreateEventTool(GoogleCalendarBaseTool):
             event['attendees'] = [{'email': email} for email in attendees]
 
         try:
-            created_event = self.service.events().insert(
+            created_event = self.api_resource.events().insert(
                 calendarId=calendar_id,
                 body=event
             ).execute()

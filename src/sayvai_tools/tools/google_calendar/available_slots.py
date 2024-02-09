@@ -1,11 +1,10 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import List, Optional, Tuple, Type
 
-from googleapiclient.discovery import Resource
 from langchain_core.callbacks import CallbackManagerForToolRun
 from langchain_core.pydantic_v1 import BaseModel, Field
 
-from sayvai_tools.tools.google_calendar.base_tool import GoogleCalendarBaseTool
+from sayvai_tools.tools.google_calendar.base import GoogleCalendarBaseTool
 
 
 class AvailableSlotsSchema(BaseModel):
@@ -38,6 +37,8 @@ class AvailableSlotsTool(GoogleCalendarBaseTool):
     )
     args_schema: Type[AvailableSlotsSchema] = AvailableSlotsSchema
 
+    from datetime import datetime, timedelta, timezone
+
     def _find_available_slots(
         self,
         calendar_id: str,
@@ -60,9 +61,11 @@ class AvailableSlotsTool(GoogleCalendarBaseTool):
         busy_events = self._get_busy_events(calendar_id, start_time, end_time)
 
         available_slots = []
-        current_time = start_time
-        while current_time < end_time:
+        current_time = start_time.replace(tzinfo=timezone.utc)
+        end_time_utc = end_time.replace(tzinfo=timezone.utc)
+        while current_time < end_time_utc:
             slot_end_time = current_time + timedelta(minutes=duration_minutes)
+            slot_end_time = slot_end_time.replace(tzinfo=timezone.utc)
             if all(
                 event_end <= current_time or event_start >= slot_end_time
                 for event_start, event_end in busy_events
@@ -89,12 +92,12 @@ class AvailableSlotsTool(GoogleCalendarBaseTool):
             List of tuples representing busy events, each tuple containing
             the start and end times of an event.
         """
-        events_result = self.service.events().list(
+        events_result = self.api_resource.events().list(
             calendarId=calendar_id,
-            timeMin=start_time.isoformat(),
-            timeMax=end_time.isoformat(),
+            timeMin=(start_time.astimezone(timezone.utc)).isoformat(),
+            timeMax=(end_time.astimezone(timezone.utc)).isoformat(),
             singleEvents=True,
-            orderBy='startTime',
+            orderBy='startTime'
         ).execute()
 
         busy_events = []
@@ -102,7 +105,7 @@ class AvailableSlotsTool(GoogleCalendarBaseTool):
             start_time = datetime.fromisoformat(event['start'].get('dateTime'))
             end_time = datetime.fromisoformat(event['end'].get('dateTime'))
             busy_events.append((start_time, end_time))
-
+        print(busy_events)
         return busy_events
 
     def _run(
