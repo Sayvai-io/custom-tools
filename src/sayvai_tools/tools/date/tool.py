@@ -19,4 +19,3 @@ class GetDate:
     async def _arun(self) -> str:
         """Use the tool asynchronously."""
         raise SayvaiToolsError("Not NotImplemented Error")
-        # return None

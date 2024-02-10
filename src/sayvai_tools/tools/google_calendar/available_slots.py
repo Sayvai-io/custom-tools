@@ -37,14 +37,12 @@ class AvailableSlotsTool(GoogleCalendarBaseTool):
     )
     args_schema: Type[AvailableSlotsSchema] = AvailableSlotsSchema
 
-    from datetime import datetime, timedelta, timezone
-
     def _find_available_slots(
-        self,
-        calendar_id: str,
-        start_time: datetime,
-        end_time: datetime,
-        duration_minutes: int,
+            self,
+            calendar_id: str,
+            start_time: datetime,
+            end_time: datetime,
+            duration_minutes: int,
     ) -> List[Tuple[datetime, datetime]]:
         """Find available time slots in the specified Google Calendar.
 
@@ -67,8 +65,8 @@ class AvailableSlotsTool(GoogleCalendarBaseTool):
             slot_end_time = current_time + timedelta(minutes=duration_minutes)
             slot_end_time = slot_end_time.replace(tzinfo=timezone.utc)
             if all(
-                event_end <= current_time or event_start >= slot_end_time
-                for event_start, event_end in busy_events
+                    event_end <= current_time or event_start >= slot_end_time
+                    for event_start, event_end in busy_events
             ):
                 available_slots.append((current_time, slot_end_time))
             current_time += timedelta(minutes=duration_minutes)
@@ -76,10 +74,10 @@ class AvailableSlotsTool(GoogleCalendarBaseTool):
         return available_slots
 
     def _get_busy_events(
-        self,
-        calendar_id: str,
-        start_time: datetime,
-        end_time: datetime,
+            self,
+            calendar_id: str,
+            start_time: datetime,
+            end_time: datetime,
     ) -> List[Tuple[datetime, datetime]]:
         """Get busy events from the specified Google Calendar.
 
@@ -109,12 +107,12 @@ class AvailableSlotsTool(GoogleCalendarBaseTool):
         return busy_events
 
     def _run(
-        self,
-        calendar_id: str,
-        start_time: datetime,
-        end_time: datetime,
-        duration_minutes: int,
-        run_manager: Optional[CallbackManagerForToolRun] = None,
+            self,
+            calendar_id: str,
+            start_time: datetime,
+            end_time: datetime,
+            duration_minutes: int,
+            run_manager: Optional[CallbackManagerForToolRun] = None,
     ) -> List[Tuple[datetime, datetime]]:
         try:
             available_slots = self._find_available_slots(

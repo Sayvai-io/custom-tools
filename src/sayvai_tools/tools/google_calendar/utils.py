@@ -71,9 +71,9 @@ DEFAULT_CLIENT_SECRETS_FILE = "credentials.json"
 
 
 def get_calendar_credentials(
-    token_file: Optional[str] = None,
-    client_secrets_file: Optional[str] = None,
-    scopes: Optional[List[str]] = None,
+        token_file: Optional[str] = None,
+        client_secrets_file: Optional[str] = None,
+        scopes: Optional[List[str]] = None,
 ) -> Credentials:
     """Get credentials."""
     Request, Credentials = import_google()
@@ -98,23 +98,11 @@ def get_calendar_credentials(
 
 
 def build_calendar_service(
-    credentials: Optional[Credentials] = None,
-    service_name: str = "calendar",
-    service_version: str = "v3",
+        credentials: Optional[Credentials] = None,
+        service_name: str = "calendar",
+        service_version: str = "v3",
 ) -> Resource:
     """Build a Calendar service."""
     credentials = credentials or get_calendar_credentials()
     builder = import_googleapiclient_resource_builder()
     return builder(service_name, service_version, credentials=credentials)
-
-
-def clean_event_summary(summary: str) -> str:
-    """Clean event summary."""
-    # Example function, you can adjust this according to your needs
-    return summary.strip().capitalize()
-
-
-def clean_event_description(description: str) -> str:
-    """Clean event description."""
-    # Example function, you can adjust this according to your needs
-    return description.strip()
