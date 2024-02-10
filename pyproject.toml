@@ -15,7 +15,7 @@ langchain = {version = "0.1.5", extras = ["llms"]}
 llama-index = "0.8.22"
 sqlalchemy = "2.0.20"
 elevenlabs = "0.2.24"
-numpy = "^1.26.3"
+numpy = "1.26.4"
 google = "^3.0.0"
 google-cloud-speech = "^2.23.0"
 cloud-sql-python-connector = "^1.5.0"

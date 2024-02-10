@@ -38,11 +38,11 @@ class AvailableSlotsTool(GoogleCalendarBaseTool):
     args_schema: Type[AvailableSlotsSchema] = AvailableSlotsSchema
 
     def _find_available_slots(
-            self,
-            calendar_id: str,
-            start_time: datetime,
-            end_time: datetime,
-            duration_minutes: int,
+        self,
+        start_time: datetime,
+        end_time: datetime,
+        duration_minutes: int,
+        calendar_id: str = "primary"
     ) -> List[Tuple[datetime, datetime]]:
         """Find available time slots in the specified Google Calendar.
 
