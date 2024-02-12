@@ -1,4 +1,4 @@
-from typing import List, Optional, Type
+from typing import Optional, Type
 
 from langchain_core.callbacks import CallbackManagerForToolRun
 from langchain_core.pydantic_v1 import BaseModel, Field
@@ -40,12 +40,9 @@ class CreateFormTool(GoogleFormsBaseTool):
         Returns:
             URL of the created form.
         """
-        form = {
-            "title": title,
-            "documentTitle": document_title
-        }
+        form = {"title": title, "documentTitle": document_title}
         created_form = self.api_resource.forms().create(body=form).execute()
-        return created_form['formUrl']
+        return created_form["formUrl"]
 
     def _run(
         self,

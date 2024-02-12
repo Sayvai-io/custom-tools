@@ -43,15 +43,19 @@ class DisplayEventsTool(GoogleCalendarBaseTool):
         Returns:
             List of dictionaries representing events.
         """
-        events_result = self.api_resource.events().list(
-            calendarId=calendar_id,
-            timeMin=datetime.utcnow().isoformat() + 'Z',
-            maxResults=max_results,
-            singleEvents=True,
-            orderBy='startTime'
-        ).execute()
+        events_result = (
+            self.api_resource.events()
+            .list(
+                calendarId=calendar_id,
+                timeMin=datetime.utcnow().isoformat() + "Z",
+                maxResults=max_results,
+                singleEvents=True,
+                orderBy="startTime",
+            )
+            .execute()
+        )
 
-        events = events_result.get('items', [])
+        events = events_result.get("items", [])
         return events
 
     def _run(

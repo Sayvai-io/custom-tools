@@ -7,5 +7,5 @@ __all__ = [
     "CreateSpreadsheetTool",
     "get_sheets_credentials",
     "AppendDataTool",
-    "GetCellValuesTool"
+    "GetCellValuesTool",
 ]
