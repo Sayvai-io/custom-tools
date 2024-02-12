@@ -11,6 +11,7 @@ langchain = "^0.1.5"
 langchain-core = "^0.1.21"
 langchain-openai = "^0.0.5"
 sayvai-tools = {path = "../.."}
+google-auth-oauthlib = "^1.2.0"
 
 
 [build-system]

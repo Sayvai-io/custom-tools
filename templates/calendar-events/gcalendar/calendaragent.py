@@ -4,15 +4,18 @@ from langchain.agents import AgentExecutor, Tool, create_openai_functions_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
 
-from sayvai_tools.tools.date import GetDate
+from sayvai_tools.tools import GetDate
+from sayvai_tools.tools.google_calendar import (AvailableSlotsTool,
+                                                CreateEventTool,
+                                                DisplayEventsTool,
+                                                get_calendar_credentials)
 
 # Create a new LangChain instance
 llm = ChatOpenAI(model="gpt-4")
 
 _SYSTEM_PROMPT: str = (
-    """You have access to the GetDate tool, which provides information about the current date and time. 
-    Your task is to respond to user queries related to date and time using the current information from the tool. 
-    Your responses should be accurate and relevant to the user's query. Use the information from the GetDate tool to provide up-to-date responses."""
+    """ 
+    """
 )
 
 prompt = ChatPromptTemplate.from_messages(
@@ -32,15 +35,22 @@ class DateTimeAgent:
         self.llm = llm
         self.prompt = prompt
         self.tools = None
+        self.creds = get_calendar_credentials()
 
     def initialize_tools(self, tools=None) -> str:
         self.tools = tools
         if self.tools is None:
             self.tools = [
                 Tool(
+                    name="AvailableSlots",
+                    func=AvailableSlotsTool(credentials=self.creds).run,
+                    description="Use this tool to find available time slots in a specified Google Calendar ( start time , end time , duration ) "
+
+                ),
+                Tool(
                     func=GetDate()._run,
                     name="GetDateTool",
-                    description="""A tool that takes no input and returns the current date and time.""",
+                    description="""A tool that returns the current date and time.""",
                 ),
             ]
         return "Tools Initialized"
@@ -65,4 +75,4 @@ class DateTimeAgent:
 dateagent = DateTimeAgent()
 dateagent.initialize_tools()
 dateagent.initialize_agent_executor()
-print(dateagent.invoke("What is the date after 4 days?"))
+print(dateagent.invoke("what is  date after 4 days?"))
