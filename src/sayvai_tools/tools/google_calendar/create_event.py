@@ -75,26 +75,23 @@ class CreateEventTool(GoogleCalendarBaseTool):
             Dictionary representing the created event.
         """
         event = {
-            'summary': summary,
-            'start': {
-                'dateTime': start_time.isoformat(),
-                'timeZone': 'Asia/Kolkata'},
-            'end': {
-                'dateTime': end_time.isoformat(),
-                'timeZone': 'Asia/Kolkata'},
+            "summary": summary,
+            "start": {"dateTime": start_time.isoformat(), "timeZone": "Asia/Kolkata"},
+            "end": {"dateTime": end_time.isoformat(), "timeZone": "Asia/Kolkata"},
         }
         if description:
-            event['description'] = description
+            event["description"] = description
         if location:
-            event['location'] = location
+            event["location"] = location
         if attendees:
-            event['attendees'] = [{'email': email} for email in attendees]
+            event["attendees"] = [{"email": email} for email in attendees]
 
         try:
-            created_event = self.api_resource.events().insert(
-                calendarId=calendar_id,
-                body=event
-            ).execute()
+            created_event = (
+                self.api_resource.events()
+                .insert(calendarId=calendar_id, body=event)
+                .execute()
+            )
             return created_event
         except HttpError as e:
             if e.resp.status == 409:
@@ -117,7 +114,13 @@ class CreateEventTool(GoogleCalendarBaseTool):
     ) -> dict:
         try:
             created_event = self._create_event(
-                calendar_id, summary, start_time, end_time, description, location, attendees
+                calendar_id,
+                summary,
+                start_time,
+                end_time,
+                description,
+                location,
+                attendees,
             )
             return created_event
         except Exception as e:

@@ -1,4 +1,5 @@
 """Gcalendar tool utils."""
+
 from __future__ import annotations
 
 import logging
@@ -71,9 +72,9 @@ DEFAULT_CLIENT_SECRETS_FILE = "credentials.json"
 
 
 def get_calendar_credentials(
-        token_file: Optional[str] = None,
-        client_secrets_file: Optional[str] = None,
-        scopes: Optional[List[str]] = None,
+    token_file: Optional[str] = None,
+    client_secrets_file: Optional[str] = None,
+    scopes: Optional[List[str]] = None,
 ) -> Credentials:
     """Get credentials."""
     Request, Credentials = import_google()
@@ -98,9 +99,9 @@ def get_calendar_credentials(
 
 
 def build_calendar_service(
-        credentials: Optional[Credentials] = None,
-        service_name: str = "calendar",
-        service_version: str = "v3",
+    credentials: Optional[Credentials] = None,
+    service_name: str = "calendar",
+    service_version: str = "v3",
 ) -> Resource:
     """Build a Calendar service."""
     credentials = credentials or get_calendar_credentials()

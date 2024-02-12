@@ -1,5 +1,4 @@
 import datetime
-from typing import Union
 
 from sayvai_tools.utils.exception import SayvaiToolsError
 
@@ -13,7 +12,7 @@ class GetDate:
     def _run(self, tool_input: str | None = None) -> str:
         """Use the tool."""
         current_time = datetime.datetime.now()
-        return current_time
+        return str(current_time)
 
     async def _arun(self) -> str:
         """Use the tool asynchronously."""

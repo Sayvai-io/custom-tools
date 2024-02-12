@@ -42,7 +42,7 @@ class AvailableSlotsTool(GoogleCalendarBaseTool):
         start_time: datetime,
         end_time: datetime,
         duration_minutes: int,
-        calendar_id: str = "primary"
+        calendar_id: str = "primary",
     ) -> List[Tuple[datetime, datetime]]:
         """Find available time slots in the specified Google Calendar.
 
@@ -65,8 +65,8 @@ class AvailableSlotsTool(GoogleCalendarBaseTool):
             slot_end_time = current_time + timedelta(minutes=duration_minutes)
             slot_end_time = slot_end_time.replace(tzinfo=timezone.utc)
             if all(
-                    event_end <= current_time or event_start >= slot_end_time
-                    for event_start, event_end in busy_events
+                event_end <= current_time or event_start >= slot_end_time
+                for event_start, event_end in busy_events
             ):
                 available_slots.append((current_time, slot_end_time))
             current_time += timedelta(minutes=duration_minutes)
@@ -74,10 +74,10 @@ class AvailableSlotsTool(GoogleCalendarBaseTool):
         return available_slots
 
     def _get_busy_events(
-            self,
-            calendar_id: str,
-            start_time: datetime,
-            end_time: datetime,
+        self,
+        calendar_id: str,
+        start_time: datetime,
+        end_time: datetime,
     ) -> List[Tuple[datetime, datetime]]:
         """Get busy events from the specified Google Calendar.
 
@@ -90,29 +90,33 @@ class AvailableSlotsTool(GoogleCalendarBaseTool):
             List of tuples representing busy events, each tuple containing
             the start and end times of an event.
         """
-        events_result = self.api_resource.events().list(
-            calendarId=calendar_id,
-            timeMin=(start_time.astimezone(timezone.utc)).isoformat(),
-            timeMax=(end_time.astimezone(timezone.utc)).isoformat(),
-            singleEvents=True,
-            orderBy='startTime'
-        ).execute()
+        events_result = (
+            self.api_resource.events()
+            .list(
+                calendarId=calendar_id,
+                timeMin=(start_time.astimezone(timezone.utc)).isoformat(),
+                timeMax=(end_time.astimezone(timezone.utc)).isoformat(),
+                singleEvents=True,
+                orderBy="startTime",
+            )
+            .execute()
+        )
 
         busy_events = []
-        for event in events_result.get('items', []):
-            start_time = datetime.fromisoformat(event['start'].get('dateTime'))
-            end_time = datetime.fromisoformat(event['end'].get('dateTime'))
+        for event in events_result.get("items", []):
+            start_time = datetime.fromisoformat(event["start"].get("dateTime"))
+            end_time = datetime.fromisoformat(event["end"].get("dateTime"))
             busy_events.append((start_time, end_time))
         print(busy_events)
         return busy_events
 
     def _run(
-            self,
-            calendar_id: str,
-            start_time: datetime,
-            end_time: datetime,
-            duration_minutes: int,
-            run_manager: Optional[CallbackManagerForToolRun] = None,
+        self,
+        calendar_id: str,
+        start_time: datetime,
+        end_time: datetime,
+        duration_minutes: int,
+        run_manager: Optional[CallbackManagerForToolRun] = None,
     ) -> List[Tuple[datetime, datetime]]:
         try:
             available_slots = self._find_available_slots(
