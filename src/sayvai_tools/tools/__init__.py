@@ -12,12 +12,11 @@ from sayvai_tools.tools.google_calendar import (AvailableSlotsTool,
                                                 DisplayEventsTool,
                                                 get_calendar_credentials)
 from sayvai_tools.tools.google_sheets import (CreateSpreadsheetTool, get_sheets_credentials, AppendDataTool,
-                                              GetCellValuesTool)
+                                              GetCellValuesTool, UpdateSpreadsheetTool)
 from sayvai_tools.tools.pdfreader import (ReadPagesTool, ReadPageTool,
                                           ReadPDFTool)
 from sayvai_tools.tools.retrive_details import RetrieveEmail, RetrievePhone
 from sayvai_tools.tools.send_mail import SendMail
-from sayvai_tools.tools.spreadsheets import Sheets, SQLSheet
 from sayvai_tools.tools.sql_database import Database
 from sayvai_tools.tools.vectordb import ChromaDB, PGVectorDB, PineconeDB
 
@@ -27,8 +26,6 @@ __all__: List[str] = [
     "RetrieveEmail",
     "RetrievePhone",
     "SendMail",
-    "SQLSheet",
-    "Sheets",
     "Database",
     "VoiceOutputRun",
     "ChromaDB",
@@ -44,7 +41,8 @@ __all__: List[str] = [
     "CreateSpreadsheetTool",
     "get_sheets_credentials",
     "AppendDataTool",
-    GetCellValuesTool
+    "GetCellValuesTool",
+    "UpdateSpreadsheetTool"
 ]
 
 
