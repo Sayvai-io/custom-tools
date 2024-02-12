@@ -1,5 +1,4 @@
 import datetime
-from typing import Union
 
 from sayvai_tools.utils.exception import SayvaiToolsError
 

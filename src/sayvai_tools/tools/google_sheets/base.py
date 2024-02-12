@@ -1,4 +1,5 @@
 """Base class for Google Sheets tools."""
+
 from __future__ import annotations
 
 from abc import ABC
