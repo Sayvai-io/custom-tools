@@ -19,6 +19,10 @@ from sayvai_tools.tools.retrive_details import RetrieveEmail, RetrievePhone
 from sayvai_tools.tools.send_mail import SendMail
 from sayvai_tools.tools.sql_database import Database
 from sayvai_tools.tools.vectordb import ChromaDB, PGVectorDB, PineconeDB
+from sayvai_tools.tools.youtube import get_youtube_credentials
+from sayvai_tools.tools.youtube.comment_threads import ListCommentsTool, InsertCommentTool
+from sayvai_tools.tools.youtube.comments import ListCommentRepliesTool, ReplyToCommentTool
+from sayvai_tools.tools.youtube.utils import get_youtube_credentials
 
 __all__: List[str] = [
     "ConversationalHuman",
@@ -42,7 +46,12 @@ __all__: List[str] = [
     "get_sheets_credentials",
     "AppendDataTool",
     "GetCellValuesTool",
-    "UpdateSpreadsheetTool"
+    "UpdateSpreadsheetTool",
+    "get_youtube_credentials",
+    "ListCommentsTool",
+    "InsertCommentTool",
+    "ListCommentRepliesTool",
+    "ReplyToCommentTool"
 ]
 
 
