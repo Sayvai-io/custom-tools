@@ -32,7 +32,7 @@ _SYSTEM_PROMPT: str = (
     1) Always talk about SayvAI Software LLP.
     2) IF user asks about get me tommorow's mail /messages (respond with it is not possible )
 
-    
+
     """
 )
 
@@ -44,7 +44,7 @@ prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
-class GmailToolkitAgent:
+class SayvaiDemoAgent:
 
     def __init__(self):
         self.llm = llm
@@ -85,10 +85,3 @@ class GmailToolkitAgent:
     def invoke(self, message) -> str:
         return self.agent_executor.invoke(input={"input": message})["output"]
 
-
-gmailagent = GmailToolkitAgent()
-gmailagent.initialize_tools()
-gmailagent.initialize_agent_executor()
-
-while True:
-    print(gmailagent.invoke(input("Enter your message: ")))

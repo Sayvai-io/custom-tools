@@ -6,9 +6,10 @@ authors = ["JayasuriyaE <jayasuriya352002@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.13"
+python = ">=3.9,<3.9.7 || >3.9.7,<3.13"
 langchain = {extras = ["llms"], version = "^0.1.8"}
 langchainhub = "^0.1.14"
+streamlit = {extras = ["all"], version = "^1.31.1"}
 
 
 [build-system]
