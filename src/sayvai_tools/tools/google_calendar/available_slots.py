@@ -10,10 +10,7 @@ from sayvai_tools.tools.google_calendar.base import GoogleCalendarBaseTool
 class AvailableSlotsSchema(BaseModel):
     """Input schema for AvailableSlotsTool."""
 
-    calendar_id: str = Field(
-        ...,
-        description="ID of the calendar to check for available slots.",
-    )
+    calendar_id: str = "primary"
     start_time: datetime = Field(
         ...,
         description="Start time to search for available slots.",

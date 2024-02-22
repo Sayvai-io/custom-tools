@@ -10,10 +10,7 @@ from sayvai_tools.tools.google_calendar.base import GoogleCalendarBaseTool
 class DisplayEventsSchema(BaseModel):
     """Input schema for DisplayEventsTool."""
 
-    calendar_id: str = Field(
-        ...,
-        description="ID of the calendar to fetch events from.",
-    )
+    calendar_id: str = "primary"
     max_results: Optional[int] = Field(
         10,
         description="Maximum number of events to fetch. Default is 10.",

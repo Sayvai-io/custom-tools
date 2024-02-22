@@ -13,7 +13,6 @@ rich = "13.7.0"
 pinecone-client = "3.0.2"
 llama-index = "0.8.22"
 sqlalchemy = "2.0.20"
-elevenlabs = "0.2.24"
 numpy = "1.26.4"
 google = "^3.0.0"
 google-cloud-speech = "^2.23.0"
@@ -35,6 +34,7 @@ langchain = {extras = ["llms"], version = "^0.1.8"}
 langchain-core = "^0.1.25"
 langchain-community = "^0.0.21"
 langchain-openai = "^0.0.6"
+pydantic = "2.6.1"
 
 
 [build-system]

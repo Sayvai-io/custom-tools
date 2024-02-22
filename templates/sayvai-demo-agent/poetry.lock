@@ -1104,6 +1104,21 @@ tenacity = ">=8.1.0,<9.0.0"
 extended-testing = ["jinja2 (>=3,<4)"]
 
 [[package]]
+name = "langchainhub"
+version = "0.1.14"
+description = ""
+optional = false
+python-versions = ">=3.8.1,<4.0"
+files = [
+    {file = "langchainhub-0.1.14-py3-none-any.whl", hash = "sha256:3d58a050a3a70684bca2e049a2425a2418d199d0b14e3c8aa318123b7f18b21a"},
+    {file = "langchainhub-0.1.14.tar.gz", hash = "sha256:c1aeda38d66df1146f9e60e47bde7fb12bad902eb19dba78ac02f89e0f1f1867"},
+]
+
+[package.dependencies]
+requests = ">=2,<3"
+types-requests = ">=2.31.0.2,<3.0.0.0"
+
+[[package]]
 name = "langsmith"
 version = "0.1.5"
 description = "Client library to connect to the LangSmith LLM Tracing and Evaluation Platform."
@@ -1746,11 +1761,11 @@ files = [
 [package.dependencies]
 numpy = [
     {version = ">=1.21.0", markers = "python_version == \"3.9\" and platform_system == \"Darwin\" and platform_machine == \"arm64\""},
+    {version = ">=1.26.0", markers = "python_version >= \"3.12\""},
+    {version = ">=1.23.5", markers = "python_version >= \"3.11\" and python_version < \"3.12\""},
     {version = ">=1.21.4", markers = "python_version >= \"3.10\" and platform_system == \"Darwin\" and python_version < \"3.11\""},
     {version = ">=1.21.2", markers = "platform_system != \"Darwin\" and python_version >= \"3.10\" and python_version < \"3.11\""},
     {version = ">=1.19.3", markers = "platform_system == \"Linux\" and platform_machine == \"aarch64\" and python_version >= \"3.8\" and python_version < \"3.10\" or python_version > \"3.9\" and python_version < \"3.10\" or python_version >= \"3.9\" and platform_system != \"Darwin\" and python_version < \"3.10\" or python_version >= \"3.9\" and platform_machine != \"arm64\" and python_version < \"3.10\""},
-    {version = ">=1.23.5", markers = "python_version >= \"3.11\" and python_version < \"3.12\""},
-    {version = ">=1.26.0", markers = "python_version >= \"3.12\""},
 ]
 
 [[package]]
@@ -1819,8 +1834,8 @@ files = [
 [package.dependencies]
 numpy = [
     {version = ">=1.22.4,<2", markers = "python_version < \"3.11\""},
-    {version = ">=1.23.2,<2", markers = "python_version == \"3.11\""},
     {version = ">=1.26.0,<2", markers = "python_version >= \"3.12\""},
+    {version = ">=1.23.2,<2", markers = "python_version == \"3.11\""},
 ]
 python-dateutil = ">=2.8.2"
 pytz = ">=2020.1"
@@ -3107,6 +3122,20 @@ grpc = ["grpcio (>=1.41.0)", "numpy (>=1.19.1)", "packaging (>=14.1)", "protobuf
 http = ["aiohttp (>=3.8.1,<4.0.0)", "geventhttpclient (>=1.4.4,<=2.0.2)", "numpy (>=1.19.1)", "python-rapidjson (>=0.9.1)"]
 
 [[package]]
+name = "types-requests"
+version = "2.31.0.20240218"
+description = "Typing stubs for requests"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "types-requests-2.31.0.20240218.tar.gz", hash = "sha256:f1721dba8385958f504a5386240b92de4734e047a08a40751c1654d1ac3349c5"},
+    {file = "types_requests-2.31.0.20240218-py3-none-any.whl", hash = "sha256:a82807ec6ddce8f00fe0e949da6d6bc1fbf1715420218a9640d695f70a9e5a9b"},
+]
+
+[package.dependencies]
+urllib3 = ">=2"
+
+[[package]]
 name = "typing-extensions"
 version = "4.9.0"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -3371,4 +3400,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.13"
-content-hash = "437c7a8d53fecaae05f39f3c0405d0f65bb2ec0356384beeabe8dadee225b6bc"
+content-hash = "dd1f9bfea8160b14442efff0788a55c89a52e811ae40605ad2f96761a7dc7eb1"
