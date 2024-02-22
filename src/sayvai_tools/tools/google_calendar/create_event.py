@@ -11,10 +11,7 @@ from sayvai_tools.tools.google_calendar.base import GoogleCalendarBaseTool
 class CreateEventSchema(BaseModel):
     """Input schema for CreateEventTool."""
 
-    calendar_id: str = Field(
-        ...,
-        description="ID of the calendar to create the event in.",
-    )
+    calendar_id: str = "primary"
     summary: str = Field(
         ...,
         description="Summary or title of the event.",

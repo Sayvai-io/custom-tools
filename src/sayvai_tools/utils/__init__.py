@@ -7,13 +7,11 @@ from sayvai_tools.utils.google.sheets import GSheets
 from sayvai_tools.utils.microsoft.excel import Excel
 
 # from sayvai_tools.utils.voice.stt import STT
-from sayvai_tools.utils.voice.tts import ElevenlabsAudioStreaming
 
 __all__ = [
     "GCalendar",
     "SQLDatabase",
     "SQLDatabaseChain",
-    "ElevenlabsAudioStreaming",
     "EmailSender",
     "GSheets",
     "GForms",

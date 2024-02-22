@@ -4,7 +4,6 @@ from typing import List
 
 from langchain.tools import __all__ as langchain_tools
 
-from sayvai_tools.tools.TTS import VoiceOutputRun
 from sayvai_tools.tools.conversational_human import ConversationalHuman
 from sayvai_tools.tools.date import GetDate
 from sayvai_tools.tools.google_calendar import (AvailableSlotsTool,
@@ -31,7 +30,6 @@ __all__: List[str] = [
     "RetrievePhone",
     "SendMail",
     "Database",
-    "VoiceOutputRun",
     "ChromaDB",
     "PGVectorDB",
     "PineconeDB",

@@ -11,10 +11,8 @@ python = ">=3.9,<3.13"
 openai = "^1.11.0"
 rich = "13.7.0"
 pinecone-client = "3.0.2"
-langchain = {version = "0.1.5", extras = ["llms"]}
 llama-index = "0.8.22"
 sqlalchemy = "2.0.20"
-elevenlabs = "0.2.24"
 numpy = "1.26.4"
 google = "^3.0.0"
 google-cloud-speech = "^2.23.0"
@@ -29,13 +27,14 @@ pytest = "^7.4.4"
 python-dotenv = "^1.0.0"
 protobuf = "4.23.4"
 google-api-python-client = "^2.116.0"
-langchain-openai = "^0.0.5"
-langchain-core = "^0.1.18"
-langchain-community = "^0.0.17"
 pymupdf = "^1.23.21"
 google-auth-oauthlib = "^1.2.0"
-# langchain-pinecone = {path = "../langchain/libs/partners/pinecone"} 
 google-auth-httplib2 = "^0.2.0"
+langchain = {extras = ["llms"], version = "^0.1.8"}
+langchain-core = "^0.1.25"
+langchain-community = "^0.0.21"
+langchain-openai = "^0.0.6"
+pydantic = "2.6.1"
 
 
 [build-system]
