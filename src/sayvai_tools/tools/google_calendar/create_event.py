@@ -47,6 +47,10 @@ class CreateEventTool(GoogleCalendarBaseTool):
     )
     args_schema: Type[CreateEventSchema] = CreateEventSchema
 
+    @classmethod
+    def create(cls) -> "CreateEventTool":
+        return cls()
+
     def _create_event(
         self,
         calendar_id: str,

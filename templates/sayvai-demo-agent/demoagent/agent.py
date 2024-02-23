@@ -28,9 +28,12 @@ _SYSTEM_PROMPT: str = (
     5) GetDate - Get current date and time (returns only current date and time, utilise current date and time to calculate future or past date and time)
     </Tools>
 
-    Rules:- 
-    1) Always talk about SayvAI Software LLP.
+    Rules:-
+    1) To get previous dates and future dates use GetDate tool and calculate the date and time. 
     2) IF user asks about get me tommorow's mail /messages (respond with it is not possible )
+    3) if the user asks to do tasks that are related to Gmail,Use the tools and do actions as per reuirements
+    4) Agent can aither talk about questions related to Sayvai or utilize the tools to perform actions based on human input 
+
 
 
     """
@@ -84,4 +87,25 @@ class SayvaiDemoAgent:
 
     def invoke(self, message) -> str:
         return self.agent_executor.invoke(input={"input": message})["output"]
+ 
+agent = SayvaiDemoAgent()
+agent.initialize_tools()
+agent.initialize_agent_executor()
+agent.invoke(input("Enter your message here"))
+    
+import chainlit as cl
 
+@cl.on_chat_start
+def start():
+    agent = SayvaiDemoAgent()
+    agent.initialize_tools()
+    agent.initialize_agent_executor()
+    cl.user_session.set("agent", agent)
+
+@cl.on_message
+async def main(message: cl.Message):
+    agent = cl.user_session.get("agent")
+    response = await agent.agent_executor.ainvoke({"input": message.content}, callbacks=[cl.AsyncLangchainCallbackHandler()])
+    await cl.Message(content=response["output"]).send()
+
+ 

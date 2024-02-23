@@ -21,6 +21,10 @@ class ListCommentsTool(YouTubeCommentsBaseTool):
     description: str = "Use this tool to list comment_threads on a YouTube video."
     args_schema: Type[ListCommentsSchema] = ListCommentsSchema
 
+    @classmethod
+    def create(cls) -> "ListCommentsTool":
+        return cls()
+
     def _list_comments(
             self,
             video_id: str,

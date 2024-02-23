@@ -25,6 +25,10 @@ class InsertCommentTool(YouTubeCommentsBaseTool):
     description: str = "Use this tool to insert a comment on a YouTube video."
     args_schema: Type[InsertCommentSchema] = InsertCommentSchema
 
+    @classmethod
+    def create(cls) -> "InsertCommentTool":
+        return cls()
+
     def _insert_comment(
             self,
             video_id: str,
