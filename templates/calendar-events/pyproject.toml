@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "calendar-events"
+version = "0.1.0"
+description = ""
+authors = ["sanjaypranav <sanjaypriya195@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+langchain = "^0.1.5"
+langchain-core = "^0.1.21"
+langchain-openai = "^0.0.5"
+sayvai-tools = {path = "../.."}
+google-auth-oauthlib = "^1.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
