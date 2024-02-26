@@ -22,6 +22,7 @@ from sayvai_tools.tools.youtube import get_youtube_credentials
 from sayvai_tools.tools.youtube.comment_threads import ListCommentsTool, InsertCommentTool
 from sayvai_tools.tools.youtube.comments import ListCommentRepliesTool, ReplyToCommentTool
 from sayvai_tools.tools.youtube.utils import get_youtube_credentials
+from sayvai_tools.tools.loader import load_tools
 
 __all__: List[str] = [
     "ConversationalHuman",
@@ -49,7 +50,8 @@ __all__: List[str] = [
     "ListCommentsTool",
     "InsertCommentTool",
     "ListCommentRepliesTool",
-    "ReplyToCommentTool"
+    "ReplyToCommentTool",
+    "load_tools"
 ]
 
 
