@@ -12,6 +12,31 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry
+          poetry add pytest
+          poetry install
+
+      - name: Test with pytest
+        run: poetry run pytest tests/
+
+      - name: Debug
+        run: |
+          echo "Event name: ${{ github.event_name }}"
+          echo "Pull Request base ref: ${{ github.event.pull_request.base.ref }}"
+          echo "Pull Request merged: ${{ github.event.pull_request.merged }}"
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -35,6 +60,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install poetry
+          poetry add twine
           poetry install
 
       - name: Build and upload to PyPI
