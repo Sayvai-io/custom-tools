@@ -1,9 +1,15 @@
 import datetime
 
+from langchain.tools import BaseTool
+
 from sayvai_tools.utils.exception import SayvaiToolsError
 
 
-class GetDate:
+class GetDate(BaseTool):
+    """Get the current date and time."""
+
+    name = "GetDate"
+    description = "Get the current date and time."
 
     @classmethod
     def create(cls) -> "GetDate":

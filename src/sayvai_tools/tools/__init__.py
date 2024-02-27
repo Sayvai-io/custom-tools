@@ -10,19 +10,24 @@ from sayvai_tools.tools.google_calendar import (AvailableSlotsTool,
                                                 CreateEventTool,
                                                 DisplayEventsTool,
                                                 get_calendar_credentials)
-from sayvai_tools.tools.google_sheets import (CreateSpreadsheetTool, get_sheets_credentials, AppendDataTool,
-                                              GetCellValuesTool, UpdateSpreadsheetTool)
+from sayvai_tools.tools.google_sheets import (AppendDataTool,
+                                              CreateSpreadsheetTool,
+                                              GetCellValuesTool,
+                                              UpdateSpreadsheetTool,
+                                              get_sheets_credentials)
+from sayvai_tools.tools.loader import load_tools
 from sayvai_tools.tools.pdfreader import (ReadPagesTool, ReadPageTool,
                                           ReadPDFTool)
 from sayvai_tools.tools.retrive_details import RetrieveEmail, RetrievePhone
 from sayvai_tools.tools.send_mail import SendMail
 from sayvai_tools.tools.sql_database import Database
-from sayvai_tools.tools.vectordb import ChromaDB, PGVectorDB, PineconeDB
+# from sayvai_tools.tools.vectordb import ChromaDB, PGVectorDB, PineconeDB
 from sayvai_tools.tools.youtube import get_youtube_credentials
-from sayvai_tools.tools.youtube.comment_threads import ListCommentsTool, InsertCommentTool
-from sayvai_tools.tools.youtube.comments import ListCommentRepliesTool, ReplyToCommentTool
+from sayvai_tools.tools.youtube.comment_threads import (InsertCommentTool,
+                                                        ListCommentsTool)
+from sayvai_tools.tools.youtube.comments import (ListCommentRepliesTool,
+                                                 ReplyToCommentTool)
 from sayvai_tools.tools.youtube.utils import get_youtube_credentials
-from sayvai_tools.tools.loader import load_tools
 
 __all__: List[str] = [
     "ConversationalHuman",
@@ -31,9 +36,6 @@ __all__: List[str] = [
     "RetrievePhone",
     "SendMail",
     "Database",
-    "ChromaDB",
-    "PGVectorDB",
-    "PineconeDB",
     "ReadPagesTool",
     "ReadPDFTool",
     "ReadPageTool",

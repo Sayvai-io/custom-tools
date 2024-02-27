@@ -21,7 +21,7 @@ from sayvai_tools.tools.pdfreader import (ReadPagesTool, ReadPageTool,
 from sayvai_tools.tools.retrive_details import RetrieveEmail, RetrievePhone
 from sayvai_tools.tools.send_mail import SendMail
 from sayvai_tools.tools.sql_database import Database
-from sayvai_tools.tools.vectordb import ChromaDB, PGVectorDB, PineconeDB
+# from sayvai_tools.tools.vectordb import ChromaDB, PGVectorDB, PineconeDB
 from sayvai_tools.tools.youtube import get_youtube_credentials
 from sayvai_tools.tools.youtube.comment_threads import (InsertCommentTool,
                                                         ListCommentsTool)
@@ -35,9 +35,6 @@ all_tools = {
     "AvailableSlotsTool": AvailableSlotsTool,
     "GetDate": GetDate,
     "SendMail": SendMail,
-    "ChromaDB": ChromaDB,
-    "PGVectorDB": PGVectorDB,
-    "PineconeDB": PineconeDB,
     "ReadPagesTool": ReadPagesTool,
     "ReadPDFTool": ReadPDFTool,
     "ReadPageTool": ReadPageTool,
