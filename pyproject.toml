@@ -35,6 +35,7 @@ langchain-core = "^0.1.25"
 langchain-community = "^0.0.21"
 langchain-openai = "^0.0.6"
 pydantic = "2.6.1"
+langchain-pinecone = "^0.0.3"
 
 
 [build-system]

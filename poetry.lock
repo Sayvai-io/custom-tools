@@ -1507,6 +1507,22 @@ openai = ">=1.10.0,<2.0.0"
 tiktoken = ">=0.5.2,<1"
 
 [[package]]
+name = "langchain-pinecone"
+version = "0.0.3"
+description = "An integration package connecting Pinecone and LangChain"
+optional = false
+python-versions = ">=3.8.1,<3.13"
+files = [
+    {file = "langchain_pinecone-0.0.3-py3-none-any.whl", hash = "sha256:aa6c9925727f509b781c791184f5c2f8bc15030c0ad20f4b52b2698207934b9d"},
+    {file = "langchain_pinecone-0.0.3.tar.gz", hash = "sha256:5584a56b4208f3a30917c6698a27ecb459c192db0b2374d515887b507763ff20"},
+]
+
+[package.dependencies]
+langchain-core = ">=0.1,<0.2"
+numpy = ">=1,<2"
+pinecone-client = ">=3,<4"
+
+[[package]]
 name = "langsmith"
 version = "0.1.5"
 description = "Client library to connect to the LangSmith LLM Tracing and Evaluation Platform."
@@ -4141,4 +4157,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.13"
-content-hash = "e060733356d0db271cab1d177279616399c328b6ee30845e415b94f51c3a0432"
+content-hash = "7db09cd74af3e77c6d211522506ea9bc6beac1fb4eaaf0124c68e95be6fdac35"
