@@ -26,8 +26,8 @@ jobs:
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
-          sudo make build
-          python -m pip install black isort flake8
+          python -m pip install black isort flake8 poetry
+          poetry install
       - name: Run tests
         run: |
           pip install pytest
