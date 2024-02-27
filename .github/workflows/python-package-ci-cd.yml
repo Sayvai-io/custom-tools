@@ -71,4 +71,4 @@ jobs:
           echo "Building and uploading to PyPI"
           echo "TWINE_USERNAME: $TWINE_USERNAME"
           poetry build
-          twine upload dist/*
+          twine upload dist/* --verbose
