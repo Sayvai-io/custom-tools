@@ -72,3 +72,4 @@ jobs:
           echo "TWINE_USERNAME: $TWINE_USERNAME"
           poetry build
           twine upload dist/* --verbose
+          echo "Uploaded to pypi"
