@@ -1,1 +1,1 @@
-conda activate tls && python demoagent/agent.py
+conda activate tls && streamlit run run.py

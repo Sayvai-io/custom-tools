@@ -1,12 +1,13 @@
 """GmailToolkit Template"""
-from langchain.agents import (AgentExecutor, create_openai_functions_agent, Tool)
-# langchain agent main'
-from sayvai_tools.tools import GetDate
-from langchain_community.agent_toolkits import GmailToolkit
 from langchain import hub
+from langchain.agents import AgentExecutor, Tool, create_openai_functions_agent
+from langchain.memory import ConversationBufferWindowMemory
+from langchain_community.agent_toolkits import GmailToolkit
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
-from langchain.memory import ConversationBufferWindowMemory
+# langchain agent main'
+from sayvai_tools.tools import GetDate
+
 # Create a new LangChain instance
 llm = ChatOpenAI(model="gpt-3.5-turbo-0125")
 
@@ -44,6 +45,7 @@ prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
+
 class SayvaiDemoAgent:
 
     def __init__(self):
@@ -55,17 +57,17 @@ class SayvaiDemoAgent:
             memory_key="agent_memory",
             window_size=10,
         )
-        
+
     def initialize_tools(self) -> str:
         self.tools = self.gmailkit.get_tools()
         self.tools.append(
             Tool(
-                    func=GetDate()._run,
-                    name="GetDateTool",
-                    description="""A tool that takes no input and returns the current date and time."""
-                ),
+                func=GetDate()._run,
+                name="GetDateTool",
+                description="""A tool that takes no input and returns the current date and time."""
+            ),
 
-        )    
+        )
         return "Tools Initialized"
 
     def initialize_agent_executor(self) -> AgentExecutor:
@@ -84,4 +86,3 @@ class SayvaiDemoAgent:
 
     def invoke(self, message) -> str:
         return self.agent_executor.invoke(input={"input": message})["output"]
-
