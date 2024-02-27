@@ -68,5 +68,8 @@ jobs:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: |
+          echo "Building and uploading to PyPI"
+          echo "TWINE_USERNAME: $TWINE_USERNAME"
+          echo "TWINE_PASSWORD: $TWINE_PASSWORD"
           poetry build
           twine upload dist/*
