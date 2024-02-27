@@ -1,6 +1,9 @@
 name: Python Package CI/CD
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -12,7 +15,12 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main'
+    if: |
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.base.ref == 'main' &&
+      github.event.pull_request.merged == true ||
+      github.event_name == 'push' &&
+      github.event.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout code
