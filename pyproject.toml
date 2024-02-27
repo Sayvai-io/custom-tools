@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sayvai-tools"
-version = "0.0.3"
+version = "0.0.4"
 description = "A python framwork for customising langchain assiatants."
 authors = ["sayvai <sanjaypranav@sayvai.io>"]
 license = "MIT"
