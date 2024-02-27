@@ -4,6 +4,7 @@ assistant.py
 credentials.json
 openai_api_key.txt
 test.py
+chainlit.md
 build
 tools.egg-info
 token.json

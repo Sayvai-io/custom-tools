@@ -34,6 +34,10 @@ class AvailableSlotsTool(GoogleCalendarBaseTool):
     )
     args_schema: Type[AvailableSlotsSchema] = AvailableSlotsSchema
 
+    @classmethod
+    def create(cls) -> "AvailableSlotsTool":
+        return cls()
+
     def _find_available_slots(
         self,
         start_time: datetime,

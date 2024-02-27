@@ -20,6 +20,10 @@ class CreateSpreadsheetTool(GoogleSheetsBaseTool):
     description: str = "Use this tool to create a new Google Sheets spreadsheet."
     args_schema: Type[CreateSpreadsheetSchema] = CreateSpreadsheetSchema
 
+    @classmethod
+    def create(cls) -> "CreateSpreadsheetTool":
+        return cls()
+
     def _create_spreadsheet(self, title: str) -> str:
         """Create a new Google Sheets spreadsheet with the specified title.
 

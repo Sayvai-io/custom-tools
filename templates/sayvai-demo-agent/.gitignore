@@ -1,3 +1,4 @@
 credentials.json
 token.json
 __pycache__
+.chainlit

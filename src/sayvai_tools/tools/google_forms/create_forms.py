@@ -26,6 +26,10 @@ class CreateFormTool(GoogleFormsBaseTool):
     description: str = "Use this tool to create a Google Form."
     args_schema: Type[CreateFormSchema] = CreateFormSchema
 
+    @classmethod
+    def create(cls) -> "CreateFormTool":
+        return cls()
+
     def _create_empty_form(
         self,
         title: str,

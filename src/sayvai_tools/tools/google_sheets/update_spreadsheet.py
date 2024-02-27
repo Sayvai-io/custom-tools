@@ -26,6 +26,10 @@ class UpdateSpreadsheetTool(GoogleSheetsBaseTool):
     description: str = "Use this tool to update cell values in a specified range of a Google Sheets spreadsheet."
     args_schema: Type[UpdateSpreadsheetSchema] = UpdateSpreadsheetSchema
 
+    @classmethod
+    def create(cls) -> "UpdateSpreadsheetTool":
+        return cls()
+
     def _update_spreadsheet(
         self,
         spreadsheet_id: str,

@@ -27,6 +27,10 @@ class GetCellValuesTool(GoogleSheetsBaseTool):
     )
     args_schema: Type[GetCellValuesSchema] = GetCellValuesSchema
 
+    @classmethod
+    def create(cls) -> "GetCellValuesTool":
+        return cls()
+    
     def _get_cell_values(self, spreadsheet_id: str, range_: str) -> List[List[str]]:
         """Retrieve cell values from the specified range in the Google Sheets spreadsheet.
 

@@ -20,6 +20,8 @@ class AppendDataSchema(BaseModel):
     )
 
 
+
+
 class AppendDataTool(GoogleSheetsBaseTool):
     """Tool for appending data to a Google Sheets spreadsheet."""
 
@@ -28,6 +30,10 @@ class AppendDataTool(GoogleSheetsBaseTool):
         "Use this tool to append data to a specified sheet in a Google Sheets spreadsheet."
     )
     args_schema: Type[AppendDataSchema] = AppendDataSchema
+
+    @classmethod
+    def create(cls) -> "AppendDataTool":
+        return cls()
 
     def _append_data(
         self,
