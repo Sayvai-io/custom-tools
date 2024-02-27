@@ -18,3 +18,6 @@ install:
 format:
 	black src/
 
+test:
+	pytest tests/
+
