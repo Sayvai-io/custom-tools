@@ -10,7 +10,7 @@ from sayvai_tools.utils.database.dbbase import SQLDatabase
 from sayvai_tools.utils.database.dbchain import SQLDatabaseChain
 
 
-class Database(BaseTool):
+class Database:
     """Tool that queries vector database."""
 
     name = "Database"
