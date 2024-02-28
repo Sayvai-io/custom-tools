@@ -76,7 +76,7 @@ class CreateEventTool(GoogleCalendarBaseTool):
             Dictionary representing the created event.
         """
         event = {
-            "summary": summary,            
+            "summary": summary,
             "start": {"dateTime": start_time.isoformat(), "timeZone": "Asia/Kolkata"},
             "end": {"dateTime": end_time.isoformat(), "timeZone": "Asia/Kolkata"},
         }
@@ -108,14 +108,14 @@ class CreateEventTool(GoogleCalendarBaseTool):
         **kwargs,
     ) -> dict:
         try:
-           created_event = self._create_event(
-                calendar_id = kwargs.get("calendar_id", "primary"),
-                summary = kwargs.get("summary","meeting"),
-                start_time= kwargs.get("start_time",datetime.now()),
-                end_time= kwargs.get("end_time",datetime.now()+timedelta(hours=1)),
-                description =kwargs.get("description",None),
-                location=kwargs.get("location",None),
-                attendees=kwargs.get("attendees",None),
+            created_event = self._create_event(
+                calendar_id=kwargs.get("calendar_id", "primary"),
+                summary=kwargs.get("summary", "meeting"),
+                start_time=kwargs.get("start_time", datetime.now()),
+                end_time=kwargs.get("end_time", datetime.now() + timedelta(hours=1)),
+                description=kwargs.get("description", None),
+                location=kwargs.get("location", None),
+                attendees=kwargs.get("attendees", None),
             )
             return created_event
         except Exception as e:
