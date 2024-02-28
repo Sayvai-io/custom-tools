@@ -2,6 +2,7 @@ from typing import Optional
 
 from langchain.schema import BasePromptTemplate
 from langchain.schema.language_model import BaseLanguageModel
+from langchain.tools import BaseTool
 from sqlalchemy.engine import Engine
 
 from sayvai_tools.tools.sql_database.prompt import PROMPT, SQL_PROMPTS
@@ -9,7 +10,7 @@ from sayvai_tools.utils.database.dbbase import SQLDatabase
 from sayvai_tools.utils.database.dbchain import SQLDatabaseChain
 
 
-class Database:
+class Database(BaseTool):
     """Tool that queries vector database."""
 
     name = "Database"
