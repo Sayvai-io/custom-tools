@@ -1,13 +1,38 @@
 from typing import Any, Optional
 
+from langchain.pydantic_v1 import BaseModel, Field
 from langchain.schema import BasePromptTemplate
 from langchain.schema.language_model import BaseLanguageModel
 from langchain.tools import BaseTool
+from proto import Field
 from sqlalchemy.engine import Engine
 
 from sayvai_tools.tools.sql_database.prompt import PROMPT, SQL_PROMPTS
 from sayvai_tools.utils.database.dbbase import SQLDatabase
 from sayvai_tools.utils.database.dbchain import SQLDatabaseChain
+
+
+class DatabaseSchema(BaseModel):
+    llm: BaseLanguageModel = Field(
+        ...,
+        description="Language model to use for generating SQL queries.",
+    )
+    engine: Engine = Field(
+        ...,
+        description="SQLAlchemy engine to use for querying the database.",
+    )
+    prompt: Optional[BasePromptTemplate] = Field(
+        None,
+        description="Prompt template to use for generating SQL queries.",
+    )
+    verbose: bool = Field(
+        False,
+        description="Whether to print verbose output.",
+    )
+    k: int = Field(
+        5,
+        description="Number of results to return.",
+    )
 
 
 class Database(BaseTool):
@@ -18,20 +43,7 @@ class Database(BaseTool):
         "Useful for when you need to access sql database"
         "Input should be a natural language"
     )
-
-    def __init__(
-        self,
-        llm: Any,
-        engine: Engine,
-        prompt: Optional[BasePromptTemplate] = None,
-        verbose: bool = False,
-        k: int = 5,
-    ):
-        self.llm = llm
-        self.engine = engine
-        self.prompt = prompt
-        self.verbose = verbose
-        self.k = k
+    args_schema = DatabaseSchema
 
     @classmethod
     def create(cls, **kwargs) -> "Database":
