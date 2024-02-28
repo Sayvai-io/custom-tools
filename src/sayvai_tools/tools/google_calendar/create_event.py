@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List, Optional, Type
 
 from googleapiclient.errors import HttpError
@@ -104,24 +104,18 @@ class CreateEventTool(GoogleCalendarBaseTool):
 
     def _run(
         self,
-        calendar_id: str,
-        summary: str,
-        start_time: datetime,
-        end_time: datetime,
-        description: Optional[str] = None,
-        location: Optional[str] = None,
-        attendees: Optional[List[str]] = None,
         run_manager: Optional[CallbackManagerForToolRun] = None,
+        **kwargs,
     ) -> dict:
         try:
             created_event = self._create_event(
-                calendar_id,
-                summary,
-                start_time,
-                end_time,
-                description,
-                location,
-                attendees,
+                calendar_id=kwargs.get("calendar_id", "primary"),
+                summary=kwargs.get("summary", "meeting"),
+                start_time=kwargs.get("start_time", datetime.now()),
+                end_time=kwargs.get("end_time", datetime.now() + timedelta(hours=1)),
+                description=kwargs.get("description", None),
+                location=kwargs.get("location", None),
+                attendees=kwargs.get("attendees", None),
             )
             return created_event
         except Exception as e:

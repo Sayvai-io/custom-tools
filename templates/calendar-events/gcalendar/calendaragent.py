@@ -67,7 +67,7 @@ class DateTimeAgent:
                     func=GetDate()._run,
                     name="get_date",
                     description="""A tool that retrieves the current date and time. 
-                   This tool does not require any input parameters.""",
+                   This tool does not require any input parameters.(watch out for leap years)""",
                 ),
             ]
         return "Tools Initialized"
@@ -92,4 +92,5 @@ class DateTimeAgent:
 dateagent = DateTimeAgent()
 dateagent.initialize_tools()
 dateagent.initialize_agent_executor()
-print(dateagent.invoke("shedule an appointment tommorrow at 9.30pm for an hour for standup meeting"))
+while True:
+    print(dateagent.invoke(input("Enter your message: ")))

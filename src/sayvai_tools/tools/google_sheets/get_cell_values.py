@@ -1,4 +1,5 @@
 from typing import List, Optional, Type
+
 from googleapiclient.errors import HttpError
 from langchain_core.callbacks import CallbackManagerForToolRun
 from langchain_core.pydantic_v1 import BaseModel, Field
@@ -30,7 +31,7 @@ class GetCellValuesTool(GoogleSheetsBaseTool):
     @classmethod
     def create(cls) -> "GetCellValuesTool":
         return cls()
-    
+
     def _get_cell_values(self, spreadsheet_id: str, range_: str) -> List[List[str]]:
         """Retrieve cell values from the specified range in the Google Sheets spreadsheet.
 

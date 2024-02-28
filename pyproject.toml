@@ -38,6 +38,13 @@ pydantic = "2.6.1"
 langchain-pinecone = "^0.0.3"
 
 
+
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.4.4"
+black = "^24.2.0"
+isort = "^5.13.2"

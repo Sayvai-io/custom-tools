@@ -1,8 +1,8 @@
-from langchain.llms import OpenAI
-from demoagent.agent import SayvaiDemoAgent
 # from langchain.callbacks import StreamlitCallbackHandler
 import streamlit as st
-from rich import print as rprint 
+from demoagent.agent import SayvaiDemoAgent
+from langchain.llms import OpenAI
+from rich import print as rprint
 
 demoag = SayvaiDemoAgent()
 demoag.initialize_tools()

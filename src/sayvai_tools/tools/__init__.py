@@ -53,7 +53,7 @@ __all__: List[str] = [
     "InsertCommentTool",
     "ListCommentRepliesTool",
     "ReplyToCommentTool",
-    "load_tools"
+    "load_tools",
 ]
 
 

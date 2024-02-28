@@ -26,7 +26,6 @@ class DisplayEventsTool(GoogleCalendarBaseTool):
     )
     args_schema: Type[DisplayEventsSchema] = DisplayEventsSchema
 
-
     @classmethod
     def create(cls) -> "DisplayEventsTool":
         return cls()
@@ -62,12 +61,12 @@ class DisplayEventsTool(GoogleCalendarBaseTool):
 
     def _run(
         self,
-        calendar_id: str,
-        max_results: int = 10,
         run_manager: Optional[CallbackManagerForToolRun] = None,
+        **kwargs,
     ) -> List[dict]:
         try:
-            events = self._display_events(calendar_id, max_results)
+            events = self._display_events(calendar_id=kwargs.get("calendar_id", "primary"),
+                                          max_results=kwargs.get("max_results", 10))
             return events
         except Exception as e:
             raise Exception(f"An error occurred: {e}")
