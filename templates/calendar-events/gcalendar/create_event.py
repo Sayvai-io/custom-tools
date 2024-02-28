@@ -13,6 +13,7 @@ create_event_tool = CreateEventTool(credentials=credentials)
 event = create_event_tool.run(
     {
         'summary': 'Meeting with John',
+        'calendar_id': 'primary',
         'start_time': datetime.now() + timedelta(days=1),
         'end_time': datetime.now() + timedelta(days=1, hours=1),
     }
