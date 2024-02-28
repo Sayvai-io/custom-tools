@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Any, Optional
 
 from langchain.schema import BasePromptTemplate
 from langchain.schema.language_model import BaseLanguageModel
@@ -21,7 +21,7 @@ class Database(BaseTool):
 
     def __init__(
         self,
-        llm: BaseLanguageModel,
+        llm: Any,
         engine: Engine,
         prompt: Optional[BasePromptTemplate] = None,
         verbose: bool = False,
