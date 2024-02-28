@@ -9,18 +9,16 @@ from sayvai_tools.tools.youtube.base import YouTubeCommentsBaseTool
 
 class InsertCommentSchema(BaseModel):
     """Input schema for InsertCommentTool."""
+
     video_id: str = Field(
-        ...,
-        description="ID of the YouTube video to insert the comment to."
+        ..., description="ID of the YouTube video to insert the comment to."
     )
-    text: str = Field(
-        ...,
-        description="Text of the comment to be inserted."
-    )
+    text: str = Field(..., description="Text of the comment to be inserted.")
 
 
 class InsertCommentTool(YouTubeCommentsBaseTool):
     """Tool for inserting a comment on a YouTube video."""
+
     name: str = "insert_comment"
     description: str = "Use this tool to insert a comment on a YouTube video."
     args_schema: Type[InsertCommentSchema] = InsertCommentSchema
@@ -29,11 +27,7 @@ class InsertCommentTool(YouTubeCommentsBaseTool):
     def create(cls) -> "InsertCommentTool":
         return cls()
 
-    def _insert_comment(
-            self,
-            video_id: str,
-            text: str
-    ) -> None:
+    def _insert_comment(self, video_id: str, text: str) -> None:
         """Insert a comment on the specified YouTube video.
 
         Args:
@@ -49,14 +43,10 @@ class InsertCommentTool(YouTubeCommentsBaseTool):
                 part="snippet",
                 body={
                     "snippet": {
-                        "topLevelComment": {
-                            "snippet": {
-                                "textOriginal": text
-                            }
-                        },
+                        "topLevelComment": {"snippet": {"textOriginal": text}},
                         "videoId": video_id,
                     }
-                }
+                },
             ).execute()
         except HttpError as e:
             raise HttpError(f"An HTTP error occurred: {e}", e.resp)
@@ -64,10 +54,10 @@ class InsertCommentTool(YouTubeCommentsBaseTool):
             raise Exception(f"An error occurred: {e}")
 
     def _run(
-            self,
-            video_id: str,
-            text: str,
-            run_manager: Optional[CallbackManagerForToolRun] = None
+        self,
+        video_id: str,
+        text: str,
+        run_manager: Optional[CallbackManagerForToolRun] = None,
     ) -> None:
         try:
             self._insert_comment(video_id, text)

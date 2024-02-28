@@ -1,4 +1,5 @@
-from sayvai_tools.tools.google_sheets import GetCellValuesTool, get_sheets_credentials
+from sayvai_tools.tools.google_sheets import (GetCellValuesTool,
+                                              get_sheets_credentials)
 
 # Get Google Sheets credentials
 credentials = get_sheets_credentials()

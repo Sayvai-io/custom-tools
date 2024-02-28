@@ -1,4 +1,5 @@
-from sayvai_tools.tools.youtube.comment_threads import InsertCommentTool, get_youtube_credentials
+from sayvai_tools.tools.youtube.comment_threads import (
+    InsertCommentTool, get_youtube_credentials)
 
 # Get YouTube credentials
 credentials = get_youtube_credentials()

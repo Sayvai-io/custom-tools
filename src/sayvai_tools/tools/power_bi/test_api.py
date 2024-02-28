@@ -1,7 +1,6 @@
 import pytest
-from langchain_core.utils import get_from_env
-
 from langchain_community.utilities.powerbi import PowerBIDataset
+from langchain_core.utils import get_from_env
 
 
 def azure_installed() -> bool:

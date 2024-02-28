@@ -20,8 +20,6 @@ class AppendDataSchema(BaseModel):
     )
 
 
-
-
 class AppendDataTool(GoogleSheetsBaseTool):
     """Tool for appending data to a Google Sheets spreadsheet."""
 

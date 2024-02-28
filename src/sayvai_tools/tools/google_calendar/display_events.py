@@ -26,7 +26,6 @@ class DisplayEventsTool(GoogleCalendarBaseTool):
     )
     args_schema: Type[DisplayEventsSchema] = DisplayEventsSchema
 
-
     @classmethod
     def create(cls) -> "DisplayEventsTool":
         return cls()

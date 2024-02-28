@@ -9,14 +9,15 @@ from sayvai_tools.tools.youtube.base import YouTubeCommentsBaseTool
 
 class ListCommentsSchema(BaseModel):
     """Input schema for ListCommentsTool."""
+
     video_id: str = Field(
-        ...,
-        description="ID of the YouTube video to list comment_threads for."
+        ..., description="ID of the YouTube video to list comment_threads for."
     )
 
 
 class ListCommentsTool(YouTubeCommentsBaseTool):
     """Tool for listing comment_threads on a YouTube video."""
+
     name: str = "list_comments"
     description: str = "Use this tool to list comment_threads on a YouTube video."
     args_schema: Type[ListCommentsSchema] = ListCommentsSchema
@@ -26,8 +27,8 @@ class ListCommentsTool(YouTubeCommentsBaseTool):
         return cls()
 
     def _list_comments(
-            self,
-            video_id: str,
+        self,
+        video_id: str,
     ) -> dict:
         """List comment_threads on the specified YouTube video.
 
@@ -42,11 +43,11 @@ class ListCommentsTool(YouTubeCommentsBaseTool):
             Exception: If any other error occurs.
         """
         try:
-            response = self.api_resource.commentThreads().list(
-                part="snippet",
-                videoId=video_id,
-                textFormat="plainText"
-            ).execute()
+            response = (
+                self.api_resource.commentThreads()
+                .list(part="snippet", videoId=video_id, textFormat="plainText")
+                .execute()
+            )
             return response
         except HttpError as e:
             raise HttpError(f"An HTTP error occurred: {e}", e.resp)
@@ -54,9 +55,7 @@ class ListCommentsTool(YouTubeCommentsBaseTool):
             raise Exception(f"An error occurred: {e}")
 
     def _run(
-            self,
-            video_id: str,
-            run_manager: Optional[CallbackManagerForToolRun] = None
+        self, video_id: str, run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> dict:
         try:
             comments = self._list_comments(video_id)

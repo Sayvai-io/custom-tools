@@ -1,22 +1,18 @@
 """Tools for interacting with a Power BI dataset."""
+
 import logging
 from time import perf_counter
 from typing import Any, Dict, Optional, Tuple
 
-from langchain_core.callbacks import (
-    AsyncCallbackManagerForToolRun,
-    CallbackManagerForToolRun,
-)
+from langchain_community.chat_models.openai import _import_tiktoken
+from langchain_community.tools.powerbi.prompt import (BAD_REQUEST_RESPONSE,
+                                                      DEFAULT_FEWSHOT_EXAMPLES,
+                                                      RETRY_RESPONSE)
+from langchain_community.utilities.powerbi import PowerBIDataset, json_to_md
+from langchain_core.callbacks import (AsyncCallbackManagerForToolRun,
+                                      CallbackManagerForToolRun)
 from langchain_core.pydantic_v1 import Field, validator
 from langchain_core.tools import BaseTool
-
-from langchain_community.chat_models.openai import _import_tiktoken
-from langchain_community.tools.powerbi.prompt import (
-    BAD_REQUEST_RESPONSE,
-    DEFAULT_FEWSHOT_EXAMPLES,
-    RETRY_RESPONSE,
-)
-from langchain_community.utilities.powerbi import PowerBIDataset, json_to_md
 
 logger = logging.getLogger(__name__)
 
@@ -99,9 +95,9 @@ class QueryPowerBITool(BaseTool):
         logger.debug(f"PBI Query duration: {end_time - start_time:0.6f}")
         result, error = self._parse_output(pbi_result)
         if error is not None and "TokenExpired" in error:
-            self.session_cache[
-                tool_input
-            ] = "Authentication token expired or invalid, please try reauthenticate."
+            self.session_cache[tool_input] = (
+                "Authentication token expired or invalid, please try reauthenticate."
+            )
             return self.session_cache[tool_input]
 
         iterations = kwargs.get("iterations", 0)
@@ -153,9 +149,9 @@ class QueryPowerBITool(BaseTool):
         logger.debug(f"PBI Query duration: {end_time - start_time:0.6f}")
         result, error = self._parse_output(pbi_result)
         if error is not None and ("TokenExpired" in error or "TokenError" in error):
-            self.session_cache[
-                tool_input
-            ] = "Authentication token expired or invalid, please try to reauthenticate or check the scope of the credential."  # noqa: E501
+            self.session_cache[tool_input] = (
+                "Authentication token expired or invalid, please try to reauthenticate or check the scope of the credential."  # noqa: E501
+            )
             return self.session_cache[tool_input]
 
         iterations = kwargs.get("iterations", 0)
@@ -251,7 +247,9 @@ class ListPowerBITool(BaseTool):
     """Tool for getting tables names."""
 
     name: str = "list_tables_powerbi"
-    description: str = "Input is an empty string, output is a comma separated list of tables in the database."  # noqa: E501 # pylint: disable=C0301
+    description: str = (
+        "Input is an empty string, output is a comma separated list of tables in the database."  # noqa: E501 # pylint: disable=C0301
+    )
     powerbi: PowerBIDataset = Field(exclude=True)
 
     class Config:

@@ -15,7 +15,7 @@ class ReadPDFTool(BaseTool):
     @classmethod
     def create(cls) -> "ReadPDFTool":
         return cls()
-    
+
     def _run(self, file_path: str) -> str:
         return read_pdf(file_path)
 

@@ -1,4 +1,5 @@
-from sayvai_tools.tools.google_sheets import CreateSpreadsheetTool, get_sheets_credentials
+from sayvai_tools.tools.google_sheets import (CreateSpreadsheetTool,
+                                              get_sheets_credentials)
 
 credentials = get_sheets_credentials()
 
