@@ -10,32 +10,34 @@ from sqlalchemy.engine import Engine
 from sayvai_tools.tools.sql_database.prompt import PROMPT, SQL_PROMPTS
 from sayvai_tools.utils.database.dbbase import SQLDatabase
 from sayvai_tools.utils.database.dbchain import SQLDatabaseChain
+from sayvai_tools.utils.exception import deprecated
+
+# @deprecated()
+# class DatabaseSchema(BaseModel):
+#     llm: BaseLanguageModel = Field(
+#         ...,
+#         description="Language model to use for generating SQL queries.",
+#     )
+#     engine: Engine = Field(
+#         ...,
+#         description="SQLAlchemy engine to use for querying the database.",
+#     )
+#     prompt: Optional[BasePromptTemplate] = Field(
+#         None,
+#         description="Prompt template to use for generating SQL queries.",
+#     )
+#     verbose: bool = Field(
+#         False,
+#         description="Whether to print verbose output.",
+#     )
+#     k: int = Field(
+#         5,
+#         description="Number of results to return.",
+#     )
 
 
-class DatabaseSchema(BaseModel):
-    llm: BaseLanguageModel = Field(
-        ...,
-        description="Language model to use for generating SQL queries.",
-    )
-    engine: Engine = Field(
-        ...,
-        description="SQLAlchemy engine to use for querying the database.",
-    )
-    prompt: Optional[BasePromptTemplate] = Field(
-        None,
-        description="Prompt template to use for generating SQL queries.",
-    )
-    verbose: bool = Field(
-        False,
-        description="Whether to print verbose output.",
-    )
-    k: int = Field(
-        5,
-        description="Number of results to return.",
-    )
-
-
-class Database(BaseTool):
+@deprecated(message="Use langchain tool instead, Database will be removed from sayvai-tools 0.0.5")
+class Database:
     """Tool that queries vector database."""
 
     name = "Database"
@@ -43,7 +45,20 @@ class Database(BaseTool):
         "Useful for when you need to access sql database"
         "Input should be a natural language"
     )
-    args_schema = DatabaseSchema
+
+    def __init__(
+        self,
+        llm: BaseLanguageModel,
+        engine: Engine,
+        prompt: Optional[BasePromptTemplate] = None,
+        verbose: bool = False,
+        k: int = 5,
+    ):
+        self.llm = llm
+        self.engine = engine
+        self.prompt = prompt
+        self.verbose = verbose
+        self.k = k
 
     @classmethod
     def create(cls, **kwargs) -> "Database":
