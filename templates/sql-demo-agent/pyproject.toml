@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "sql-demo-agent"
+version = "0.1.0"
+description = ""
+authors = ["sanjaypranav <sanjaypriya195@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+sayvai-tools = {path = "../.."}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
