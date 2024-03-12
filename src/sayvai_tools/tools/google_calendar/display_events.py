@@ -65,8 +65,10 @@ class DisplayEventsTool(GoogleCalendarBaseTool):
         **kwargs,
     ) -> List[dict]:
         try:
-            events = self._display_events(calendar_id=kwargs.get("calendar_id", "primary"),
-                                          max_results=kwargs.get("max_results", 10))
+            events = self._display_events(
+                calendar_id=kwargs.get("calendar_id", "primary"),
+                max_results=kwargs.get("max_results", 10),
+            )
             return events
         except Exception as e:
             raise Exception(f"An error occurred: {e}")

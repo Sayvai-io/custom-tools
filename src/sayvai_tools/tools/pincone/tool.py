@@ -2,8 +2,10 @@
 import os
 from typing import Optional
 
-from langchain_core.callbacks import (AsyncCallbackManagerForToolRun,
-                                      CallbackManagerForToolRun)
+from langchain_core.callbacks import (
+    AsyncCallbackManagerForToolRun,
+    CallbackManagerForToolRun,
+)
 from langchain_core.pydantic_v1 import BaseModel, Field, root_validator
 from langchain_core.tools import BaseTool
 from langchain_openai import OpenAIEmbeddings
@@ -29,10 +31,9 @@ class PineconeTool(BasePineconeTool, BaseTool):
 
     vectorstore: PineconeVectorStore = Field(
         default_factory=lambda: PineconeVectorStore.from_existing_index(
-            index_name=os.environ["PINECONE_INDEX"],
-            embedding=OpenAIEmbeddings()
+            index_name=os.environ["PINECONE_INDEX"], embedding=OpenAIEmbeddings()
         ),
-        description="The Pinecone vector store"
+        description="The Pinecone vector store",
     )
 
     @classmethod

@@ -36,7 +36,9 @@ from sayvai_tools.utils.exception import deprecated
 #     )
 
 
-@deprecated(message="Use langchain tool instead, Database will be removed from sayvai-tools 0.0.5")
+@deprecated(
+    message="Use langchain tool instead, Database will be removed from sayvai-tools 0.0.5"
+)
 class Database:
     """Tool that queries vector database."""
 
