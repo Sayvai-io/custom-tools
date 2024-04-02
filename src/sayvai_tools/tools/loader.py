@@ -18,7 +18,6 @@ from sayvai_tools.tools.google_sheets import (AppendDataTool,
                                               get_sheets_credentials)
 from sayvai_tools.tools.pdfreader import (ReadPagesTool, ReadPageTool,
                                           ReadPDFTool)
-from sayvai_tools.tools.pincone import PineconeTool
 from sayvai_tools.tools.retrive_details import RetrieveEmail, RetrievePhone
 from sayvai_tools.tools.send_mail import SendMail
 from sayvai_tools.tools.sql_database import Database
