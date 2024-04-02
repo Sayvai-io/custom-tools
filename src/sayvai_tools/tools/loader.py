@@ -48,8 +48,7 @@ all_tools = {
     "ReplyToCommentTool": ReplyToCommentTool,
     "RetrieveEmail": RetrieveEmail,
     "RetrievePhone": RetrievePhone,
-    "Database": Database,
-    "PineconeTool": PineconeTool,
+    "Database": Database
 }
 
 
