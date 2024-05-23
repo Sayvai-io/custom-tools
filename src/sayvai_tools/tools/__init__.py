@@ -28,6 +28,7 @@ from sayvai_tools.tools.youtube.comment_threads import (InsertCommentTool,
 from sayvai_tools.tools.youtube.comments import (ListCommentRepliesTool,
                                                  ReplyToCommentTool)
 from sayvai_tools.tools.youtube.utils import get_youtube_credentials
+from sayvai_tools.tools.collect_data_from_user import CollectUserDataTool, create_data_model
 
 __all__: List[str] = [
     "ConversationalHuman",
@@ -54,6 +55,8 @@ __all__: List[str] = [
     "ListCommentRepliesTool",
     "ReplyToCommentTool",
     "load_tools",
+    "CollectUserDataTool",
+    "create_data_model"
 ]
 
 
