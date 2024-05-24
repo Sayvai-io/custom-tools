@@ -26,7 +26,7 @@ class BlockCalendar:
         )
 
     def _run(self, date: str, contacts: list):
-        self.cal.block_day(
+        self.vsical.block_day(
             date=date,
             contacts=contacts,
             organizer=self.organizer,

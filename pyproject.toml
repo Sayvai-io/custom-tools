@@ -30,12 +30,11 @@ google-api-python-client = "^2.116.0"
 pymupdf = "^1.23.21"
 google-auth-oauthlib = "^1.2.0"
 google-auth-httplib2 = "^0.2.0"
-langchain = "^0.1.14"
-langchain-core = "^0.1.25"
-langchain-community = "^0.0.31"
-langchain-openai = "^0.1.1"
+langchain = "^0.1.17"
+langchain-core = "^0.1.52"
+langchain-community = "^0.0.38"
+langchain-openai = "^0.1.6"
 pydantic = "^1.10.14"
-langchain-pinecone = "^0.0.3"
 
 
 
