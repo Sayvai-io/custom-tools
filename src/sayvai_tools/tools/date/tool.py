@@ -1,25 +1,21 @@
-import datetime
+from datetime import datetime
+from typing import Optional
 
 from langchain.tools import BaseTool
-
-from sayvai_tools.utils.exception import SayvaiToolsError
+from langchain_core.callbacks import CallbackManagerForToolRun
 
 
 class GetDate(BaseTool):
-    """Get the current date and time."""
-
-    name = "GetDate"
-    description = "Get the current date and time."
+    name: str = "get_current_date_time"
+    description: str = "Gets the current date and time."
 
     @classmethod
     def create(cls) -> "GetDate":
         return cls()
 
-    def _run(self, tool_input: str | None = None) -> str:
-        """Use the tool."""
-        current_time = datetime.datetime.now()
+    def _run(self, 
+            run_manager: Optional[CallbackManagerForToolRun] = None
+            ) -> str:
+        current_time = datetime.now()
         return str(current_time)
 
-    async def _arun(self) -> str:
-        """Use the tool asynchronously."""
-        raise SayvaiToolsError("Not NotImplemented Error")
