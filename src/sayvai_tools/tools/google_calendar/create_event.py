@@ -53,10 +53,10 @@ class CreateEventTool(GoogleCalendarBaseTool):
 
     def _create_event(
         self,
-        calendar_id: str,
         summary: str,
         start_time: datetime,
         end_time: datetime,
+        calendar_id: Optional[str] = "primary",
         description: Optional[str] = None,
         location: Optional[str] = None,
         attendees: Optional[List[str]] = None,

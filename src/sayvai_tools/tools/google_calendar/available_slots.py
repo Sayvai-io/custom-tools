@@ -43,7 +43,7 @@ class AvailableSlotsTool(GoogleCalendarBaseTool):
         start_time: datetime,
         end_time: datetime,
         duration_minutes: int,
-        calendar_id: str = "primary",
+        calendar_id: Optional[str] = "primary",
     ) -> List[Tuple[datetime, datetime]]:
         """Find available time slots in the specified Google Calendar.
 

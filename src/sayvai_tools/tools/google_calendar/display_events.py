@@ -32,8 +32,8 @@ class DisplayEventsTool(GoogleCalendarBaseTool):
 
     def _display_events(
         self,
-        calendar_id: str,
         max_results: int = 10,
+        calendar_id: Optional[str] = "primary",
     ) -> List[dict]:
         """Fetch and display events from a specific calendar.
 
