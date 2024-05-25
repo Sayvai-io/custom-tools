@@ -113,10 +113,10 @@ class AvailableSlotsTool(GoogleCalendarBaseTool):
 
     def _run(
         self,
-        calendar_id: str,
         start_time: datetime,
         end_time: datetime,
         duration_minutes: int,
+        calendar_id: Optional[str] = "primary",
         run_manager: Optional[CallbackManagerForToolRun] = None,
     ) -> List[Tuple[datetime, datetime]]:
         try:
